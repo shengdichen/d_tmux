@@ -1,0 +1,7 @@
+*
+!.gitignore
+!*/
+!modes/**/*
+!startup/**/*
+!bindings/**/*
+!options/**/*
