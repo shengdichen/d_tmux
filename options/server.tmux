@@ -124,9 +124,8 @@ set-option -s exit-unattached off
 #   rxvt*:clear=\e[H\e[2J The terminal entry value is passed through strunvis(3)
 #   before interpretation.
 #
-set-option -u terminal-override
-set-option -sa terminal-overrides '*:RGB'
-
+set-option -sgu terminal-override
+set-option -sga terminal-overrides ',*:RGB:Tc'
 
 
 #   user-keys[] key
