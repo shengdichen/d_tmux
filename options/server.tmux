@@ -125,7 +125,11 @@ set-option -s exit-unattached off
 #   before interpretation.
 #
 set-option -sgu terminal-override
+set-option -sga terminal-overrides ',*:XT'
+set-option -sga terminal-overrides ',*:Ms=\E]52;%p1%s;%p2%s\007'
+set-option -sga terminal-overrides ',*:Cs=\E]12;%p1%s\007:Cr=\E]112\007'
 set-option -sga terminal-overrides ',*:RGB:Tc'
+set-option -sga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
 
 
 #   user-keys[] key
