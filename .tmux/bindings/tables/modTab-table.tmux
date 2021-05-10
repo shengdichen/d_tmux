@@ -156,6 +156,12 @@ bind-key -T modTab M-% split-window -h
 
 #   C-Up, C-Down, C-Left, C-Right
 #           ->  Resize the current pane in steps of one cell.
+# non-default binds {{{
+bind-key -r -T modTab M-Up resize-pane -U
+bind-key -r -T modTab M-Down resize-pane -D
+bind-key -r -T modTab M-Left resize-pane -L
+bind-key -r -T modTab M-Right resize-pane -R
+# }}}
 #   M-Up, M-Down, M-Left, M-Right
 #           ->  Resize the current pane in steps of five cells.
 
