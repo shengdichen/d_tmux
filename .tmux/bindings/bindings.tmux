@@ -45,11 +45,11 @@ unbind-key -a -T modTab
 
 # bindings {{{
 
-source-file ./prefix-table.tmux
+source-file ~/.tmux/bindings/tables/prefix-table.tmux
 
-source-file ./defTab-table.tmux
+source-file ~/.tmux/bindings/tables/defTab-table.tmux
 
-source-file ./modTab-table.tmux
+source-file ~/.tmux/bindings/tables/modTab-table.tmux
 
 # }}}
 
