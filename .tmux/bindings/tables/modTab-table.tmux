@@ -185,7 +185,23 @@ bind-key -T modTab M-m select-pane -m
 
 # misc
 #   !       ->  Break the current pane out of the window.
-bind-key -T modTab M-! break-pane
+# non-default {{{
+#       bind-key -T modTab M-! break-pane
+
+# SYNOPSIS:
+#   1.  break pane to new window inserted after current one
+#   2.  prompt for the new window's name, default to current name
+#
+bind-key -T modTab M-! { \
+    command-prompt \
+        -p "New-Window:" \
+        -I "#{window_name}" \
+        "\
+            break-pane -a -n %1\
+        "; \
+}
+# }}}
+
 #   x       ->  Kill the current pane.
 bind-key -T modTab M-x confirm-before -p '\
 CONFIRM Pane Termination' kill-pane
