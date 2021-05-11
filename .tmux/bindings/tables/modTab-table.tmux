@@ -67,10 +67,8 @@ bind-key -T modTab M-c { \
         "new-window \
             -a \
             -n %1 \
-            \"\
-                $SHELL -c 'vifm ~/ ~/mnt/'\
-            \"\
-        "\
+            'vifm ~/ ~/mnt' \
+        ";\
 }
 # }}}
 
