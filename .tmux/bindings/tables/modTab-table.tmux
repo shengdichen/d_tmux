@@ -178,6 +178,14 @@ bind-key -T modTab M-Space next-layout
 bind-key -T modTab M-'{' swap-pane -U
 bind-key -T modTab M-'}' swap-pane -D
 
+# non-default binds {{{
+# -d to stay on the current pane after swapping
+bind-key -T modTab M-H swap-pane -d -t :.'{left-of}'
+bind-key -T modTab M-K swap-pane -d -t :.'{up-of}'
+bind-key -T modTab M-J swap-pane -d -t :.'{down-of}'
+bind-key -T modTab M-L swap-pane -d -t :.'{right-of}'
+# }}}
+
 # marking
 #   m       ->  Mark the current pane (see select-pane -m).
 bind-key -T modTab M-m select-pane -m
