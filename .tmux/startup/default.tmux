@@ -53,21 +53,18 @@
 # 3. switch to the main window
 
 
-new-session -s "sys" -A -d -n "home" -c ~/; \
-split-window -c ~/; last-pane; resize-pane -Z; \
-new-window -a -c / -n "pacm"; \
-select-window -l
-
-new-session -s "xyz" -A -d -n "KlCt" -c /mnt/x/myData/KlCt/; \
-new-window -a -d -c /mnt/x/myData/dev -n "dev"; \
-
-new-session -s "acd" -A -d -n "data"; \
-split-window -c /mnt/x/myData; last-pane
-
-new-session -s "ent" -A -d -n "cmus" -c /mnt/x/myMusic/
-
-# }}}
-
+#       new-session -s "sys" -A -d -n "home" -c ~/; \
+#       split-window -c ~/; last-pane; resize-pane -Z; \
+#       new-window -a -c / -n "pacm"; \
+#       select-window -l
+#
+#       new-session -s "xyz" -A -n "KlCt" -c /mnt/x/myData/KlCt/; \
+#       new-window -a -d -c /mnt/x/myData/dev -n "dev"; \
+#
+#       new-session -s "acd" -A -d -n "data"; \
+#       split-window -c /mnt/x/myData; last-pane
+#
+#       new-session -s "ent" -A -d -n "cmus" -c /mnt/x/myMusic/
 
 # on SESSIONs {{{
 
