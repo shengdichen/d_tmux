@@ -54,7 +54,23 @@ bind-key -T modTab M-'$' command-prompt -I "#S" "rename-session -- '%%'"
 # windows {{{
 # creating
 #   c       ->  Create a new window.
-bind-key -T modTab M-c new-window
+# non-default {{{
+#       bind-key -T modTab M-c new-window
+
+#   1.  create new window immediately after the current one
+#   2.  ask for input for window's name before creating, displaying "void" as
+#       the default prompted name
+#   3.  launch vifm to the default directories
+bind-key -T modTab M-c { \
+    command-prompt \
+        -I "void" \
+        "new-window \
+            -a \
+            -n %1 \
+            'vifm ~/ ~/mnt' \
+        ";\
+}
+# }}}
 
 # switching
 #   l       ->  Move to the previously selected window.
