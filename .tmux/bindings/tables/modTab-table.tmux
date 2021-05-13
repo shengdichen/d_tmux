@@ -229,7 +229,40 @@ bind-key -T modTab M-m select-pane -m
 
 # misc
 #   !       ->  Break the current pane out of the window.
-bind-key -T modTab M-! break-pane
+# non-default {{{
+#       bind-key -T modTab M-! break-pane
+
+# SYNOPSIS:
+#   1.  break pane to new window inserted after current one
+#   2.  prompt for the new window's name, default to current name
+#
+bind-key -T modTab M-! { \
+    command-prompt \
+        -p "New-Window:" \
+        -I "#{window_name}" \
+        "\
+            break-pane -a -n %1\
+        "; \
+}
+# }}}
+
+# non-default {{{
+# SYNOPSIS:
+#   1.  move the marked pane to become the last pane of the current window
+#   2.  stay on the newly "pasted-in" pane
+#   3.  set the layout
+#
+# PHILOSOPHY:
+#   1.  use join-pane OR move-pane
+#   2.  move-pane is preferred as it allows moving in the same window
+#   3.  documentation under |split-window| and |join-pane|
+#
+bind-key -T modTab M-M { \
+    move-pane -t ':.{bottom}'; \
+    select-layout main-vertical; \
+}
+# }}}
+
 #   x       ->  Kill the current pane.
 bind-key -T modTab M-x confirm-before -p '\
 CONFIRM Pane Termination' kill-pane
@@ -237,15 +270,6 @@ CONFIRM Pane Termination' kill-pane
 #   q       ->  Briefly display pane indexes.
 bind-key -T modTab M-q display-panes
 
-# "paste" the marked pane
-# this can be thought of as the "cut-and-paste" version of split-window:
-# instead of opening an empty split, join-pane opens a split and pasting in a
-# specific pane. To avoid having to explicitly state the pane with
-#       [-s <my_pane_to_paste>]
-# mark the target pane beforehand and omit specifying the pane altogether,
-# which will then use the marked pane as the source pane
-#   -v/h    ->  opens a vertical or horizontal split
-bind-key -T modTab M-M join-pane -v -t :.+
 # }}}
 
 
