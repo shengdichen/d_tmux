@@ -156,6 +156,26 @@ bind-key -T modTab M-% split-window -h
 
 #   C-Up, C-Down, C-Left, C-Right
 #           ->  Resize the current pane in steps of one cell.
+# non-default binds {{{
+bind-key -r -T modTab M-Up resize-pane -U
+bind-key -r -T modTab M-Down resize-pane -D
+bind-key -r -T modTab M-Left resize-pane -L
+bind-key -r -T modTab M-Right resize-pane -R
+
+# stretching vertically {{{
+bind-key -T modTab M-PPage resize-pane -y 50%
+bind-key -T modTab M-NPage resize-pane -y 100%
+
+bind-key -T modTab M-Home { \
+    swap-pane -d -t :.2; \
+    resize-pane -y 67% \
+}
+bind-key -T modTab M-End { \
+    swap-pane -d -t :.2; \
+    resize-pane -y 100% \
+}
+# }}}
+# }}}
 #   M-Up, M-Down, M-Left, M-Right
 #           ->  Resize the current pane in steps of five cells.
 
@@ -218,8 +238,10 @@ bind-key -T modTab M-= choose-buffer -Z
 #   -       ->  Delete the most recently copied buffer of text.
 bind-key -T modTab M-'-' delete-buffer
 
-#   PageUp  ->  Enter copy mode and scroll one page up.
-bind-key -T modTab M-PPage copy-mode -u
+#   non-default {{{
+#       #   PageUp  ->  Enter copy mode and scroll one page up.
+#       bind-key -T modTab M-PPage copy-mode -u
+#   }}}
 
 #   #       ->  List all paste buffers.
 bind-key -T modTab M-'#' list-buffers
