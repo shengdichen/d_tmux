@@ -25,6 +25,17 @@ split-window -v -d -t "=ent:1." "pulsemixer"
 split-window -h -d -t "=ent:2." "cmus"
 # }}}
 # }}}
+
+
+# 2.    pre-attach sessions {{{
+# SYNOPSIS:
+#   re-visit all the sessions in reverse order of desired, listed order
+#
+attach-session -t "=xyz:1.1"
+attach-session -t "=ent:1.1"
+attach-session -t "=ace:1.1"
+attach-session -t "=sys:1.2"
+# }}}
 # manipulating the tmux-server outside of tmux {{{
 
 # check if there is a server:
