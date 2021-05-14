@@ -4,12 +4,19 @@ start-server
 
 
 # 1.1   create the sessions {{{
+
 new-session -d -s "sys" -n "admin" "vifm ~/xdg/ ~/mnt/"
 new-session -d -s "ace" -n "data" "vifm ~/xdg/ ~/mnt/X/Dox/"
 new-session -d -s "ent" -n "ctrl" "vifm ~/xdg/Med/ ~/mnt/X/Med/"
 new-session -d -s "xyz" -n "misc" "vifm ~/xdg/ ~/mnt/"
 # }}}
 
+# 1.2   create windows within the sessions {{{
+new-window -d -n "home" -t "=sys:2." "vifm ~/ ~/Dots/"
+
+new-window -d -n "audio" -t "=ent:2." "vifm ~/xdg/Med/Aud/ ~/mnt/X/Med/Mus/"
+new-window -d -n "video" -t "=ent:3." "vifm ~/xdg/Med/Vid/ ~/mnt/X/Med/Vid/"
+# }}}
 # }}}
 # manipulating the tmux-server outside of tmux {{{
 
