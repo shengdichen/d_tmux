@@ -17,6 +17,13 @@ new-window -d -n "home" -t "=sys:2." "vifm ~/ ~/Dots/"
 new-window -d -n "audio" -t "=ent:2." "vifm ~/xdg/Med/Aud/ ~/mnt/X/Med/Mus/"
 new-window -d -n "video" -t "=ent:3." "vifm ~/xdg/Med/Vid/ ~/mnt/X/Med/Vid/"
 # }}}
+
+# 1.3   create panes within windows {{{
+split-window -h -d -t "=sys:1." -c /
+
+split-window -v -d -t "=ent:1." "pulsemixer"
+split-window -h -d -t "=ent:2." "cmus"
+# }}}
 # }}}
 # manipulating the tmux-server outside of tmux {{{
 
