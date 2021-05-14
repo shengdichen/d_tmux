@@ -1,8 +1,16 @@
 # default start-up procedure {{{
 # 0.    start the server
 start-server
+
+
+# 1.1   create the sessions {{{
+new-session -d -s "sys" -n "admin" "vifm ~/xdg/ ~/mnt/"
+new-session -d -s "ace" -n "data" "vifm ~/xdg/ ~/mnt/X/Dox/"
+new-session -d -s "ent" -n "ctrl" "vifm ~/xdg/Med/ ~/mnt/X/Med/"
+new-session -d -s "xyz" -n "misc" "vifm ~/xdg/ ~/mnt/"
 # }}}
 
+# }}}
 # manipulating the tmux-server outside of tmux {{{
 
 # check if there is a server:
