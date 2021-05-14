@@ -1,3 +1,8 @@
+# default start-up procedure {{{
+# 0.    start the server
+start-server
+# }}}
+
 # manipulating the tmux-server outside of tmux {{{
 
 # check if there is a server:
