@@ -14,6 +14,18 @@ bind-key    -T prefix       M-Space               send-prefix -2
 # }}}
 
 
+# non-default key-tables {{{
+#   NOTE:
+#       to remove all legacy bindings of a non-default key-table from previous
+#       experimentations:
+#       1.  -a
+#           ->  unbind all of the key-table
+#       2.  -q
+#           ->  fail silently to suppress warning when starting server
+#           initially, as the non-default key-table did not exist prior to
+#           server-launch
+#
+
 # |defTab| key-table {{{
 
 # set the default key-table to the customized key-table with less awkward
@@ -22,7 +34,7 @@ bind-key    -T prefix       M-Space               send-prefix -2
 
 # remove all legacy bindings of the key-table |defTab| that might persist from
 # previous experimentations
-#       unbind-key -a -T defTab
+#       unbind-key -a -q -T defTab
 
 # }}}
 
@@ -33,10 +45,9 @@ bind-key    -T prefix       M-Space               send-prefix -2
 # prefixing
 set-option -g key-table modTab
 
-# remove all legacy bindings of the key-table |defTab| that might persist from
-# previous experimentations
-unbind-key -a -T modTab
+unbind-key -a -q -T modTab
 
+# }}}
 # }}}
 
 # }}}
