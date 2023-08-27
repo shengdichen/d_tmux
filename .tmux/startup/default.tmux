@@ -14,8 +14,8 @@ start-server
 #   -n: set name of the default created window
 
 new-session -d -s "sys" -n "admin" "vifm ~/xdg/ ~/mnt/"
-new-session -d -s "ace" -n "data" "vifm ~/xdg/ ~/mnt/X/Dox/"
-new-session -d -s "ent" -n "ctrl" "vifm ~/xdg/Med/ ~/mnt/X/Med/"
+new-session -d -s "ace" -n "data" "vifm ~/xdg/ ~/mnt/x/Dox/"
+new-session -d -s "ent" -n "ctrl" "vifm ~/xdg/MDA/ ~/xdg/ -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\""
 new-session -d -s "xyz" -n "misc" "vifm ~/xdg/ ~/mnt/"
 # }}}
 
@@ -27,8 +27,7 @@ new-session -d -s "xyz" -n "misc" "vifm ~/xdg/ ~/mnt/"
 
 new-window -d -n "home" -t "=sys:2." "vifm ~/ ~/Dots/"
 
-new-window -d -n "audio" -t "=ent:2." "vifm ~/xdg/Med/Aud/ ~/mnt/X/Med/Mus/"
-new-window -d -n "video" -t "=ent:3." "vifm ~/xdg/Med/Vid/ ~/mnt/X/Med/Vid/"
+new-window -d -n "MDA" -t "=ent:2." "vifm ~/xdg/MDA/ ~/xdg/ -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\""
 # }}}
 
 # 1.3   create panes within windows {{{
@@ -37,8 +36,8 @@ new-window -d -n "video" -t "=ent:3." "vifm ~/xdg/Med/Vid/ ~/mnt/X/Med/Vid/"
 
 split-window -h -d -t "=sys:1." -c /
 
+split-window -h -d -t "=ent:1." "cmus"
 split-window -v -d -t "=ent:1." "pulsemixer"
-split-window -h -d -t "=ent:2." "cmus"
 # }}}
 # }}}
 
