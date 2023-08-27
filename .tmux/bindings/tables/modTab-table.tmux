@@ -88,7 +88,6 @@ bind-key -T modTab M-w choose-tree -NZ -O "time"
 #       bind-key -T modTab M-"'" command-prompt -p index "select-window -t ':%%'"
 
 #   0 to 9  ->  Select windows 0 to 9.
-bind-key -T modTab M-0 select-window -t :=0.
 bind-key -T modTab M-1 select-window -t :=1.
 bind-key -T modTab M-2 select-window -t :=2.
 bind-key -T modTab M-3 select-window -t :=3.
@@ -98,6 +97,13 @@ bind-key -T modTab M-6 select-window -t :=6.
 bind-key -T modTab M-7 select-window -t :=7.
 bind-key -T modTab M-8 select-window -t :=8.
 bind-key -T modTab M-9 select-window -t :=9.
+# non-default binding {{{
+#       bind-key -T modTab M-0 select-window -t :=0.
+
+# makes location-wise sense
+bind-key -T modTab M-0 select-window -t :'{end}'.
+# }}}
+
 
 #   M-n     ->  Move to the next window with a bell or activity marker.
 #   M-p     ->  Move to the previous window with a bell or activity marker.
