@@ -1,3 +1,61 @@
+# default start-up procedure {{{
+# 0.    start the server
+start-server
+
+
+# 1.    creating things {{{
+# 1.1   create the sessions {{{
+# PHILOSOPHY:
+#   -A: attach if session already exists; would otherwise complain about
+#       duplicate session without this
+#   -d: do not attach after creation
+#   -s: specify session name
+#   -c: set the directory
+#   -n: set name of the default created window
+
+new-session -d -s "sys" -n "admin" "vifm ~/xdg/ ~/mnt/"
+new-session -d -s "ace" -n "data" "vifm ~/xdg/ ~/mnt/X/Dox/"
+new-session -d -s "ent" -n "ctrl" "vifm ~/xdg/Med/ ~/mnt/X/Med/"
+new-session -d -s "xyz" -n "misc" "vifm ~/xdg/ ~/mnt/"
+# }}}
+
+# 1.2   create windows within the sessions {{{
+# PHILOSOPHY:
+#   -b: create before the existing window
+#   -a: create after the existing window
+#   -d: do not attach after creation
+
+new-window -d -n "home" -t "=sys:2." "vifm ~/ ~/Dots/"
+
+new-window -d -n "audio" -t "=ent:2." "vifm ~/xdg/Med/Aud/ ~/mnt/X/Med/Mus/"
+new-window -d -n "video" -t "=ent:3." "vifm ~/xdg/Med/Vid/ ~/mnt/X/Med/Vid/"
+# }}}
+
+# 1.3   create panes within windows {{{
+# PHILOSOPHY:
+#   -d: no not switch to the new pane
+
+split-window -h -d -t "=sys:1." -c /
+
+split-window -v -d -t "=ent:1." "pulsemixer"
+split-window -h -d -t "=ent:2." "cmus"
+# }}}
+# }}}
+
+
+# 2.    pre-attach sessions {{{
+# SYNOPSIS:
+#   re-visit all the sessions in reverse order of desired, listed order
+#
+attach-session -t "=xyz:1.1"
+attach-session -t "=ent:1.1"
+attach-session -t "=ace:1.1"
+attach-session -t "=sys:1.2"
+# }}}
+# }}}
+
+
+
 # manipulating the tmux-server outside of tmux {{{
 
 # check if there is a server:
@@ -53,21 +111,18 @@
 # 3. switch to the main window
 
 
-new-session -s "sys" -A -d -n "home" -c ~/; \
-split-window -c ~/; last-pane; resize-pane -Z; \
-new-window -a -c / -n "pacm"; \
-select-window -l
-
-new-session -s "xyz" -A -d -n "KlCt" -c /mnt/x/myData/KlCt/; \
-new-window -a -d -c /mnt/x/myData/dev -n "dev"; \
-
-new-session -s "acd" -A -d -n "data"; \
-split-window -c /mnt/x/myData; last-pane
-
-new-session -s "ent" -A -d -n "cmus" -c /mnt/x/myMusic/
-
-# }}}
-
+#       new-session -s "sys" -A -d -n "home" -c ~/; \
+#       split-window -c ~/; last-pane; resize-pane -Z; \
+#       new-window -a -c / -n "pacm"; \
+#       select-window -l
+#
+#       new-session -s "xyz" -A -n "KlCt" -c /mnt/x/myData/KlCt/; \
+#       new-window -a -d -c /mnt/x/myData/dev -n "dev"; \
+#
+#       new-session -s "acd" -A -d -n "data"; \
+#       split-window -c /mnt/x/myData; last-pane
+#
+#       new-session -s "ent" -A -d -n "cmus" -c /mnt/x/myMusic/
 
 # on SESSIONs {{{
 
