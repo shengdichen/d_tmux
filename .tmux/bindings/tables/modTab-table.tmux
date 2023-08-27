@@ -76,11 +76,15 @@ bind-key -T modTab M-c { \
 #   l       ->  Move to the previously selected window.
 #   n       ->  Change to the next window.
 #   p       ->  Change to the previous window.
+# non-default {{{
 #       bind-key -T modTab M-l last-window
-bind-key -T modTab M-n next-window
-bind-key -T modTab M-p previous-window
-# non-default keybind
-bind-key -T modTab M-` last-window
+bind-key -T modTab M-'`' select-window -t :'{last}'.
+
+#       bind-key -T modTab M-n next-window
+#       bind-key -T modTab M-p previous-window
+bind-key -T modTab M-n select-window -t :'{next}'.
+bind-key -T modTab M-p select-window -t :'{previous}'.
+# }}}
 
 #   w       ->  Choose the current window interactively.
 #   '       ->  Prompt for a window index to select.
@@ -132,8 +136,8 @@ bind-key -T modTab M-i display-message
 
 # non-default bindings {{{
 # inner-session displacement of the current window
-bind-key -T modTab M-N swap-window -d -t :+1.
-bind-key -T modTab M-P swap-window -d -t :-1.
+bind-key -T modTab M-N swap-window -d -t :'{next}'.
+bind-key -T modTab M-P swap-window -d -t :'{previous}'.
 # }}}
 
 # cross-session displacement of the current window
@@ -150,9 +154,10 @@ bind-key -T modTab M-P swap-window -d -t :-1.
 # panes {{{
 # switching
 #   ;       ->  Move to the previously active pane.
-bind-key -T modTab M-';' last-pane
+bind-key -T modTab M-';' select-pane -Z -t :.'{last}'
+
 #   o       ->  Select the next pane in the current window.
-bind-key -T modTab M-o select-pane -t :.+1
+bind-key -T modTab M-o select-pane -t :.'{next}'
 
 #   Up, Down, Left, Right
 #           ->  Change to the pane above, below, to the left, or to the right
