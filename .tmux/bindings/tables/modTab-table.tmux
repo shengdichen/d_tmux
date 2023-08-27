@@ -76,11 +76,15 @@ bind-key -T modTab M-c { \
 #   l       ->  Move to the previously selected window.
 #   n       ->  Change to the next window.
 #   p       ->  Change to the previous window.
+# non-default {{{
 #       bind-key -T modTab M-l last-window
-bind-key -T modTab M-n next-window
-bind-key -T modTab M-p previous-window
-# non-default keybind
-bind-key -T modTab M-` last-window
+bind-key -T modTab M-'`' select-window -t :'{last}'.
+
+#       bind-key -T modTab M-n next-window
+#       bind-key -T modTab M-p previous-window
+bind-key -T modTab M-n select-window -t :'{next}'.
+bind-key -T modTab M-p select-window -t :'{previous}'.
+# }}}
 
 #   w       ->  Choose the current window interactively.
 #   '       ->  Prompt for a window index to select.
@@ -91,17 +95,88 @@ bind-key -T modTab M-w choose-tree -NZ -O "time"
 bind-key -T modTab M-1 select-window -t :=1.
 bind-key -T modTab M-2 select-window -t :=2.
 bind-key -T modTab M-3 select-window -t :=3.
-bind-key -T modTab M-4 select-window -t :=4.
-bind-key -T modTab M-5 select-window -t :=5.
-bind-key -T modTab M-6 select-window -t :=6.
-bind-key -T modTab M-7 select-window -t :=7.
-bind-key -T modTab M-8 select-window -t :=8.
-bind-key -T modTab M-9 select-window -t :=9.
+
+# non-default {{{
+# SYNOPSIS:
+#   4   5                           6   7
+#   -2  -3      current_window      +3  +2
+
+#       bind-key -T modTab M-4 select-window -t :=4.
+#       bind-key -T modTab M-5 select-window -t :=5.
+#       bind-key -T modTab M-6 select-window -t :=6.
+#       bind-key -T modTab M-7 select-window -t :=7.
+
+bind-key -T modTab M-4 { \
+    run-shell \
+        "
+            zsh \
+            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
+            -2 1 \
+        "; \
+}
+
+bind-key -T modTab M-5 { \
+    run-shell \
+        "
+            zsh \
+            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
+            -3 1 \
+        "; \
+}
+
+bind-key -T modTab M-6 { \
+    run-shell \
+        "
+            zsh \
+            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
+            +3 1 \
+        "; \
+}
+
+bind-key -T modTab M-7 { \
+    run-shell \
+        "
+            zsh \
+            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
+            +2 1 \
+        "; \
+}
+# }}}
+
 # non-default binding {{{
+#       bind-key -T modTab M-8 select-window -t :=8.
+#       bind-key -T modTab M-9 select-window -t :=9.
 #       bind-key -T modTab M-0 select-window -t :=0.
 
-# makes location-wise sense
-bind-key -T modTab M-0 select-window -t :'{end}'.
+# backwards-navigation
+#       bind-key -T modTab M-0 select-window -t :'{end}'.
+#
+bind-key -T modTab M-0 { \
+    run-shell \
+        "
+            zsh \
+            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
+            -0 \
+        "; \
+}
+
+bind-key -T modTab M-9 { \
+    run-shell \
+        "
+            zsh \
+            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
+            -1 \
+        "; \
+}
+
+bind-key -T modTab M-8 { \
+    run-shell \
+        "
+            zsh \
+            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
+            -2 \
+        "; \
+}
 # }}}
 
 
@@ -132,8 +207,8 @@ bind-key -T modTab M-i display-message
 
 # non-default bindings {{{
 # inner-session displacement of the current window
-bind-key -T modTab M-N swap-window -d -t :+1.
-bind-key -T modTab M-P swap-window -d -t :-1.
+bind-key -T modTab M-N swap-window -d -t :'{next}'.
+bind-key -T modTab M-P swap-window -d -t :'{previous}'.
 # }}}
 
 # cross-session displacement of the current window
@@ -150,9 +225,10 @@ bind-key -T modTab M-P swap-window -d -t :-1.
 # panes {{{
 # switching
 #   ;       ->  Move to the previously active pane.
-bind-key -T modTab M-';' last-pane
+bind-key -T modTab M-';' select-pane -Z -t :.'{last}'
+
 #   o       ->  Select the next pane in the current window.
-bind-key -T modTab M-o select-pane -t :.+1
+bind-key -T modTab M-o select-pane -t :.'{next}'
 
 #   Up, Down, Left, Right
 #           ->  Change to the pane above, below, to the left, or to the right
@@ -271,9 +347,21 @@ bind-key -T modTab M-M { \
 }
 # }}}
 
+# killing and respawning {{{
 #   x       ->  Kill the current pane.
-bind-key -T modTab M-x confirm-before -p '\
-CONFIRM Pane Termination' kill-pane
+bind-key -T modTab M-x { \
+    confirm-before \
+        -p 'CONFIRM Pane Termination' \
+        kill-pane; \
+}
+
+# non-default {{{
+#   X       ->  Force-respawn current pane even if alive
+bind-key -T modTab M-X {
+    respawn-pane -k \
+}
+# }}}
+# }}}
 
 #   q       ->  Briefly display pane indexes.
 bind-key -T modTab M-q display-panes
