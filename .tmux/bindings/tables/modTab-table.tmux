@@ -161,10 +161,12 @@ bind-key -T modTab M-o select-pane -t :.+1
 #       bind-key -r -T modTab M-Down select-pane -D
 #       bind-key -r -T modTab M-Left select-pane -L
 #       bind-key -r -T modTab M-Right select-pane -R
-bind-key -r -T modTab M-k select-pane -U
-bind-key -r -T modTab M-j select-pane -D
-bind-key -r -T modTab M-h select-pane -L
-bind-key -r -T modTab M-l select-pane -R
+#
+#   -Z := keep the Zoom level of current window
+bind-key -r -T modTab M-k select-pane -Z -U
+bind-key -r -T modTab M-j select-pane -Z -D
+bind-key -r -T modTab M-h select-pane -Z -L
+bind-key -r -T modTab M-l select-pane -Z -R
 
 
 # splitting and resizing
