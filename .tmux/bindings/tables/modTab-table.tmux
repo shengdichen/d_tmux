@@ -271,9 +271,21 @@ bind-key -T modTab M-M { \
 }
 # }}}
 
+# killing and respawning {{{
 #   x       ->  Kill the current pane.
-bind-key -T modTab M-x confirm-before -p '\
-CONFIRM Pane Termination' kill-pane
+bind-key -T modTab M-x { \
+    confirm-before \
+        -p 'CONFIRM Pane Termination' \
+        kill-pane; \
+}
+
+# non-default {{{
+#   X       ->  Force-respawn current pane even if alive
+bind-key -T modTab M-X {
+    respawn-pane -k \
+}
+# }}}
+# }}}
 
 #   q       ->  Briefly display pane indexes.
 bind-key -T modTab M-q display-panes
