@@ -10,7 +10,7 @@ set-option -s exit-empty off
 # do NOT exit server if no attached client
 set-option -s exit-unattached off
 
-set-option -sgu terminal-override
+set-option -sgu terminal-overrides
 set-option -sga terminal-overrides ',*:XT'
 set-option -sga terminal-overrides ',*:Ms=\E]52;%p1%s;%p2%s\007'
 set-option -sga terminal-overrides ',*:Cs=\E]12;%p1%s\007:Cr=\E]112\007'
