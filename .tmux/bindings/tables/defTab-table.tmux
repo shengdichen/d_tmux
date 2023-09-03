@@ -226,3 +226,4 @@ bind-key -T defTab M-Enter refresh-client
 
 # }}}
 
+# vim: filetype=tmux foldmethod=marker

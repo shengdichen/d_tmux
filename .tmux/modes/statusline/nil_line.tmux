@@ -245,3 +245,4 @@ set-option -g status off
 # }}}
 # }}}
 
+# vim: filetype=tmux foldmethod=marker

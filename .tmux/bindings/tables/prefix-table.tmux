@@ -224,3 +224,4 @@ bind-key -T prefix : command-prompt
 
 # }}}
 
+# vim: filetype=tmux foldmethod=marker

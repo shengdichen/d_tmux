@@ -25,3 +25,5 @@ set-option -gw pane-border-status bottom
 #           set-option -u <config>
 #
 #       1.  set to value
+
+# vim: filetype=tmux foldmethod=marker

@@ -64,3 +64,4 @@ source-file ~/.tmux/bindings/tables/modTab-table.tmux
 
 # }}}
 
+# vim: filetype=tmux foldmethod=marker

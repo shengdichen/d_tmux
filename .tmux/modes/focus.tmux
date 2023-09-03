@@ -121,3 +121,4 @@ bg=colour016 \
 #       2.  components of the 2nd row
 #               set components to simulate window components
 
+# vim: filetype=tmux foldmethod=marker
