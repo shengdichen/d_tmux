@@ -214,26 +214,11 @@ bind-key -T modTab M-Q {
 }
 # }}}
 
-# copy-mode {{{
-#   [       ->  Enter copy mode to copy text or view the history.
+# buffer {{{
 bind-key -T modTab M-[ copy-mode
+bind-key -T modTab M-] paste-buffer  # use most-recent buffer
 
-#   ]       ->  Paste the most recently copied buffer of text.
-bind-key -T modTab M-] paste-buffer
-
-#   =       ->  Choose which buffer to paste interactively from a list.
-bind-key -T modTab M-= choose-buffer -Z
-
-#   -       ->  Delete the most recently copied buffer of text.
-bind-key -T modTab M-"-" delete-buffer
-
-#   non-default {{{
-#       #   PageUp  ->  Enter copy mode and scroll one page up.
-#       bind-key -T modTab M-PPage copy-mode -u
-#   }}}
-
-#   #       ->  List all paste buffers.
-bind-key -T modTab M-"#" list-buffers
+bind-key -T modTab M-= choose-buffer
 # }}}
 
 # misc {{{
