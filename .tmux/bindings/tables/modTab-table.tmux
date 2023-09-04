@@ -193,49 +193,27 @@ bind-key -T modTab M-L swap-pane -d -t ":.{right-of}"
 # break pane into a new window after the current one
 bind-key -T modTab M-! {
     command-prompt \
-        -p "New-Window:" \
-        -I "#{window_name}" \
-        "\
-            break-pane -a -n %1\
-        "; \
+        -p "Break to new window:" \
+        -I "#{window_name}_" \
+        "break-pane -a -n %1";
+}
+
+# select (mark) pane
+bind-key -T modTab M-m select-pane -m
+
+# paste pane
+bind-key -T modTab M-M {
+    move-pane -t ":.";
+    select-layout main-vertical;
 }
 # }}}
 
-# non-default {{{
-# SYNOPSIS:
-#   1.  move the marked pane to become the last pane of the current window
-#   2.  stay on the newly "pasted-in" pane
-#   3.  set the layout
-#
-# PHILOSOPHY:
-#   1.  use join-pane OR move-pane
-#   2.  move-pane is preferred as it allows moving in the same window
-#   3.  documentation under |split-window| and |join-pane|
-#
-bind-key -T modTab M-M { \
-    move-pane -t ':.{bottom}'; \
-    select-layout main-vertical; \
+bind-key -T modTab M-q {
+    confirm-before -p "Close pane?" kill-pane;
 }
-# }}}
-
-# killing and respawning {{{
-#   x       ->  Kill the current pane.
-bind-key -T modTab M-x { \
-    confirm-before \
-        -p 'CONFIRM Pane Termination' \
-        kill-pane; \
+bind-key -T modTab M-Q {
+    respawn-pane -k;
 }
-
-# non-default {{{
-#   X       ->  Force-respawn current pane even if alive
-bind-key -T modTab M-X {
-    respawn-pane -k \
-}
-# }}}
-# }}}
-
-#   q       ->  Briefly display pane indexes.
-bind-key -T modTab M-q display-panes
 # }}}
 
 # copy-mode {{{
