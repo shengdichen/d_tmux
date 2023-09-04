@@ -1,65 +1,24 @@
-# |modTab| key-table {{{
-# the modTab (MODified key-TABle) key-table is designed such that it:
-#   1.  incorporates more intuitive keybinds for common commands available in
-#       other contexts such as *Vim and Window Managers
-#   2.  minimizes the keybinds to encourage direct manual input and
-#       memorization of tmux-command instead of using keybinds themselves
-#   3.  preserves the default tmux-bindings as long as the above points are not
-#       violated
-#
-# in this spirit, modTab sees the most modifications in:
-#   1.  cross-pane navigation
-#           ->  hjkl-bindings
-#   2.  quick switch
-#           Alt-Tab!
-
-
-
 # client {{{
-#   d       ->  Detach the current client.
-bind-key -T modTab M-d detach-client
-#   D       ->  Choose a client to detach.
-#       bind-key -T modTab M-D choose-client -Z
-
-# update the client
-#   r       ->  Force redraw of the attached client
-#       bind-key -T modTab M-r refresh-client
-
-#   C-z     ->  Suspend the tmux client.
-
+# misc:
+#   detach-client
+#   choose-client
+#   refresh-client
+#   suspend-client
 # }}}
 
+# session {{{
+bind-key -T modTab M-Tab switch-client -l  # last-active session
 
-# sessions {{{
-# switching
-#   L       ->  Switch the attached client back to the last session.
-#       bind-key -T modTab M-L switch-client -l
-bind-key -T modTab M-Tab switch-client -l
+bind-key -T modTab M-( switch-client -p  # previous session
+bind-key -T modTab M-) switch-client -n  # next session
 
-#   (       ->  Switch the attached client to the previous session.
-#   )       ->  Switch the attached client to the next session.
-bind-key -T modTab M-( switch-client -p
-bind-key -T modTab M-) switch-client -n
-
-#   s       ->  Select a new session for the attached client interactively.
 bind-key -T modTab M-s choose-tree -Zs -O "time"
-
-# renaming
-#   $       ->  Rename the current session
-bind-key -T modTab M-'$' command-prompt -I "#S" "rename-session -- '%%'"
-
 # }}}
 
-
-# windows {{{
-# creating
-#   c       ->  Create a new window.
-# non-default {{{
-#       bind-key -T modTab M-c new-window
-
-#   1.  create new window immediately after the current one
-#   2.  ask for input for window's name before creating, displaying "void" as
-#       the default prompted name
+# window {{{
+# NOTE:
+#   -a: create after current window
+#   -n: name window by prompt-input, with |void| as default
 #   3.  launch vifm to the default directories
 bind-key -T modTab M-c { \
     command-prompt \
@@ -70,42 +29,26 @@ bind-key -T modTab M-c { \
             'vifm ~/ ~/mnt' \
         ";\
 }
-# }}}
 
-# switching
-#   l       ->  Move to the previously selected window.
-#   n       ->  Change to the next window.
-#   p       ->  Change to the previous window.
-# non-default {{{
-#       bind-key -T modTab M-l last-window
-bind-key -T modTab M-'`' select-window -t :'{last}'.
+# navigation {{{
+bind-key -T modTab M-w choose-tree -NZ -O "time"  # choose window interactively
 
-#       bind-key -T modTab M-n next-window
-#       bind-key -T modTab M-p previous-window
-bind-key -T modTab M-n select-window -t :'{next}'.
-bind-key -T modTab M-p select-window -t :'{previous}'.
-# }}}
+bind-key -T modTab M-` select-window -t ":{last}."  # last-active window
 
-#   w       ->  Choose the current window interactively.
-#   '       ->  Prompt for a window index to select.
-bind-key -T modTab M-w choose-tree -NZ -O "time"
-#       bind-key -T modTab M-"'" command-prompt -p index "select-window -t ':%%'"
+bind-key -T modTab M-n select-window -t ":{next}."
+bind-key -T modTab M-p select-window -t ":{previous}."
 
-#   0 to 9  ->  Select windows 0 to 9.
-bind-key -T modTab M-1 select-window -t :=1.
-bind-key -T modTab M-2 select-window -t :=2.
-bind-key -T modTab M-3 select-window -t :=3.
+# 1-0 {{{
+bind-key -T modTab M-1 select-window -t ":=1."
+bind-key -T modTab M-2 select-window -t ":=2."
+bind-key -T modTab M-3 select-window -t ":=3."
 
-# non-default {{{
-# SYNOPSIS:
-#   4   5                           6   7
-#   -2  -3      current_window      +3  +2
-
-#       bind-key -T modTab M-4 select-window -t :=4.
-#       bind-key -T modTab M-5 select-window -t :=5.
-#       bind-key -T modTab M-6 select-window -t :=6.
-#       bind-key -T modTab M-7 select-window -t :=7.
-
+# 4-7 {{{
+# NOTE:
+#   4 := current-2
+#   5 := current-3
+#   6 := current+3
+#   7 := current+2
 bind-key -T modTab M-4 { \
     run-shell \
         "
@@ -143,14 +86,11 @@ bind-key -T modTab M-7 { \
 }
 # }}}
 
-# non-default binding {{{
-#       bind-key -T modTab M-8 select-window -t :=8.
-#       bind-key -T modTab M-9 select-window -t :=9.
-#       bind-key -T modTab M-0 select-window -t :=0.
-
-# backwards-navigation
-#       bind-key -T modTab M-0 select-window -t :'{end}'.
-#
+# 8-0 {{{
+# NOTE:
+#   0 := end
+#   9 := end-1
+#   8 := end-2
 bind-key -T modTab M-0 { \
     run-shell \
         "
@@ -178,149 +118,80 @@ bind-key -T modTab M-8 { \
         "; \
 }
 # }}}
-
-
-#   M-n     ->  Move to the next window with a bell or activity marker.
-#   M-p     ->  Move to the previous window with a bell or activity marker.
-
-
-# renaming and killing
-#   ,       ->  Rename the current window.
-bind-key -T modTab M-, command-prompt -I "#W" "rename-window -- '%%'"
-
-#   &       ->  Kill the current window.
-bind-key -T modTab M-& confirm-before -p "\
-Confirm Action: Window Termination" kill-window
-
-
-# misc
-#   .       ->  Prompt for an index to move the current window.
-#       bind-key -T modTab M-. command-prompt "move-window -t '%%'"
-
-#   f       ->  Prompt to search for text in open windows.
-#       bind-key -T modTab M-f command-prompt "find-window -Z -- '%%'"
-
-#   i       ->  Display some information about the current window.
-bind-key -T modTab M-i display-message
-
-
-
-# non-default bindings {{{
-# inner-session displacement of the current window
-bind-key -T modTab M-N swap-window -d -t :'{next}'.
-bind-key -T modTab M-P swap-window -d -t :'{previous}'.
 # }}}
 
-# cross-session displacement of the current window
-#       move-window -t <my_session>:<window_number>
-#
-# create a copy of the current window (in any session)
-#       link-window -t <my_session>:
-# closing any copy of the window will close all copies of it, thus, undoing
-# linking is required to close one particular copy
-#       unlink-window -t <my_session>:<my_window>
+# misc:
+#   command-prompt "find-window -Z -- '%%'"
 # }}}
 
+bind-key -T modTab M-q {
+    confirm-before -p "Kill window?" kill-window;
+}
 
-# panes {{{
-# switching
-#   ;       ->  Move to the previously active pane.
-bind-key -T modTab M-';' select-pane -Z -t :.'{last}'
+# displacement {{{
+# inner-session displacement
+bind-key -T modTab M-N swap-window -d -t ":{next}."
+bind-key -T modTab M-P swap-window -d -t ":{previous}."
 
-#   o       ->  Select the next pane in the current window.
-bind-key -T modTab M-o select-pane -t :.'{next}'
-
-#   Up, Down, Left, Right
-#           ->  Change to the pane above, below, to the left, or to the right
-#               of the current pane.
-#       bind-key -r -T modTab M-Up select-pane -U
-#       bind-key -r -T modTab M-Down select-pane -D
-#       bind-key -r -T modTab M-Left select-pane -L
-#       bind-key -r -T modTab M-Right select-pane -R
+# available commands:
+#   1. moving
+#   a. command-prompt "move-window -t '%%'"
+#   -> prompt for index for moving current window
+#   b. move-window -t <my_session>:<window_number>
+#   -> cross-session displacement
 #
-#   -Z := keep the Zoom level of current window
+#   2. linking: (cpp-like) references of windows
+#   a. link-window -t <my_session>:
+#   b. unlink-window -t <my_session>:<my_window>
+# }}}
+# }}}
+
+# pane {{{
+bind-key -T modTab M-";" select-pane -Z -t ":.{last}"
+
+# NOTE:
+#   -Z := maintain zoom-level
 bind-key -r -T modTab M-k select-pane -Z -U
 bind-key -r -T modTab M-j select-pane -Z -D
 bind-key -r -T modTab M-h select-pane -Z -L
 bind-key -r -T modTab M-l select-pane -Z -R
 
-
-# splitting and resizing
-#   z       ->  Toggle zoom state of the current pane.
-bind-key -T modTab M-z 'resize-pane -Z'
-
-#   "       ->  Split the current pane into two, top and bottom.
 bind-key -T modTab M-'"' split-window
-#   %       ->  Split the current pane into two, left and right.
 bind-key -T modTab M-% split-window -h
 
-#   C-Up, C-Down, C-Left, C-Right
-#           ->  Resize the current pane in steps of one cell.
-# non-default binds {{{
+# toggle fullscreen (zoom-level)
+bind-key -T modTab M-z resize-pane -Z
+
+# resize {{{
 bind-key -r -T modTab M-Up resize-pane -U
 bind-key -r -T modTab M-Down resize-pane -D
 bind-key -r -T modTab M-Left resize-pane -L
 bind-key -r -T modTab M-Right resize-pane -R
 
-# stretching vertically {{{
-bind-key -T modTab M-PPage resize-pane -y 50%
-bind-key -T modTab M-NPage resize-pane -y 100%
+# NOTE:
+#   -y := vertical stretch
+bind-key -T modTab M-PPage resize-pane -y "50%"
+bind-key -T modTab M-NPage resize-pane -y "100%"
 
-bind-key -T modTab M-Home { \
-    swap-pane -d -t :.2; \
-    resize-pane -y 67% \
+bind-key -T modTab M-Home {
+    swap-pane -d -t ":.2";
+    resize-pane -y "67%";
 }
-bind-key -T modTab M-End { \
-    swap-pane -d -t :.2; \
-    resize-pane -y 100% \
+bind-key -T modTab M-End {
+    swap-pane -d -t ":.2";
+    resize-pane -y "100%";
 }
 # }}}
-# }}}
-#   M-Up, M-Down, M-Left, M-Right
-#           ->  Resize the current pane in steps of five cells.
 
-
-# layout and resizing
-#   M-1 to M-5
-#           ->  Arrange panes in one of the five preset layouts:
-#               even-horizontal, even-vertical, main-horizontal, main-vertical,
-#               or tiled
-#   Space   ->  Arrange the current window in the next preset layout.
-bind-key -T modTab M-Space next-layout
-
-# rotate all panes in the current window
-#   C-o     ->  Rotate the panes in the current window forwards.
-# rotate all panes in the current window counterclockwise
-#   M-o     ->  Rotate the panes in the current window backwards.
-
-#   {       ->  Swap the current pane with the previous pane.
-#   }       ->  Swap the current pane with the next pane.
-bind-key -T modTab M-'{' swap-pane -U
-bind-key -T modTab M-'}' swap-pane -D
-
-# non-default binds {{{
+# displacement {{{
 # -d to stay on the current pane after swapping
-bind-key -T modTab M-H swap-pane -d -t :.'{left-of}'
-bind-key -T modTab M-K swap-pane -d -t :.'{up-of}'
-bind-key -T modTab M-J swap-pane -d -t :.'{down-of}'
-bind-key -T modTab M-L swap-pane -d -t :.'{right-of}'
-# }}}
+bind-key -T modTab M-H swap-pane -d -t ":.{left-of}"
+bind-key -T modTab M-K swap-pane -d -t ":.{up-of}"
+bind-key -T modTab M-J swap-pane -d -t ":.{down-of}"
+bind-key -T modTab M-L swap-pane -d -t ":.{right-of}"
 
-# marking
-#   m       ->  Mark the current pane (see select-pane -m).
-bind-key -T modTab M-m select-pane -m
-#   M       ->  Clear the marked pane.
-
-# misc
-#   !       ->  Break the current pane out of the window.
-# non-default {{{
-#       bind-key -T modTab M-! break-pane
-
-# SYNOPSIS:
-#   1.  break pane to new window inserted after current one
-#   2.  prompt for the new window's name, default to current name
-#
-bind-key -T modTab M-! { \
+# break pane into a new window after the current one
+bind-key -T modTab M-! {
     command-prompt \
         -p "New-Window:" \
         -I "#{window_name}" \
@@ -365,9 +236,7 @@ bind-key -T modTab M-X {
 
 #   q       ->  Briefly display pane indexes.
 bind-key -T modTab M-q display-panes
-
 # }}}
-
 
 # copy-mode {{{
 #   [       ->  Enter copy mode to copy text or view the history.
@@ -380,7 +249,7 @@ bind-key -T modTab M-] paste-buffer
 bind-key -T modTab M-= choose-buffer -Z
 
 #   -       ->  Delete the most recently copied buffer of text.
-bind-key -T modTab M-'-' delete-buffer
+bind-key -T modTab M-"-" delete-buffer
 
 #   non-default {{{
 #       #   PageUp  ->  Enter copy mode and scroll one page up.
@@ -388,42 +257,22 @@ bind-key -T modTab M-'-' delete-buffer
 #   }}}
 
 #   #       ->  List all paste buffers.
-bind-key -T modTab M-'#' list-buffers
-
+bind-key -T modTab M-"#" list-buffers
 # }}}
-
 
 # misc {{{
-#   ?       ->  List all key bindings.
-bind-key -T modTab M-'?' list-keys
+bind-key -T modTab M-: command-prompt
 
-#   t       ->  Show the time.
-#       bind-key -T modTab M-t clock-mode
+bind-key -T modTab M-e {
+    source-file "~/.tmux.conf";
+    display-message "Config reloaded";
+}
+bind-key -T modTab M-E {
+    source-file "~/.tmux/modes/focus.tmux";
+    display-message "Focus-mode";
+}
 
-#   ~       ->  Show previous messages from tmux, if any.
-#       bind-key -T modTab M-'~' show-messages
-
-#   :       ->  Enter the tmux command prompt.
-bind-key -T modTab M-':' command-prompt
-
-# }}}
-
-
-# non-default keybinds {{{
-bind-key -T modTab M-e '\
-source-file ~/.tmux.conf; \
-display-message "[Configuration Reset]"; \
-'
-
-bind-key -T modTab M-E '\
-source-file ~/.tmux/modes/focus.tmux; \
-display-message "[Entered Focus Mode]"; \
-'
-
-# a much easier to hit shortcut for refreshing the client
-bind-key -T modTab M-Enter refresh-client
-# }}}
-
+bind-key -T modTab M-F1 list-keys  # list binds (of all tables)
 # }}}
 
 # vim: filetype=tmux foldmethod=marker
