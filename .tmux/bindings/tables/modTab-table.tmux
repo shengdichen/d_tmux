@@ -119,8 +119,8 @@ bind-key -T modTab M-8 { \
 #   command-prompt "find-window -Z -- '%%'"
 # }}}
 
-bind-key -T modTab M-q {
-    confirm-before -p "Kill window?" kill-window;
+bind-key -T modTab M-C-q {
+    confirm-before -p "Close window?" kill-window;
 }
 
 # displacement {{{
