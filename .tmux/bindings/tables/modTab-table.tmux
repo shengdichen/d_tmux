@@ -142,6 +142,12 @@ bind-key -T modTab M-P swap-window -d -t ":{previous}."
 # }}}
 
 # pane {{{
+bind-key -T modTab M-Enter {
+    command-prompt \
+        -p "Exec:" \
+        "split-window %1";
+}
+
 bind-key -T modTab M-";" select-pane -Z -t ":.{last}"
 
 # NOTE:
@@ -150,8 +156,6 @@ bind-key -r -T modTab M-k select-pane -Z -U
 bind-key -r -T modTab M-j select-pane -Z -D
 bind-key -r -T modTab M-h select-pane -Z -L
 bind-key -r -T modTab M-l select-pane -Z -R
-
-bind-key -T modTab M-Enter split-window
 
 # toggle fullscreen (zoom-level)
 bind-key -T modTab M-z resize-pane -Z
