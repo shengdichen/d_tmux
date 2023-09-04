@@ -20,14 +20,9 @@ bind-key -T modTab M-s choose-tree -Zs -O "time"
 #   -a: create after current window
 #   -n: name window by prompt-input, with |void| as default
 #   3.  launch vifm to the default directories
-bind-key -T modTab M-c { \
-    command-prompt \
-        -I "void" \
-        "new-window \
-            -a \
-            -n %1 \
-            'vifm ~/ ~/mnt' \
-        ";\
+bind-key -T modTab M-S-Enter {
+    command-prompt -I "void" \
+        "new-window -a -n %1 \"vifm ~/xdg ~/mnt\"";
 }
 
 # navigation {{{
@@ -156,8 +151,7 @@ bind-key -r -T modTab M-j select-pane -Z -D
 bind-key -r -T modTab M-h select-pane -Z -L
 bind-key -r -T modTab M-l select-pane -Z -R
 
-bind-key -T modTab M-'"' split-window
-bind-key -T modTab M-% split-window -h
+bind-key -T modTab M-Enter split-window
 
 # toggle fullscreen (zoom-level)
 bind-key -T modTab M-z resize-pane -Z
