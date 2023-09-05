@@ -34,26 +34,20 @@ set-option -gw pane-border-format ' \
 '
 
 # the current pane
-set-option -gw pane-active-border-style '\
-fg=colour255 \
-bg=colour016 \
-bold \
-'
+set-option -gw pane-active-border-style \
+"bg=colour016 fg=colour255 \
+bold"
 
 # all other panes
-set-option -gw pane-border-style '\
-fg=colour242 \
-bg=colour016 \
-'
-# }}}
+set-option -gw pane-border-style \
+"bg=colour016 fg=colour242"
+# }}i}
 
 # non-default modes {{{
 set-option -gw mode-keys vi
-set-option -gw mode-style '\
-fg=colour015 \
-bg=colour237 \
-bold \
-'
+set-option -gw mode-style \
+"bg=colour237 fg=colour015 \
+bold"
 
 set-option -gw clock-mode-colour colour008
 set-option -gw clock-mode-style 12  # AM/PM
