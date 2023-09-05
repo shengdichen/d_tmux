@@ -9,7 +9,7 @@ bind-key -T prefix M-Space send-prefix -2
 
 unbind-key -a -q -T defTab
 
-source-file ~/.tmux/bindings/tables/prefix-table.tmux
+source-file ~/.tmux/bindings/tables/prefix.tmux
 source-file ~/.tmux/bindings/tables/default.tmux
 
 # vim: filetype=tmux foldmethod=marker
