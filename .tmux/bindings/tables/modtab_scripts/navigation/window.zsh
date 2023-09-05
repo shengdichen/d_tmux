@@ -1,8 +1,3 @@
-# absolute window-number {{{
-# SYNOPSIS:
-#   obtain total number of windows in session
-# CORE:
-#   :run-shell "echo #{e|-:7,3} #{e|-:session_windows,1}"
 function n_windows() {
     echo $(tmux display-message -p -F "#{session_windows}")
 }
@@ -10,97 +5,48 @@ function n_windows() {
 function index_current() {
     echo $(tmux display-message -p -F "#{window_index}")
 }
-# }}}
 
-# relative window-number {{{
-# SYNOPSIS:
-#   obtain the relative window number from the first window
-#
-# TODO:
-#   Do we need to care if positive index starts from 0 or 1?
-getForwardsNumber() {
-    first_window=1
-
-    offset=$1
-    ((target_window = first_window + offset))
-
-    echo "$target_window"
+function switch_window() {
+    tmux select-window -t ":=$1."
 }
 
-# SYNOPSIS:
-#   obtain the relative window number from the last window
-#
-# E.g.:
-#   IN: 3
-#   OUT: lastwindow-3
-getBackwardsNumber() {
-    total_windows=$(($(n_windows)))
+# index calculation {{{
+function index_rel_start() {
+    local target="$((1 + $1))"  # 1-indexing for windows
 
-    offset=$1
-    ((target_window = total_windows - offset))
-
-    echo "$target_window"
+    echo "${target}"
 }
 
-# SYNOPSIS:
-#   obtain the window number relative to current
-#
-# SYNTAX:
-#   IN: offset
-#       ->  signed!
-#
-getRelativeWindowNumber() {
-    curr_window=$(($(index_current)))
-    offset=$1
-    ((target_window = curr_window + offset))
+function index_rel_end() {
+    local target="$(("$(n_windows)" - $1))"
 
-    echo "$target_window"
+    echo "${target}"
+}
+
+function index_rel_current() {
+    local target="$(("$(index_current)" + $1))"
+
+    echo "${target}"
 }
 # }}}
 
-# attaching window {{{
-# SYNOPSIS:
-#   switch to given window number
-attachWindows() {
-    # if (absolute number, attach directly)
-    #   else if (+x) attach
-    #   else (-x), attach from end
-    window_to_attach=$1
-    tmux select-window -t "${window_to_attach}"
+
+function main() {
+    case $1 in
+        "start")
+            index=$(index_rel_start "$2")
+            ;;
+        "end")
+            index=$(index_rel_end "$2")
+            ;;
+        "current")
+            index=$(index_rel_current "$2")
+            ;;
+    esac
+
+    switch_window "${index}"
+
+    unfunction n_windows index_current switch_window index_rel_start index_rel_end index_rel_current
 }
-# }}}
-
-# the big func {{{
-# SYNTAX:
-#   1.  argc != 1
-#       ->  navigation relative to current window
-#
-#   2.  argc == 1
-#       i.  argc[1] >= 1
-#           ->  navigation relative to front
-#       ii. argc[1] >= 1
-#           ->  navigation relative to back
-#
-getNumber() {
-    offset=$1
-
-    if [[ "$#" -gt 1 ]]; then
-        target=$(getRelativeWindowNumber "$offset")
-    else
-        if [[ $1 -ge 1 ]]; then
-            target=$(getForwardsNumber "$1")
-        else
-            target=$(getBackwardsNumber $(($1 * -1)))
-        fi
-    fi
-
-    echo "$target"
-}
-
-main() {
-    window_to_attach=$(($(getNumber "$@")))
-    attachWindows "$window_to_attach"
-}
-
 main "$@"
-# }}}
+unfunction main
