@@ -7,9 +7,4 @@ set-option -g key-table default
 bind-key -T prefix C-b send-prefix
 bind-key -T prefix M-Space send-prefix -2
 
-unbind-key -a -q -T defTab
-
-source-file ~/.tmux/conf/bind/table/prefix.tmux
-source-file ~/.tmux/conf/bind/table/default.tmux
-
-# vim: filetype=tmux foldmethod=marker
+# vim: filetype=tmux
