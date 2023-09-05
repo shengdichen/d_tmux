@@ -14,17 +14,25 @@ function switch_window() {
 function index_rel_start() {
     local target="$((1 + $1))"  # 1-indexing for windows
 
-    echo "${target}"
+    local n_wins=$(n_windows)
+    echo $((target > n_wins ? n_wins : target ))
 }
 
 function index_rel_end() {
     local target="$(("$(n_windows)" - $1))"
 
-    echo "${target}"
+    echo $((target < 1 ? 1 : target))
 }
 
 function index_rel_current() {
     local target="$(("$(index_current)" + $1))"
+
+    local n_wins=$(n_windows)
+    if [[ $target -gt  $n_wins ]]; then
+        target=$n_wins
+    elif [[ $target -lt 1 ]]; then
+        target=1
+    fi
 
     echo "${target}"
 }
