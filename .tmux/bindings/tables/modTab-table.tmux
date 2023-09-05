@@ -127,10 +127,10 @@ bind-key -r -T modTab M-j select-pane -Z -D
 bind-key -r -T modTab M-h select-pane -Z -L
 bind-key -r -T modTab M-l select-pane -Z -R
 
+# resize {{{
 # toggle fullscreen (zoom-level)
 bind-key -T modTab M-z resize-pane -Z
 
-# resize {{{
 bind-key -r -T modTab M-Up resize-pane -U
 bind-key -r -T modTab M-Down resize-pane -D
 bind-key -r -T modTab M-Left resize-pane -L
@@ -152,7 +152,7 @@ bind-key -T modTab M-End {
 # }}}
 
 # displacement {{{
-# -d to stay on the current pane after swapping
+# -d := stay on the current pane after swapping
 bind-key -T modTab M-H swap-pane -d -t ":.{left-of}"
 bind-key -T modTab M-K swap-pane -d -t ":.{up-of}"
 bind-key -T modTab M-J swap-pane -d -t ":.{down-of}"
@@ -177,7 +177,8 @@ bind-key -T modTab M-M {
 # }}}
 
 bind-key -T modTab M-q {
-    confirm-before -p "Close pane?" kill-pane;
+    confirm-before -p "Close pane?" \
+        kill-pane;
 }
 bind-key -T modTab M-Q {
     respawn-pane -k;
