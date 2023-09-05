@@ -38,7 +38,6 @@ function index_rel_current() {
 }
 # }}}
 
-
 function main() {
     case $1 in
         "start")
@@ -54,7 +53,9 @@ function main() {
 
     switch_window "${index}"
 
-    unfunction n_windows index_current switch_window index_rel_start index_rel_end index_rel_current
+    unfunction \
+        n_windows index_current switch_window \
+        index_rel_start index_rel_end index_rel_current
 }
 main "$@"
 unfunction main
