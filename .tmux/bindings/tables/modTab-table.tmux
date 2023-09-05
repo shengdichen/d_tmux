@@ -45,39 +45,23 @@ bind-key -T modTab M-3 select-window -t ":=3."
 #   6 := current+3
 #   7 := current+2
 bind-key -T modTab M-4 { \
-    run-shell \
-        "
-            zsh \
-            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
-            -2 1 \
-        "; \
+    run-shell -b "zsh \
+    ~/.tmux/bindings/tables/modtab_scripts/navigation/window.zsh current +2";
 }
 
 bind-key -T modTab M-5 { \
-    run-shell \
-        "
-            zsh \
-            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
-            -3 1 \
-        "; \
+    run-shell -b "zsh \
+    ~/.tmux/bindings/tables/modtab_scripts/navigation/window.zsh current +3";
 }
 
 bind-key -T modTab M-6 { \
-    run-shell \
-        "
-            zsh \
-            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
-            +3 1 \
-        "; \
+    run-shell -b "zsh \
+    ~/.tmux/bindings/tables/modtab_scripts/navigation/window.zsh current -3";
 }
 
 bind-key -T modTab M-7 { \
-    run-shell \
-        "
-            zsh \
-            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
-            +2 1 \
-        "; \
+    run-shell -b "zsh \
+    ~/.tmux/bindings/tables/modtab_scripts/navigation/window.zsh current -2";
 }
 # }}}
 
@@ -87,30 +71,18 @@ bind-key -T modTab M-7 { \
 #   9 := end-1
 #   8 := end-2
 bind-key -T modTab M-0 { \
-    run-shell \
-        "
-            zsh \
-            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
-            -0 \
-        "; \
+    run-shell -b "zsh \
+    ~/.tmux/bindings/tables/modtab_scripts/navigation/window.zsh end 0";
 }
 
 bind-key -T modTab M-9 { \
-    run-shell \
-        "
-            zsh \
-            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
-            -1 \
-        "; \
+    run-shell -b "zsh \
+    ~/.tmux/bindings/tables/modtab_scripts/navigation/window.zsh end 1";
 }
 
 bind-key -T modTab M-8 { \
-    run-shell \
-        "
-            zsh \
-            ~/.tmux/bindings/tables/modtab_scripts/navigation/window.sh \
-            -2 \
-        "; \
+    run-shell -b "zsh \
+    ~/.tmux/bindings/tables/modtab_scripts/navigation/window.zsh end 2";
 }
 # }}}
 # }}}
