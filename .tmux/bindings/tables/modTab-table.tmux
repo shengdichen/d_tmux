@@ -120,8 +120,6 @@ bind-key -T modTab M-Enter {
         "split-window %1";
 }
 
-bind-key -T modTab M-";" select-pane -Z -t ":.{last}"
-
 # NOTE:
 #   -Z := maintain zoom-level
 bind-key -r -T modTab M-k select-pane -Z -U
@@ -195,6 +193,9 @@ bind-key -T modTab M-= choose-buffer
 
 # misc {{{
 bind-key -T modTab M-: command-prompt
+bind-key -T modTab M-";" {
+    command-prompt -p "$SHELL:" "run-shell \"%%\"";
+}
 
 bind-key -T modTab M-e {
     source-file "~/.tmux.conf";
