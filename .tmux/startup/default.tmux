@@ -164,3 +164,6 @@ attach-session -t "=sys:1.2"
 #   -t $<Session_ID>:@<Window_ID>.<PANE_NUMBER>
 
 # }}}
+# }}}
+
+# vim: filetype=tmux foldmethod=marker

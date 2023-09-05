@@ -230,3 +230,4 @@ set -g status-right-length 40
 
 # }}}
 
+# vim: filetype=tmux foldmethod=marker

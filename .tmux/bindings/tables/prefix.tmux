@@ -1,5 +1,3 @@
-# |prefix| key-table {{{
-
 # client {{{
 #   d       ->  Detach the current client.
 bind-key -T prefix d detach-client
@@ -13,9 +11,7 @@ bind-key -T prefix r refresh-client
 
 #   C-z     ->  Suspend the tmux client.
 bind-key -T prefix C-z suspend-client
-
 # }}}
-
 
 # sessions {{{
 # switching
@@ -33,9 +29,7 @@ bind-key -T prefix s choose-tree -Zs -O "time"
 # renaming
 #   $       ->  Rename the current session
 bind-key -T prefix "$" command-prompt -I "#S" "rename-session -- '%%'"
-
 # }}}
-
 
 # windows {{{
 # creating
@@ -75,13 +69,11 @@ bind-key -T prefix M-n next-window -a
 #   M-p     ->  Move to the previous window with a bell or activity marker.
 bind-key -T prefix M-p previous-window -a
 
-
 # renaming and killing
 #   ,       ->  Rename the current window.
 bind-key -T prefix , command-prompt -I "#W" "rename-window -- '%%'"
 #   &       ->  Kill the current window.
 bind-key -T prefix & confirm-before -p "Confirm Action: Window Termination" kill-window
-
 
 # misc
 #   .       ->  Prompt for an index to move the current window.
@@ -92,9 +84,7 @@ bind-key -T prefix f command-prompt "find-window -Z -- '%%'"
 
 #   i       ->  Display some information about the current window.
 bind-key -T prefix i display-message
-
 # }}}
-
 
 # panes {{{
 # switching
@@ -111,7 +101,6 @@ bind-key -r -T prefix Up select-pane -U
 bind-key -r -T prefix Down select-pane -D
 bind-key -r -T prefix Left select-pane -L
 bind-key -r -T prefix Right select-pane -R
-
 
 # splitting and resizing
 #   z       ->  Toggle zoom state of the current pane.
@@ -135,7 +124,6 @@ bind-key -r -T prefix M-Up resize-pane -U 5
 bind-key -r -T prefix M-Down resize-pane -D 5
 bind-key -r -T prefix M-Left resize-pane -L 5
 bind-key -r -T prefix M-Right resize-pane -R 5
-
 
 # layout and resizing
 #   M-1 to M-5
@@ -164,14 +152,12 @@ bind-key -T prefix M-o rotate-window -D
 bind-key -T prefix '{' swap-pane -U
 bind-key -T prefix '}' swap-pane -D
 
-
 # marking
 #   m       ->  Mark the current pane (see select-pane -m).
 bind-key -T prefix m select-pane -m
 
 #   M       ->  Clear the marked pane.
 bind-key -T prefix M select-pane -M
-
 
 # misc
 #   !       ->  Break the current pane out of the window.
@@ -182,9 +168,7 @@ bind-key -T prefix x confirm-before -p "CONFIRM Pane Termination" kill-pane
 
 #   q       ->  Briefly display pane indexes.
 bind-key -T prefix q display-panes
-
 # }}}
-
 
 # copy-mode {{{
 #   [       ->  Enter copy mode to copy text or view the history.
@@ -203,9 +187,7 @@ bind-key -T prefix PPage copy-mode -u
 
 #   #       ->  List all paste buffers.
 bind-key -T prefix '#' list-buffers
-
 # }}}
-
 
 # misc {{{
 #   ?       ->  List all key bindings.
@@ -219,8 +201,6 @@ bind-key -T prefix '~' show-messages
 
 #   :       ->  Enter the tmux command prompt.
 bind-key -T prefix : command-prompt
-
 # }}}
 
-# }}}
-
+# vim: filetype=tmux foldmethod=marker

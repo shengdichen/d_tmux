@@ -225,8 +225,4 @@ set-option -g status-format[1] '\
 
 # }}}
 
-
-
-
-
-
+# vim: filetype=tmux foldmethod=marker
