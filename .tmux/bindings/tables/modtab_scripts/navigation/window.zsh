@@ -3,14 +3,12 @@
 #   obtain total number of windows in session
 # CORE:
 #   :run-shell "echo #{e|-:7,3} #{e|-:session_windows,1}"
-getTotalNWindows() {
-    total_windows=$(tmux run-shell "echo #{session_windows}")
-    echo "$total_windows"
+function n_windows() {
+    echo $(tmux display-message -p -F "#{session_windows}")
 }
 
-getCurrWindow() {
-    curr_window=$(tmux run-shell "echo #{window_index}")
-    echo "$curr_window"
+function index_current() {
+    echo $(tmux display-message -p -F "#{window_index}")
 }
 # }}}
 
@@ -36,7 +34,7 @@ getForwardsNumber() {
 #   IN: 3
 #   OUT: lastwindow-3
 getBackwardsNumber() {
-    total_windows=$(($(getTotalNWindows)))
+    total_windows=$(($(n_windows)))
 
     offset=$1
     ((target_window = total_windows - offset))
@@ -52,7 +50,7 @@ getBackwardsNumber() {
 #       ->  signed!
 #
 getRelativeWindowNumber() {
-    curr_window=$(($(getCurrWindow)))
+    curr_window=$(($(index_current)))
     offset=$1
     ((target_window = curr_window + offset))
 
