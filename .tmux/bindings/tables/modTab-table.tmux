@@ -1,3 +1,11 @@
+# NOTE:
+#   1. -a
+#   unset all binds of the key-table
+#   2.  -q
+#   fail silently: suppress warning when starting server, as these non-default
+#   key-tables do not yet exist
+unbind-key -a -q -T modTab
+
 # client {{{
 # misc:
 #   detach-client

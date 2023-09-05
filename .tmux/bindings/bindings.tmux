@@ -7,15 +7,7 @@ set-option -g key-table modTab
 bind-key -T prefix C-b send-prefix
 bind-key -T prefix M-Space send-prefix -2
 
-# reset key-tables
-# NOTE:
-#   1. -a
-#   unset all binds of the key-table
-#   2.  -q
-#   fail silently: suppress warning when starting server, as these non-default
-#   key-tables do not yet exist
 unbind-key -a -q -T defTab
-unbind-key -a -q -T modTab
 
 source-file ~/.tmux/bindings/tables/prefix-table.tmux
 source-file ~/.tmux/bindings/tables/defTab-table.tmux
