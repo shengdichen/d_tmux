@@ -35,12 +35,11 @@ set-option -gw pane-border-format ' \
 
 # the current pane
 set-option -gw pane-active-border-style \
-"bg=colour016 fg=colour255 \
-bold"
+"bg=terminal fg=terminal"
 
 # all other panes
 set-option -gw pane-border-style \
-"bg=colour016 fg=colour242"
+"bg=colour008 fg=terminal"
 # }}i}
 
 # non-default modes {{{

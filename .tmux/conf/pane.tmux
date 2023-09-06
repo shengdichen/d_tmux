@@ -1,10 +1,10 @@
 # the active pane
 set-option -gw window-active-style \
-"bg=colour016 fg=#ede3f7"
+"bg=terminal fg=terminal"
 
 # all inactive panes
 set-option -gw window-style \
-"bg=colour237 fg=colour239"
+"bg=colour008 fg=terminal"
 
 # do NOT auto-rename window
 set-option -gw allow-rename off
