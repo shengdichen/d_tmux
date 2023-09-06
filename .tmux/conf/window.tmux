@@ -17,8 +17,6 @@ set-option -gw monitor-bell on
 set-option -gw monitor-silence 0  # do NOT monitor window-silence
 
 # pane-info {{{
-set-option -gw pane-border-status off
-
 set-option -gw pane-border-format ' \
 #{\
 ?pane_dead,\
