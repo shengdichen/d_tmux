@@ -54,22 +54,22 @@ bind-key -T default M-3 select-window -t ":=3."
 #   7 := current+2
 bind-key -T default M-4 { \
     run-shell -b "zsh \
-    ~/.tmux/script/window.zsh current +2";
+    ~/.config/tmux/script/window.zsh current +2";
 }
 
 bind-key -T default M-5 { \
     run-shell -b "zsh \
-    ~/.tmux/script/window.zsh current +3";
+    ~/.config/tmux/script/window.zsh current +3";
 }
 
 bind-key -T default M-6 { \
     run-shell -b "zsh \
-    ~/.tmux/script/window.zsh current -3";
+    ~/.config/tmux/script/window.zsh current -3";
 }
 
 bind-key -T default M-7 { \
     run-shell -b "zsh \
-    ~/.tmux/script/window.zsh current -2";
+    ~/.config/tmux/script/window.zsh current -2";
 }
 # }}}
 
@@ -80,17 +80,17 @@ bind-key -T default M-7 { \
 #   8 := end-2
 bind-key -T default M-0 { \
     run-shell -b "zsh \
-    ~/.tmux/script/window.zsh end 0";
+    ~/.config/tmux/script/window.zsh end 0";
 }
 
 bind-key -T default M-9 { \
     run-shell -b "zsh \
-    ~/.tmux/script/window.zsh end 1";
+    ~/.config/tmux/script/window.zsh end 1";
 }
 
 bind-key -T default M-8 { \
     run-shell -b "zsh \
-    ~/.tmux/script/window.zsh end 2";
+    ~/.config/tmux/script/window.zsh end 2";
 }
 # }}}
 # }}}
@@ -207,11 +207,11 @@ bind-key -T default M-";" {
 }
 
 bind-key -T default M-e {
-    source-file "~/.tmux.conf";
+    source-file "~/.config/tmux/tmux.conf";
     display-message "Config reloaded";
 }
 bind-key -T default M-E {
-    source-file "~/.tmux/script/mode/focus.tmux"
+    source-file "~/.config/tmux/script/mode/focus.tmux"
     display-message "Focus-mode";
 }
 
