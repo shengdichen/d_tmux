@@ -45,8 +45,7 @@ set-option -gw pane-border-style \
 # non-default modes {{{
 set-option -gw mode-keys vi
 set-option -gw mode-style \
-"bg=colour237 fg=colour015 \
-bold"
+"bg=terminal fg=terminal bold reverse"
 
 set-option -gw clock-mode-colour colour008
 set-option -gw clock-mode-style 12  # AM/PM
