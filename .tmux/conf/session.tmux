@@ -57,15 +57,11 @@ set-option -g display-panes-active-colour colour253
 set-option -g display-panes-colour colour243
 set-option -g display-panes-time 750
 
-set-option -g message-command-style "\
-bold italics \
-fg=colour009 bg=colour255 \
-"
+set-option -g message-command-style \
+"bg=terminal fg=terminal bold italics"
 
-set-option -g message-style '\
-bold italics \
-fg=colour255 bg=colour016 \
-'
+set-option -g message-style \
+"bg=terminal fg=terminal bold italics"
 # }}}
 
 set-option -g status-keys vi  # in status-line
