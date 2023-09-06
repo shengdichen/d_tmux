@@ -1,11 +1,15 @@
 # creation {{{
-# session {{{
 # NOTE:
-#   -d: do not attach after creation
-#   -s: name of session
-#   -n: name of first-window
+#   -d: do not attach
+#   -s: session-name
+#   -n: window-name
+
 new-session -d -s "sys" -n "admin" \
     "vifm ~/xdg/ ~/mnt/"
+split-window -d -t "=sys:1." -h \
+    -c "/"  # -c := cd
+new-window -d -n "home" -t "=sys:2." \
+    "vifm ~/ ~/Dots/"
 
 new-session -d -s "ace" -n "data" \
     "vifm ~/xdg/ ~/mnt/x/Dox/"
@@ -16,30 +20,19 @@ new-session -d -s "ent" -n "ctrl" "\
         -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
         -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
 "
-
-new-session -d -s "xyz" -n "misc" \
-    "vifm ~/xdg/ ~/mnt/"
-# }}}
-
-# window {{{
-# NOTE:
-#   -d: do not attach after creation
-new-window -d -n "home" -t "=sys:2." \
-    "vifm ~/ ~/Dots/"
-
+split-window -d -t "=ent:1." -h \
+    "cmus"
+split-window -d -t "=ent:1." -v \
+    "pulsemixer"
 new-window -d -n "MDA" -t "=ent:2." "\
     vifm ~/xdg/MDA/ ~/xdg/ \
         -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" \
         -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
         -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
 "
-# }}}
 
-# pane {{{
-split-window -d -t "=sys:1." -h -c "/"  # -c := cd
-split-window -d -t "=ent:1." -h "cmus"
-split-window -d -t "=ent:1." -v "pulsemixer"
-# }}}
+new-session -d -s "xyz" -n "misc" \
+    "vifm ~/xdg/ ~/mnt/"
 # }}}
 
 # NOTE:
