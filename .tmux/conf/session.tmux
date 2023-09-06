@@ -37,16 +37,9 @@ set-option -g visual-silence on  # throwaway: |silence| is NOT monitored anyway
 # }}}
 
 # input {{{
-#   key-table key-table
-#   Set the default key table to key-table instead of root.
-#
-#       set-option -g key-table root
-
 set-option -g mouse off
 
-# bind for |prefix| table
-set-option -g prefix C-b
-set-option -g prefix2 M-Space
+set-option -g prefix M-Space
 
 set-option -g repeat-time 500  # time before prefix-key is required again
 # }}}
