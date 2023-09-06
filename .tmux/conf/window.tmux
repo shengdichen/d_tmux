@@ -40,9 +40,9 @@ set-option -gw pane-active-border-style \
 # all other panes
 set-option -gw pane-border-style \
 "bg=colour008 fg=terminal"
-# }}i}
+# }}}
 
-# non-default modes {{{
+# misc {{{
 set-option -gw mode-keys vi
 set-option -gw mode-style \
 "bg=terminal fg=terminal bold reverse"
