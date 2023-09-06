@@ -211,8 +211,12 @@ bind-key -T default M-e {
     display-message "Config reloaded";
 }
 bind-key -T default M-E {
-    source-file "~/.config/tmux/script/mode/focus.tmux"
-    display-message "Focus-mode";
+    source-file "~/.config/tmux/script/mode/less.tmux"
+    display-message "Less";
+}
+bind-key -T default M-C-e {
+    source-file "~/.config/tmux/script/mode/more.tmux"
+    display-message "More";
 }
 
 bind-key -T default M-F1 list-keys  # list binds (of all tables)
