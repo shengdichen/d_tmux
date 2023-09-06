@@ -4,34 +4,34 @@
 #   -s: session-name
 #   -n: window-name
 
-new-session -d -s "sys" -n "admin" \
+new-session -s "sys" -n "admin" -d \
     "vifm ~/xdg/ ~/mnt/"
-split-window -d -t "=sys:1." -h \
+split-window -h -t "=sys:1." -d \
     -c "/"  # -c := cd
-new-window -d -n "home" -t "=sys:2." \
+new-window -n "home" -t "=sys:2." -d \
     "vifm ~/ ~/Dots/"
 
-new-session -d -s "ace" -n "data" \
+new-session -s "ace" -n "data" -d \
     "vifm ~/xdg/ ~/mnt/x/Dox/"
 
-new-session -d -s "ent" -n "ctrl" "\
+new-session -s "ent" -n "ctrl" -d "\
     vifm ~/xdg/MDA/ ~/xdg/ \
         -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" \
         -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
         -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
 "
-split-window -d -t "=ent:1." -h \
+split-window -h -t "=ent:1." -d \
     "cmus"
-split-window -d -t "=ent:1." -v \
+split-window -v -t "=ent:1." -d \
     "pulsemixer"
-new-window -d -n "MDA" -t "=ent:2." "\
+new-window -n "MDA" -t "=ent:2." -d "\
     vifm ~/xdg/MDA/ ~/xdg/ \
         -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" \
         -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
         -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
 "
 
-new-session -d -s "xyz" -n "misc" \
+new-session -s "xyz" -n "misc" -d \
     "vifm ~/xdg/ ~/mnt/"
 # }}}
 
