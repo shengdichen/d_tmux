@@ -53,8 +53,8 @@ set-option -g repeat-time 500  # time before prefix-key is required again
 
 # style {{{
 # pane-numbers for current window (invoke with |:display-panes|)
-set-option -g display-panes-active-colour colour253
-set-option -g display-panes-colour colour243
+set-option -g display-panes-active-colour colour015
+set-option -g display-panes-colour colour007
 set-option -g display-panes-time 750
 
 set-option -g message-command-style \
