@@ -17,8 +17,6 @@ set-option -gw monitor-bell on
 set-option -gw monitor-silence 0  # do NOT monitor window-silence
 
 # pane-info {{{
-set-option -gw pane-border-status off
-
 set-option -gw pane-border-format ' \
 #{\
 ?pane_dead,\
@@ -34,26 +32,18 @@ set-option -gw pane-border-format ' \
 '
 
 # the current pane
-set-option -gw pane-active-border-style '\
-fg=colour255 \
-bg=colour016 \
-bold \
-'
+set-option -gw pane-active-border-style \
+"bg=terminal fg=terminal"
 
 # all other panes
-set-option -gw pane-border-style '\
-fg=colour242 \
-bg=colour016 \
-'
+set-option -gw pane-border-style \
+"bg=colour008 fg=terminal"
 # }}}
 
-# non-default modes {{{
+# misc {{{
 set-option -gw mode-keys vi
-set-option -gw mode-style '\
-fg=colour015 \
-bg=colour237 \
-bold \
-'
+set-option -gw mode-style \
+"bg=terminal fg=terminal bold reverse"
 
 set-option -gw clock-mode-colour colour008
 set-option -gw clock-mode-style 12  # AM/PM

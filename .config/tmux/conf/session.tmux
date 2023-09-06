@@ -37,35 +37,24 @@ set-option -g visual-silence on  # throwaway: |silence| is NOT monitored anyway
 # }}}
 
 # input {{{
-#   key-table key-table
-#   Set the default key table to key-table instead of root.
-#
-#       set-option -g key-table root
-
 set-option -g mouse off
 
-# bind for |prefix| table
-set-option -g prefix C-b
-set-option -g prefix2 M-Space
+set-option -g prefix M-Space
 
 set-option -g repeat-time 500  # time before prefix-key is required again
 # }}}
 
 # style {{{
 # pane-numbers for current window (invoke with |:display-panes|)
-set-option -g display-panes-active-colour colour253
-set-option -g display-panes-colour colour243
+set-option -g display-panes-active-colour colour015
+set-option -g display-panes-colour colour007
 set-option -g display-panes-time 750
 
-set-option -g message-command-style '\
-bold italics \
-fg=colour009 bg=colour255 \
-'
+set-option -g message-command-style \
+"bg=terminal fg=terminal bold italics"
 
-set-option -g message-style '\
-bold italics \
-fg=colour255 bg=colour016 \
-'
+set-option -g message-style \
+"bg=terminal fg=terminal bold italics"
 # }}}
 
 set-option -g status-keys vi  # in status-line
