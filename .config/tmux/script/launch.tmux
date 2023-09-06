@@ -30,14 +30,10 @@ new-window -n "MDA" -t "=ent:2." -d "\
         -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
         -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
 "
-
-new-session -s "xyz" -n "misc" -d \
-    "vifm ~/xdg/ ~/mnt/"
 # }}}
 
 # NOTE:
 #   attach in reverse-order
-attach-session -t "=xyz:1.1"
 attach-session -t "=ent:1.1"
 attach-session -t "=ace:1.1"
 attach-session -t "=sys:1.2"
