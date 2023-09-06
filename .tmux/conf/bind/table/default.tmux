@@ -211,7 +211,7 @@ bind-key -T default M-e {
     display-message "Config reloaded";
 }
 bind-key -T default M-E {
-    source-file "~/.tmux/modes/focus.tmux";
+    source-file "~/.tmux/script/mode/focus.tmux"
     display-message "Focus-mode";
 }
 
