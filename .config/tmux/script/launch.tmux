@@ -20,10 +20,10 @@ new-session -s "ent" -n "ctrl" -d "\
         -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
         -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
 "
-split-window -h -t "=ent:1." -d \
-    "cmus"
-split-window -v -t "=ent:1." -d \
+split-window -h -t "=ent:1.+" -d \
     "pulsemixer"
+split-window -v -t "=ent:1.+" -d \
+    "cmus"
 new-window -n "MDA" -t "=ent:2." -d "\
     vifm ~/xdg/MDA/ ~/xdg/ \
         -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" \
