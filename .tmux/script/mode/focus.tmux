@@ -1,4 +1,4 @@
-source-file ~/.tmux/conf/statusline/nil_line.tmux
+source-file ~/.tmux/conf/statusline/nil.tmux
 
 
 

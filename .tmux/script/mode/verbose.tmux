@@ -1,4 +1,4 @@
-source-file ~/.tmux/modes/statusline/two_line.tmux
+source-file ~/.tmux/modes/statusline/two.tmux
 
 
 
