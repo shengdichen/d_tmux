@@ -2,6 +2,7 @@ set-option -s default-terminal "tmux-256color"
 
 # as recommended by neovim
 set-option -s escape-time 300
+set-option -s focus-events on
 
 # do NOT exit server if no active session; instead, force with:
 #   :kill-server
