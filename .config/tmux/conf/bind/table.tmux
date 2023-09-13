@@ -53,22 +53,22 @@ bind-key -T default M-3 select-window -t ":=3."
 #   6 := current+3
 #   7 := current+2
 bind-key -T default M-4 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +2";
 }
 
 bind-key -T default M-5 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +3";
 }
 
 bind-key -T default M-6 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -3";
 }
 
 bind-key -T default M-7 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -2";
 }
 # }}}
@@ -79,17 +79,17 @@ bind-key -T default M-7 { \
 #   9 := end-1
 #   8 := end-2
 bind-key -T default M-0 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 0";
 }
 
 bind-key -T default M-9 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 1";
 }
 
 bind-key -T default M-8 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 2";
 }
 # }}}
@@ -203,7 +203,7 @@ bind-key -T default M-= choose-buffer
 # misc {{{
 bind-key -T default M-: command-prompt
 bind-key -T default M-";" {
-    command-prompt -p "$SHELL:" "run-shell \"%%\"";
+    command-prompt -p "${SHELL}:" "run-shell \"%%\"";
 }
 
 bind-key -T default M-e {
