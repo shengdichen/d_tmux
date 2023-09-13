@@ -37,7 +37,7 @@ set-option -gw pane-active-border-style \
 
 # all other panes
 set-option -gw pane-border-style \
-"bg=colour008 fg=terminal"
+"bg=colour008 fg=colour007"
 # }}}
 
 # misc {{{
