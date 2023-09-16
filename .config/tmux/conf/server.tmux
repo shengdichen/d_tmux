@@ -1,4 +1,4 @@
-set-option -s default-terminal "tmux-256color"
+set-option -s default-terminal "xterm-256color"
 
 # as recommended by neovim
 set-option -s escape-time 300
