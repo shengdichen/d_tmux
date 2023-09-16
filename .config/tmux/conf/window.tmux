@@ -18,24 +18,28 @@ set-option -g -w monitor-silence 0  # do NOT monitor window-silence
 
 # pane-info {{{
 set-option -g -w pane-border-format ""
+
 # LHS
-set-option -g -w -a pane-border-format \
-" \
+set-option -g -w -a pane-border-format " "  # padding
+set-option -g -w -a pane-border-format "\
 #{pane_synchronized,#[fg=colour001][sync] ,}#[default]\
 #{host}:#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
 "
+set-option -g -w -a pane-border-format " "  # padding
+
 # RHS
-set-option -g -w -a pane-border-format \
-"#[default] #[align=right] \
+set-option -g -w -a pane-border-format "#[align=right]"
+set-option -g -w -a pane-border-format "\
 #{\
 ?pane_dead,\
-#[fg=colour002][###{pane_index}]_EXIT@#{pane_dead_status},\
-[###{pane_index}>#{pane_tty}]_#{pane_title}\
-} "
+#[reverse] [###{pane_index}]_EXIT@#{pane_dead_status} #[default],\
+ [###{pane_index}>#{pane_tty}]_#{pane_title} \
+}\
+"
 
 # the current pane
 set-option -g -w pane-active-border-style \
-"bg=terminal fg=terminal"
+"bg=terminal fg=colour007"
 
 # all other panes
 set-option -g -w pane-border-style \
