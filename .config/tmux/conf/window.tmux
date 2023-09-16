@@ -21,17 +21,17 @@ set-option -g -w pane-border-format ""
 # LHS
 set-option -g -w -a pane-border-format \
 " \
+#{pane_synchronized,#[fg=colour001][sync] ,}#[default]\
+#{host}:#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
+"
+# RHS
+set-option -g -w -a pane-border-format \
+"#[default] #[align=right] \
 #{\
 ?pane_dead,\
 #[fg=colour002][###{pane_index}]_EXIT@#{pane_dead_status},\
 [###{pane_index}>#{pane_tty}]_#{pane_title}\
-}"
-# RHS
-set-option -g -w -a pane-border-format \
-"#[default] #[align=right] \
-#{pane_synchronized,#[fg=colour001][sync] ,}#[default]\
-#{host}:#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
- "
+} "
 
 # the current pane
 set-option -g -w pane-active-border-style \
