@@ -17,19 +17,21 @@ set-option -g -w monitor-bell on
 set-option -g -w monitor-silence 0  # do NOT monitor window-silence
 
 # pane-info {{{
-set-option -g -w pane-border-format ' \
+set-option -g -w pane-border-format ""
+# LHS
+set-option -g -w -a pane-border-format \
+" \
 #{\
 ?pane_dead,\
-#[fg=colour001 bg=colour007 bold][###{pane_index}]_EXIT@#{pane_dead_status},\
+#[fg=colour002][###{pane_index}]_EXIT@#{pane_dead_status},\
 [###{pane_index}>#{pane_tty}]_#{pane_title}\
-}\
-#[default] \
-\
-#[align=right] \
+}"
+# RHS
+set-option -g -w -a pane-border-format \
+"#[default] #[align=right] \
 #{pane_synchronized,#[fg=colour001][sync] ,}#[default]\
-#{host}:#{=/-19/#{l:/}.../:pane_current_path}/ \
-~> #{pane_current_command} \
-'
+#{host}:#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
+ "
 
 # the current pane
 set-option -g -w pane-active-border-style \
