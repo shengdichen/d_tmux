@@ -33,7 +33,7 @@ set-option -g -w -a pane-border-format "\
 #{\
 ?pane_dead,\
 #[reverse] [###{pane_index}]_EXIT@#{pane_dead_status} #[default],\
- [###{pane_index}>#{pane_tty}]_#{pane_title} \
+ [###{pane_index}#{?#{!=:#{pane_title},#{host}},#{pane_title},}] \
 }\
 "
 
