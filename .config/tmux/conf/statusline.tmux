@@ -20,7 +20,7 @@ set-option -g -w -a window-status-format \
 set-option -g -w -a window-status-format " "  # padding
 
 set-option -g -w window-status-style \
-"bg=terminal fg=colour007"
+"bg=terminal fg=colour007 nobold"
 
 set-option -g -w window-status-activity-style \
 "bg=terminal fg=colour006"
