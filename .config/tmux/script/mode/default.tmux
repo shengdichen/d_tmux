@@ -6,7 +6,7 @@ set-option -g -a status-format[0] \
 #[bg=terminal fg=colour007]/ #{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},} /\
 ,\
 / \
-#[bg=terminal fg=terminal bold]#{session_name}:#{window_index} #{=/-15/[*]:window_name},#{window_flags}\
+#[bg=terminal fg=terminal bold]#{session_name}:#{=/-15/[*]:window_name}.#{pane_index}\
 #[bg=terminal fg=colour007 nobold] /\
 }"
 
