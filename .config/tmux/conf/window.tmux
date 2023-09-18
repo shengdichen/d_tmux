@@ -32,8 +32,8 @@ set-option -g -w -a pane-border-format "#[align=right]"
 set-option -g -w -a pane-border-format "\
 #{\
 ?pane_dead,\
-#[reverse] [###{pane_index}]_EXIT@#{pane_dead_status} #[default],\
- [###{pane_index}#{?#{!=:#{pane_title},#{host}},#{pane_title},}] \
+#[reverse] [###{pane_index/#{window_panes}}]_EXIT@#{pane_dead_status} #[default],\
+ [###{pane_index}/#{window_panes}#{?#{!=:#{pane_title},#{host}},#{pane_title},}] \
 }\
 "
 
