@@ -6,10 +6,10 @@ set-option -g -a status-format[0] \
 set-option -g -a status-format[0] "  >"
 set-option -g -a status-format[0] \
 "#{W:\
-/#[#{E:window-status-style}]#{E:window-status-format}/\
+/ #[bg=terminal fg=colour007]#{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},}#[default] /\
 ,\
-/#[#{E:window-status-current-style}]#{E:window-status-current-format}#[default]/\
-}#[default]"
+/ #[bg=terminal fg=terminal bold][#{=/-15/[*]:window_name},#{window_flags}]#[default] /\
+}"
 
 set-option -g -a status-format[0] "#[align=right]"
 set-option -g -a status-format[0] "#{client_tty}"
