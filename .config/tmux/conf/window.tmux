@@ -23,7 +23,7 @@ set-option -g -w pane-border-format ""
 set-option -g -w -a pane-border-format " "  # padding
 set-option -g -w -a pane-border-format "\
 #{pane_synchronized,#[fg=colour001][sync] ,}#[default]\
-#{host}:#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
+#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
 "
 set-option -g -w -a pane-border-format " "  # padding
 
