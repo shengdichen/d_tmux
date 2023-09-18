@@ -35,7 +35,7 @@ set-option -gw window-status-separator "|"
 set-option -g status-justify centre
 
 set-option -g status-style \
-"bg=terminal fg=terminal"
+"bg=terminal fg=terminal nobold"
 
 # do NOT auto-redraw
 set-option -g status-interval 0
