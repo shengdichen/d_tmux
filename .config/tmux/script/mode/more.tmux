@@ -4,7 +4,7 @@ set-option -g -a status-format[0] "#[align=left]"
 set-option -g -a status-format[0] "#{host}"
 set-option -g -a status-format[0] "#[bg=terminal fg=colour007]:#[default] "
 set-option -g -a status-format[0] \
-"#{W:\
+"#[bg=terminal fg=colour007]#{W:\
 #[bg=terminal fg=colour007]/ #{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},} /\
 ,\
 / \
@@ -32,6 +32,6 @@ set-option -g status on
 set-option -g status-position bottom
 # }}}
 
-set-option -gw pane-border-status bottom
+set-option -gw pane-border-status top
 
 # vim: filetype=tmux foldmethod=marker
