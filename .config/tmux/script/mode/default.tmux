@@ -1,9 +1,13 @@
 # status-line {{{
+set-option -g status on
+set-option -g status-position bottom
+
+# component {{{
 set-option -g status-format[0] ""
 
 set-option -g -a status-format[0] "#[align=absolute-centre] "
 
-# all current windows
+# all windows
 set-option -g -a status-format[0] "#[#{E:window-status-style}]"\
 "#{W:\
 #[#{E:window-status-style}]/ #{?window_last_flag,-,}#{=/-9[*]:window_name} /\
@@ -19,9 +23,7 @@ set-option -g -a status-format[0] "#[#{E:window-status-style}]"\
 }"
 
 set-option -g -a status-format[0] "#[#{E:status-style}]"
-
-set-option -g status on
-set-option -g status-position bottom
+# }}}
 # }}}
 
 set-option -gw pane-border-status off
