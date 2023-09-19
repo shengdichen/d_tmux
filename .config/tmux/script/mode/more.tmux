@@ -18,7 +18,8 @@ set-option -g -a status-format[0] "#[#{E:window-status-style}]\
 #[#{E:window-status-style}]/ #{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},} /\
 ,\
 #[#{E:window-status-style}]/ \
-#[#{E:window-status-current-style}]#{=/-15/[*]:window_name},#{window_flags}\
+#[#{E:window-status-current-style}]#{=/-15/[*]:window_name}\
+#{?window_flags,#[#{E:window-status-style}]#,#[#{E:status-style}]#{window_flags},}\
 #[#{E:window-status-style}] /\
 }"
 # }}}

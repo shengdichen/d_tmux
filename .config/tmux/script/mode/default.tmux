@@ -13,12 +13,12 @@ set-option -g -a status-format[0] "#[#{E:window-status-style}]"\
 #[#{E:window-status-style}]/ #{?window_last_flag,-,}#{=/-9[*]:window_name} /\
 ,\
 #[#{E:window-status-style}]/ \
-#[#{E:window-status-current-style}]#{session_name}\
+#[#{E:status-style}]#{session_name}\
 #[#{E:window-status-style}]:\
 #[#{E:window-status-current-style}]#{=/-15/[*]:window_name}\
 #[#{E:window-status-style}].\
-#[#{E:window-status-current-style}]#{pane_index}\
-#[#{E:status-style}]#{?window_zoomed_flag,z,}\
+#[#{E:status-style}]#{pane_index}\
+#[#{E:window-status-style}]#{?window_zoomed_flag,z,}\
 #[#{E:window-status-style}] /\
 }"
 
