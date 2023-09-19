@@ -1,24 +1,12 @@
 # component {{{
 # first line, center {{{
 # the current window
-set-option -g -w window-status-current-format ""
-set-option -g -w -a window-status-current-format " "  # padding
-set-option -g -w -a window-status-current-format \
-"[\
-#{=/-15/[*]:window_name},#{window_flags}\
-]"
-set-option -g -w -a window-status-current-format " "  # padding
-
+set-option -g -w window-status-current-format ""  # specify manually
 set-option -g -w window-status-current-style \
 "bg=terminal fg=terminal bold"
 
 # all inactive windows
-set-option -g -w window-status-format ""
-set-option -g -w -a window-status-format " "  # padding
-set-option -g -w -a window-status-format \
-"#{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},}"
-set-option -g -w -a window-status-format " "  # padding
-
+set-option -g -w window-status-format ""  # specify manually
 set-option -g -w window-status-style \
 "bg=terminal fg=colour007 nobold"
 
