@@ -2,7 +2,7 @@
 #   1. -a
 #   unset all binds of the key-table
 #   2.  -q
-#   fail silently: suppress warning when starting server, as these non-default
+#   fail silently: suppress warning when starting server, as non-default
 #   key-tables do not yet exist
 unbind-key -a -q -T default
 
@@ -53,22 +53,22 @@ bind-key -T default M-3 select-window -t ":=3."
 #   6 := current+3
 #   7 := current+2
 bind-key -T default M-4 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +2";
 }
 
 bind-key -T default M-5 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +3";
 }
 
 bind-key -T default M-6 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -3";
 }
 
 bind-key -T default M-7 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -2";
 }
 # }}}
@@ -79,17 +79,17 @@ bind-key -T default M-7 { \
 #   9 := end-1
 #   8 := end-2
 bind-key -T default M-0 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 0";
 }
 
 bind-key -T default M-9 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 1";
 }
 
 bind-key -T default M-8 { \
-    run-shell -b "zsh \
+    run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 2";
 }
 # }}}
@@ -194,16 +194,22 @@ bind-key -T default M-Q {
 # }}}
 
 # buffer {{{
-bind-key -T default M-[ copy-mode
-bind-key -T default M-] paste-buffer  # use most-recent buffer
+bind-key -T default M-y copy-mode
+bind-key -T default M-u paste-buffer  # use most-recent buffer
 
-bind-key -T default M-= choose-buffer
+bind-key -T copy-mode-vi K {
+    send-key -N 4 k
+}
+bind-key -T copy-mode-vi J {
+    send-key -N 4 j
+}
+unbind-key -T copy-mode-vi q
 # }}}
 
 # misc {{{
 bind-key -T default M-: command-prompt
 bind-key -T default M-";" {
-    command-prompt -p "$SHELL:" "run-shell \"%%\"";
+    command-prompt -p "${SHELL}:" "run-shell \"%%\"";
 }
 
 bind-key -T default M-e {

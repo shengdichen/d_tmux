@@ -1,22 +1,22 @@
 # component {{{
 # first line, center {{{
 # the current window
-set-option -gw window-status-current-format " \
+set-option -g -w window-status-current-format " \
 [#{=/-15/[*]:window_name},#{window_flags}] \
 "
-set-option -gw window-status-current-style \
+set-option -g -w window-status-current-style \
 "bg=terminal fg=terminal bold"
 
 # all inactive windows
-set-option -gw window-status-format " \
+set-option -g -w window-status-format " \
 #{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},} \
 "
-set-option -gw window-status-style \
+set-option -g -w window-status-style \
 "bg=terminal fg=colour007"
 
-set-option -gw window-status-activity-style \
+set-option -g -w window-status-activity-style \
 "bg=terminal fg=colour006"
-set-option -gw window-status-bell-style \
+set-option -g -w window-status-bell-style \
 "bg=terminal fg=colour001"
 # }}}
 
