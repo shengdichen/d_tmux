@@ -23,7 +23,7 @@ set-option -g -w pane-border-format ""
 set-option -g -w -a pane-border-format " "  # padding
 set-option -g -w -a pane-border-format "\
 #{pane_synchronized,#[fg=colour001][sync] ,}#[default]\
-#{host}:#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
+#{=/-19/#{l:/}.../:pane_current_path}/  >#{pane_current_command}\
 "
 set-option -g -w -a pane-border-format " "  # padding
 
@@ -32,8 +32,8 @@ set-option -g -w -a pane-border-format "#[align=right]"
 set-option -g -w -a pane-border-format "\
 #{\
 ?pane_dead,\
-#[reverse] [###{pane_index}]_EXIT@#{pane_dead_status} #[default],\
- [###{pane_index}>#{pane_tty}]_#{pane_title} \
+#[reverse] [###{pane_index/#{window_panes}}]_EXIT@#{pane_dead_status} #[default],\
+ [###{pane_index}/#{window_panes}#{?#{!=:#{pane_title},#{host}},#{pane_title},}] \
 }\
 "
 

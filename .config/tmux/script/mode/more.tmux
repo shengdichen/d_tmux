@@ -1,62 +1,78 @@
 # status-line {{{
+set-option -g status on
+set-option -g status-position bottom
+
 # component {{{
-# first line, extra {{{
-set-option -g status-left '\
-[(#{session_name})->\
-#{?#{==:#{client_key_table},root},\
-\
-#[fg=colour009]Rt,\
-\
-#{?#{==:#{client_key_table},prefix},\
-#[fg=colour005 reverse]Px,\
-#[default]#{client_key_table}\
-}\
-\
-}#[default]\
-] > {#{client_tty}}\
-'
-set -g status-left-length 40
-#   status-left-style style
+set-option -g status-format[0] ""
 
-set -g status-right '\
-Nº(#{?session_many_attached,#[fg=colour001],}#{session_attached}\
-#[default],#{session_windows},#{window_panes})/\
-∑(#{session_id},#{window_id},#{pane_id})\
-'
-set -g status-right-length 40
-#   status-right-style style
+# LHS {{{
+set-option -g -a status-format[0] "#[align=left]"
+
+# host
+set-option -g -a status-format[0] "#[#{E:status-style}]#{host}"
+set-option -g -a status-format[0] "#[#{E:window-status-style}]: "
+
+# all windows
+set-option -g -a status-format[0] "#[#{E:window-status-style}]\
+#{W:\
+#[#{E:window-status-style}]/ #{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},} /\
+,\
+#[#{E:window-status-style}]/ \
+#[#{E:window-status-current-style}]#{=/-15/[*]:window_name}\
+#{?window_flags,#[#{E:window-status-style}]#,#[#{E:status-style}]#{window_flags},}\
+#[#{E:window-status-style}] /\
+}"
 # }}}
 
-# second line {{{
-set-option -g status-format[1] '\
-#[align=centre]\
-#{?client_prefix,\
-\
-[prefixed@#{client_key_table}],\
-\
-#{W:#{?window_active,\
-#[#{E:window-status-current-style}][#{=/-15/[*]:window_name}#,#{window_flags}],\
-#[#{E:window-status-style}]#{=/-9/[*]:window_name}#{?window_flags,#,#{window_flags},}}\
-#[default]#{?window_end_flag,, | }\
-}\
-\
-}\
-'
+# RHS {{{
+set-option -g -a status-format[0] "#[align=right]"
 
-# NOTE: default
-#       set-option -g status-format[1] "\
-#[align=centre]#{P:#{?pane_active,#[reverse],}#{pane_index}\
-[#{pane_width}x#{pane_height}]#[default] }\
+# tty
+set-option -g -a status-format[0] "#[#{E:window-status-style}]>"
+set-option -g -a status-format[0] "#[#{E:status-style}]#{client_tty}"
+set-option -g -a status-format[0] "#[#{E:window-status-style}]  "
+
+set-option -g -a status-format[0] "#[#{E:window-status-style}]("
+# session
+set-option -g -a status-format[0] "#[#{E:window-status-current-style}]#{session_name}"
+set-option -g -a status-format[0] "#{\
+?session_many_attached,\
+#[#{E:status-style}](\
+#[fg=colour001]#{session_attached}\
+#[#{E:status-style}])\
+,\
+}"
+set-option -g -a status-format[0] "#[#{E:window-status-style}]/"
+set-option -g -a status-format[0] "#[#{E:window-status-style}]#{session_id}"
+
+set-option -g -a status-format[0] "#[#{E:window-status-style}], "  # separator
+
+# window
+set-option -g -a status-format[0] "\
+#[#{E:window-status-current-style}]#{window_index}\
+#[#{E:window-status-style}]/\
+#[#{E:status-status-style}]#{session_windows}\
+#[#{E:window-status-style}]/\
+#[#{E:window-status-style}]#{window_id}\
 "
+
+set-option -g -a status-format[0] "#[#{E:window-status-style}], "  # separator
+
+# pane
+set-option -g -a status-format[0] "\
+#[#{E:window-status-current-style}]#{pane_index}\
+#[#{E:window-status-style}]/\
+#[#{E:window-status-style}]#{window_panes}\
+#[#{E:window-status-style}]/\
+#[#{E:window-status-style}]#{pane_id}\
+"
+set-option -g -a status-format[0] "#[#{E:window-status-style}])"
+# }}}
+
+set-option -g -a status-format[0] "#[#{E:status-style}]"
 # }}}
 # }}}
 
-# show two lines
-set-option -g status 2
-
-set-option -g status-position top
-# }}}
-
-set-option -gw pane-border-status bottom
+set-option -gw pane-border-status top
 
 # vim: filetype=tmux foldmethod=marker
