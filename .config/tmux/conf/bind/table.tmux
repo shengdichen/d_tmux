@@ -197,6 +197,10 @@ bind-key -T default M-Q {
 bind-key -T default M-v copy-mode
 bind-key -T default M-u paste-buffer  # use most-recent buffer
 
+unbind-key -T copy-mode-vi v
+bind-key -T copy-mode-vi v {
+    send-keys -X begin-selection
+}
 bind-key -T copy-mode-vi K {
     send-key -N 4 k
 }
@@ -204,6 +208,11 @@ bind-key -T copy-mode-vi J {
     send-key -N 4 j
 }
 unbind-key -T copy-mode-vi q
+
+bind-key -T copy-mode-vi y {
+    send-keys -X copy-pipe-and-cancel
+}
+unbind-key -T copy-mode-vi Enter
 # }}}
 
 # misc {{{
