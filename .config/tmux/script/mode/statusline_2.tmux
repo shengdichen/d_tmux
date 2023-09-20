@@ -14,7 +14,7 @@ set-option -g -a status-format[0] "#[#{E:window-status-style}]: "
 # all windows
 set-option -g -a status-format[0] "#[#{E:window-status-style}]\
 #{W:\
-#[#{E:window-status-style}]/ #{=/-9[*]:window_name}#{?window_flags,#,#{window_flags},} /\
+#[#{E:window-status-style}]/ #{?window_last_flag,-,}#{=/-9[*]:window_name} /\
 ,\
 #[#{E:window-status-style}]/ \
 #[#{E:window-status-current-style}]#{=/-15/[*]:window_name}\
