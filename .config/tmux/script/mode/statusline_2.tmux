@@ -18,7 +18,7 @@ set-option -g -a status-format[0] "#[#{E:window-status-style}]\
 ,\
 #[#{E:window-status-style}]/ \
 #[#{E:window-status-current-style}]#{=/-15/[*]:window_name}\
-#{?window_flags,#[#{E:window-status-style}]#,#[#{E:status-style}]#{window_flags},}\
+#{?window_zoomed_flag,#[#{E:window-status-style}]#,#[#{E:status-style}]z,}\
 #[#{E:window-status-style}] /\
 }"
 # }}}
