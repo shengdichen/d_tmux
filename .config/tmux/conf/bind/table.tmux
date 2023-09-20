@@ -256,7 +256,7 @@ bind-key -T default M-Q {
 # buffer {{{
 bind-key -T default M-v {
     copy-mode;
-    send-keys -X begin-selection;
+    send-keys -X "begin-selection";
 }
 bind-key -T default M-u {
     paste-buffer;  # use most-recent buffer
@@ -264,26 +264,26 @@ bind-key -T default M-u {
 
 unbind-key -T copy-mode-vi v
 bind-key -T copy-mode-vi v {
-    send-keys -X begin-selection;
+    send-keys -X "begin-selection";
 }
 bind-key -T copy-mode-vi K {
-    send-key -N 4 k;
+    send-key -N 4 "k";
 }
 bind-key -T copy-mode-vi J {
-    send-key -N 4 j;
+    send-key -N 4 "j";
 }
 
 unbind-key -T copy-mode-vi C-C
 bind-key -T copy-mode-vi C-C {
-    send-keys -X clear-selection;
+    send-keys -X "clear-selection";
 }
 unbind-key -T copy-mode-vi q
 bind-key -T copy-mode-vi Q {
-    send-keys -X cancel;
+    send-keys -X "cancel";
 }
 
 bind-key -T copy-mode-vi y {
-    send-keys -X copy-pipe-and-cancel;
+    send-keys -X "copy-pipe-and-cancel";
 }
 unbind-key -T copy-mode-vi Enter
 # }}}
