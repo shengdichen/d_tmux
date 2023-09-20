@@ -210,7 +210,15 @@ bind-key -T copy-mode-vi K {
 bind-key -T copy-mode-vi J {
     send-key -N 4 j
 }
+
+unbind-key -T copy-mode-vi C-C
+bind-key -T copy-mode-vi C-C {
+    send-keys -X clear-selection
+}
 unbind-key -T copy-mode-vi q
+bind-key -T copy-mode-vi Q {
+    send-keys -X cancel
+}
 
 bind-key -T copy-mode-vi y {
     send-keys -X copy-pipe-and-cancel
