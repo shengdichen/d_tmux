@@ -194,7 +194,10 @@ bind-key -T default M-Q {
 # }}}
 
 # buffer {{{
-bind-key -T default M-v copy-mode
+bind-key -T default M-v {
+    copy-mode;
+    send-keys -X begin-selection;
+}
 bind-key -T default M-u paste-buffer  # use most-recent buffer
 
 unbind-key -T copy-mode-vi v
