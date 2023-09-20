@@ -74,22 +74,22 @@ bind-key -T default M-3 {
 #   5 := current-3
 #   6 := current+3
 #   7 := current+2
-bind-key -T default M-4 { \
+bind-key -T default M-4 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +2";
 }
 
-bind-key -T default M-5 { \
+bind-key -T default M-5 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +3";
 }
 
-bind-key -T default M-6 { \
+bind-key -T default M-6 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -3";
 }
 
-bind-key -T default M-7 { \
+bind-key -T default M-7 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -2";
 }
@@ -100,17 +100,17 @@ bind-key -T default M-7 { \
 #   0 := end
 #   9 := end-1
 #   8 := end-2
-bind-key -T default M-0 { \
+bind-key -T default M-0 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 0";
 }
 
-bind-key -T default M-9 { \
+bind-key -T default M-9 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 1";
 }
 
-bind-key -T default M-8 { \
+bind-key -T default M-8 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 2";
 }
