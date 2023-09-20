@@ -15,12 +15,20 @@ unbind-key -a -q -T default
 # }}}
 
 # session {{{
-bind-key -T default M-Tab switch-client -l  # last-active session
+bind-key -T default M-Tab {
+    switch-client -l;  # last-active session
+}
 
-bind-key -T default M-( switch-client -p  # previous session
-bind-key -T default M-) switch-client -n  # next session
+bind-key -T default M-( {
+    switch-client -p;  # previous session
+}
+bind-key -T default M-) {
+    switch-client -n;  # next session
+}
 
-bind-key -T default M-s choose-tree -Zs -O "time"
+bind-key -T default M-s {
+    choose-tree -Zs -O "time";
+}
 # }}}
 
 # window {{{
@@ -29,22 +37,37 @@ bind-key -T default M-s choose-tree -Zs -O "time"
 #   -n: name window by prompt-input, with |void| as default
 #   3.  launch vifm to the default directories
 bind-key -T default M-S-Enter {
-    command-prompt -I "void" \
+    command-prompt \
+        -I "void" \
         "new-window -a -n %1 \"vifm ~/xdg ~/mnt\"";
 }
 
 # navigation {{{
-bind-key -T default M-w choose-tree -NZ -O "time"  # choose window interactively
+bind-key -T default M-w {
+    choose-tree -NZ -O "time";  # choose window interactively
+}
 
-bind-key -T default M-` select-window -t ":{last}."  # last-active window
+bind-key -T default M-` {
+    select-window -t ":{last}.";  # last-active window
+}
 
-bind-key -T default M-n select-window -t ":{next}."
-bind-key -T default M-p select-window -t ":{previous}."
+bind-key -T default M-n {
+    select-window -t ":{next}.";
+}
+bind-key -T default M-p {
+    select-window -t ":{previous}.";
+}
 
 # 1-0 {{{
-bind-key -T default M-1 select-window -t ":=1."
-bind-key -T default M-2 select-window -t ":=2."
-bind-key -T default M-3 select-window -t ":=3."
+bind-key -T default M-1 {
+    select-window -t ":=1.";
+}
+bind-key -T default M-2 {
+    select-window -t ":=2.";
+}
+bind-key -T default M-3 {
+    select-window -t ":=3.";
+}
 
 # 4-7 {{{
 # NOTE:
@@ -52,22 +75,22 @@ bind-key -T default M-3 select-window -t ":=3."
 #   5 := current-3
 #   6 := current+3
 #   7 := current+2
-bind-key -T default M-4 { \
+bind-key -T default M-4 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +2";
 }
 
-bind-key -T default M-5 { \
+bind-key -T default M-5 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current +3";
 }
 
-bind-key -T default M-6 { \
+bind-key -T default M-6 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -3";
 }
 
-bind-key -T default M-7 { \
+bind-key -T default M-7 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh current -2";
 }
@@ -78,17 +101,17 @@ bind-key -T default M-7 { \
 #   0 := end
 #   9 := end-1
 #   8 := end-2
-bind-key -T default M-0 { \
+bind-key -T default M-0 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 0";
 }
 
-bind-key -T default M-9 { \
+bind-key -T default M-9 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 1";
 }
 
-bind-key -T default M-8 { \
+bind-key -T default M-8 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/window.zsh end 2";
 }
@@ -100,13 +123,19 @@ bind-key -T default M-8 { \
 # }}}
 
 bind-key -T default M-C-q {
-    confirm-before -p "Close window?" kill-window;
+    confirm-before \
+        -p "Close window?" \
+        "kill-window";
 }
 
 # displacement {{{
 # inner-session displacement
-bind-key -T default M-N swap-window -d -t ":{next}."
-bind-key -T default M-P swap-window -d -t ":{previous}."
+bind-key -T default M-N {
+    swap-window -d -t ":{next}.";
+}
+bind-key -T default M-P {
+    swap-window -d -t ":{previous}.";
+}
 
 # available commands:
 #   1. moving
@@ -130,24 +159,46 @@ bind-key -T default M-Enter {
 
 # NOTE:
 #   -Z := maintain zoom-level
-bind-key -r -T default M-k select-pane -Z -U
-bind-key -r -T default M-j select-pane -Z -D
-bind-key -r -T default M-h select-pane -Z -L
-bind-key -r -T default M-l select-pane -Z -R
+bind-key -r -T default M-k {
+    select-pane -Z -U;
+}
+bind-key -r -T default M-j {
+    select-pane -Z -D;
+}
+bind-key -r -T default M-h {
+    select-pane -Z -L;
+}
+bind-key -r -T default M-l {
+    select-pane -Z -R;
+}
 
 # resize {{{
 # toggle fullscreen (zoom-level)
-bind-key -T default M-z resize-pane -Z
+bind-key -T default M-z {
+    resize-pane -Z;
+}
 
-bind-key -r -T default M-Up resize-pane -U
-bind-key -r -T default M-Down resize-pane -D
-bind-key -r -T default M-Left resize-pane -L
-bind-key -r -T default M-Right resize-pane -R
+bind-key -r -T default M-Up {
+    resize-pane -U;
+}
+bind-key -r -T default M-Down {
+    resize-pane -D;
+}
+bind-key -r -T default M-Left {
+    resize-pane -L;
+}
+bind-key -r -T default M-Right {
+    resize-pane -R;
+}
 
 # NOTE:
 #   -y := vertical stretch
-bind-key -T default M-PPage resize-pane -y "50%"
-bind-key -T default M-NPage resize-pane -y "100%"
+bind-key -T default M-PPage {
+    resize-pane -y "50%";
+}
+bind-key -T default M-NPage {
+    resize-pane -y "100%";
+}
 
 bind-key -T default M-Home {
     swap-pane -d -t ":.2";
@@ -161,10 +212,18 @@ bind-key -T default M-End {
 
 # displacement {{{
 # -d := stay on the current pane after swapping
-bind-key -T default M-H swap-pane -d -t ":.{left-of}"
-bind-key -T default M-K swap-pane -d -t ":.{up-of}"
-bind-key -T default M-J swap-pane -d -t ":.{down-of}"
-bind-key -T default M-L swap-pane -d -t ":.{right-of}"
+bind-key -T default M-H {
+    swap-pane -d -t ":.{left-of}";
+}
+bind-key -T default M-K {
+    swap-pane -d -t ":.{up-of}";
+}
+bind-key -T default M-J {
+    swap-pane -d -t ":.{down-of}";
+}
+bind-key -T default M-L {
+    swap-pane -d -t ":.{right-of}";
+}
 
 # break pane into a new window after the current one
 bind-key -T default M-! {
@@ -185,8 +244,9 @@ bind-key -T default M-M {
 # }}}
 
 bind-key -T default M-q {
-    confirm-before -p "Close pane?" \
-        kill-pane;
+    confirm-before \
+        -p "Close pane?" \
+        "kill-pane";
 }
 bind-key -T default M-Q {
     respawn-pane -k;
@@ -196,40 +256,64 @@ bind-key -T default M-Q {
 # buffer {{{
 bind-key -T default M-v {
     copy-mode;
-    send-keys -X begin-selection;
+    send-keys -X "begin-selection";
 }
-bind-key -T default M-u paste-buffer  # use most-recent buffer
+bind-key -T default M-V {
+    copy-mode;
+    send-keys -X "begin-selection";
+    send-keys -X "select-line";
+}
+bind-key -T default M-C-V {
+    copy-mode;
+    send-keys -X "begin-selection";
+    send-keys -X "rectangle-toggle";
+}
+
+bind-key -T default M-u {
+    paste-buffer;  # use most-recent buffer
+}
 
 unbind-key -T copy-mode-vi v
 bind-key -T copy-mode-vi v {
-    send-keys -X begin-selection
+    send-keys -X "begin-selection";
 }
+bind-key -T copy-mode-vi V {
+    send-keys -X "select-line";
+}
+bind-key -T copy-mode-vi C-V {
+    send-keys -X "rectangle-toggle"
+}
+
 bind-key -T copy-mode-vi K {
-    send-key -N 4 k
+    send-key -N 4 "k";
 }
 bind-key -T copy-mode-vi J {
-    send-key -N 4 j
+    send-key -N 4 "j";
 }
 
 unbind-key -T copy-mode-vi C-C
 bind-key -T copy-mode-vi C-C {
-    send-keys -X clear-selection
+    send-keys -X "clear-selection";
 }
 unbind-key -T copy-mode-vi q
 bind-key -T copy-mode-vi Q {
-    send-keys -X cancel
+    send-keys -X "cancel";
 }
 
 bind-key -T copy-mode-vi y {
-    send-keys -X copy-pipe-and-cancel
+    send-keys -X "copy-pipe-and-cancel";
 }
 unbind-key -T copy-mode-vi Enter
 # }}}
 
 # misc {{{
-bind-key -T default M-: command-prompt
+bind-key -T default M-: {
+    command-prompt;
+}
 bind-key -T default M-";" {
-    command-prompt -p "${SHELL}:" "run-shell \"%%\"";
+    command-prompt \
+        -p "${SHELL}:" \
+        "run-shell \"%%\"";
 }
 
 bind-key -T default M-e {
@@ -237,15 +321,17 @@ bind-key -T default M-e {
     display-message "Config reloaded";
 }
 bind-key -T default M-E {
-    source-file "~/.config/tmux/script/mode/less.tmux"
+    source-file "~/.config/tmux/script/mode/less.tmux";
     display-message "Less";
 }
 bind-key -T default M-C-e {
-    source-file "~/.config/tmux/script/mode/more.tmux"
+    source-file "~/.config/tmux/script/mode/more.tmux";
     display-message "More";
 }
 
-bind-key -T default M-F1 list-keys  # list binds (of all tables)
+bind-key -T default M-F1 {
+    list-keys;  # list binds (of all tables)
+}
 # }}}
 
 # vim: filetype=tmux foldmethod=marker
