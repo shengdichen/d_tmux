@@ -258,6 +258,17 @@ bind-key -T default M-v {
     copy-mode;
     send-keys -X "begin-selection";
 }
+bind-key -T default M-V {
+    copy-mode;
+    send-keys -X "begin-selection";
+    send-keys -X "select-line";
+}
+bind-key -T default M-C-V {
+    copy-mode;
+    send-keys -X "begin-selection";
+    send-keys -X "rectangle-toggle";
+}
+
 bind-key -T default M-u {
     paste-buffer;  # use most-recent buffer
 }
@@ -266,6 +277,13 @@ unbind-key -T copy-mode-vi v
 bind-key -T copy-mode-vi v {
     send-keys -X "begin-selection";
 }
+bind-key -T copy-mode-vi V {
+    send-keys -X "select-line";
+}
+bind-key -T copy-mode-vi C-V {
+    send-keys -X "rectangle-toggle"
+}
+
 bind-key -T copy-mode-vi K {
     send-key -N 4 "k";
 }
