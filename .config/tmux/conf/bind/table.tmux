@@ -37,7 +37,8 @@ bind-key -T default M-s {
 #   -n: name window by prompt-input, with |void| as default
 #   3.  launch vifm to the default directories
 bind-key -T default M-S-Enter {
-    command-prompt -I "void" \
+    command-prompt \
+        -I "void" \
         "new-window -a -n %1 \"vifm ~/xdg ~/mnt\"";
 }
 
@@ -122,7 +123,9 @@ bind-key -T default M-8 {
 # }}}
 
 bind-key -T default M-C-q {
-    confirm-before -p "Close window?" kill-window;
+    confirm-before \
+        -p "Close window?" \
+        "kill-window";
 }
 
 # displacement {{{
@@ -241,8 +244,9 @@ bind-key -T default M-M {
 # }}}
 
 bind-key -T default M-q {
-    confirm-before -p "Close pane?" \
-        kill-pane;
+    confirm-before \
+        -p "Close pane?" \
+        "kill-pane";
 }
 bind-key -T default M-Q {
     respawn-pane -k;
@@ -289,7 +293,9 @@ bind-key -T default M-: {
     command-prompt;
 }
 bind-key -T default M-";" {
-    command-prompt -p "${SHELL}:" "run-shell \"%%\"";
+    command-prompt \
+        -p "${SHELL}:" \
+        "run-shell \"%%\"";
 }
 
 bind-key -T default M-e {
