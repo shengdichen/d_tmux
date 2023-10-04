@@ -179,16 +179,28 @@ bind-key -T default M-z {
 }
 
 bind-key -r -T default M-Up {
-    resize-pane -U;
+    resize-pane -U "1";
+}
+bind-key -r -T default M-S-Up {
+    resize-pane -U "7";
 }
 bind-key -r -T default M-Down {
-    resize-pane -D;
+    resize-pane -D "1";
+}
+bind-key -r -T default M-S-Down {
+    resize-pane -D "7";
 }
 bind-key -r -T default M-Left {
-    resize-pane -L;
+    resize-pane -L "1";
+}
+bind-key -r -T default M-S-Left {
+    resize-pane -L "7";
 }
 bind-key -r -T default M-Right {
-    resize-pane -R;
+    resize-pane -R "1";
+}
+bind-key -r -T default M-S-Right {
+    resize-pane -R "7";
 }
 
 # NOTE:
