@@ -19,18 +19,25 @@ function move_to_split() {
 }
 
 function even_vertical() {
-    local start="${1}" end="${2}"
+    local start="${1}" end="${2}" full_size="${3}"
 
     if [[ "${start}" -lt "${end}" ]]; then
         n_panes=$((end - start + 1))
-        size_avg=$((100 / n_panes))
-        size_last=$((100 - (n_panes - 1) * size_avg))
+        size_avg=$((full_size / n_panes))
+        size_last=$((full_size - (n_panes - 1) * size_avg))
 
         for pane in $(seq "${start}" $((end - 1))); do
             tmux resize-pane -t ":.${pane}" -y "${size_avg}%"
         done
         tmux resize-pane -t ":.${end}" -y "${size_last}%"
     fi
+}
+
+function main_vertical() {
+    local start="${1}" end="${2}" main_size="${3}"
+
+    tmux resize-pane -t ":.${start}" -y "${main_size}%"
+    even_vertical $((start + 1)) "${end}" $((100 - main_size))
 }
 
 function pipeline() {
