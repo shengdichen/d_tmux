@@ -18,11 +18,36 @@ function move_to_split() {
         -l "${new_size}"
 }
 
+function even_vertical() {
+    local start="${1}" end="${2}"
+
+    if [[ "${start}" -lt "${end}" ]]; then
+        n_panes=$((end - start + 1))
+        size_avg=$((100 / n_panes))
+        size_last=$((100 - (n_panes - 1) * size_avg))
+
+        for pane in $(seq "${start}" $((end - 1))); do
+            tmux resize-pane -t ":.${pane}" -y "${size_avg}%"
+        done
+        tmux resize-pane -t ":.${end}" -y "${size_last}%"
+    fi
+}
+
 function pipeline() {
-    if [[ $(pane_command ":.1") == "vifm" ]]; then
-        layout_default
-        if [[ $(pane_command ":.2") == "zsh" ]]; then
-            move_to_split ":.2" ":.1" "67%"
+    local n_panes
+    n_panes=$(tmux display-message -p -t ":" -F "#{window_panes}")
+
+    if [[ "${n_panes}" -gt 1 ]]; then
+        if [[ $(pane_command ":.1") == "vifm" ]]; then
+            layout_default
+            if [[ $(pane_command ":.2") == "zsh" ]]; then
+                move_to_split ":.2" ":.1" "67%"
+                even_vertical 3 "${n_panes}"
+            else
+                even_vertical 2 "${n_panes}"
+            fi
+        else
+            even_vertical 1 "${n_panes}"
         fi
     fi
 }
