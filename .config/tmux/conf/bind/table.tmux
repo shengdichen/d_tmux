@@ -286,6 +286,14 @@ bind-key -T default M-Q {
 }
 # }}}
 
+# layout {{{
+unbind-key -T prefix M-1
+bind-key -T prefix M-1 {
+    run-shell -b "${SHELL} \
+    ~/.config/tmux/script/layout.sh";
+}
+# }}}
+
 # buffer {{{
 bind-key -T default M-v {
     copy-mode;
