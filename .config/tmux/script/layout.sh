@@ -9,6 +9,17 @@ function size_of() {
     tmux display-message -p -t "${target}" -F "#{${2}_${3}}"
 }
 
+function __squeeze() {
+    local val="${1}" min="${2}" max="${3}"
+    if (( val < min )); then
+        echo "${min}"
+    elif (( val > max )); then
+        echo "${max}"
+    else
+        echo "${val}"
+    fi
+}
+
 function width_lhs_main() {
     local width_min=59 width_max=97
     local width_by_perc
@@ -25,15 +36,17 @@ function width_lhs_main() {
             echo "${width_by_perc}"
             ;;
         "range" )
-            if (( width_by_perc < width_min )); then
-                echo "${width_min}"
-            elif (( width_by_perc > width_max )); then
-                echo "${width_max}"
-            else
-                echo "${width_by_perc}"
-            fi
+            __squeeze "${width_by_perc}" "${width_min}" "${width_max}"
             ;;
     esac
+}
+
+function height_lhs_secondary_main() {
+    local height_total height_primary
+    height_total=$(size_of ":" "window" "height")
+    height_primary=$(__squeeze $(( height_total / 3 )) 20 53)
+
+    echo $(( height_total - height_primary ))
 }
 
 function layout_default() {
@@ -88,7 +101,7 @@ function pipeline() {
         local idx_rhs_start=2
         if [[ $(pane_command ":.2") == "zsh" ]]; then
             idx_rhs_start=3
-            move_to_split ":.2" ":.1" "67%"
+            move_to_split ":.2" ":.1" "$(height_lhs_secondary_main)"
         fi
         case "${mode}" in
             "vert_even" )
