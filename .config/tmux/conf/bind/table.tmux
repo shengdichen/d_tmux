@@ -266,6 +266,14 @@ bind-key -T default M-M {
     move-pane -t ":.";
     select-layout main-vertical;
 }
+
+# split current pane and move (marked) pane there
+bind-key -T default M-[ {
+    join-pane -v -t ":.";  # vertically
+}
+bind-key -T default M-] {
+    join-pane -h -t ":.";  # horizontally
+}
 # }}}
 
 bind-key -T default M-q {
