@@ -3,8 +3,43 @@ function pane_command() {
     tmux display-message -p -t "${target}" -F "#{pane_current_command}"
 }
 
+function size_of() {
+    local target="${1}"
+
+    tmux display-message -p -t "${target}" -F "#{${2}_${3}}"
+}
+
+function width_lhs_main() {
+    local width_min=59 width_max=97
+    local width_by_perc
+    width_by_perc=$(( $(size_of ":" "window" "width") / 3 ))
+
+    case "${1}" in
+        "min" )
+            echo "${width_min}"
+            ;;
+        "max" )
+            echo "${width_max}"
+            ;;
+        "perc" )
+            echo "${width_by_perc}"
+            ;;
+        "range" )
+            if (( width_by_perc < width_min )); then
+                echo "${width_min}"
+            elif (( width_by_perc > width_max )); then
+                echo "${width_max}"
+            else
+                echo "${width_by_perc}"
+            fi
+            ;;
+    esac
+}
+
 function layout_default() {
     tmux select-layout main-vertical
+
+    tmux resize-pane -t ":.1" -x "$(width_lhs_main "range")"
 }
 
 function move_to_split() {
