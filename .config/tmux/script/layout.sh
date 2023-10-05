@@ -22,6 +22,7 @@ function even_vertical() {
     local start="${1}" end="${2}" full_size="${3}"
 
     if (( "${start}" < "${end}" )); then
+        local n_panes size_avg size_last
         n_panes=$((end - start + 1))
         size_avg=$((full_size / n_panes))
         size_last=$((full_size - (n_panes - 1) * size_avg))
