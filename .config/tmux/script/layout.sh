@@ -41,6 +41,20 @@ function width_lhs_main() {
     esac
 }
 
+function set_vifm_miller() {
+    local target=":.${1}" threshold=67
+    if [[ $(pane_command "${target}") == "vifm" ]]; then
+        local width
+        width=$(size_of "${target}" "pane" "width")
+
+        if (( width < threshold )); then
+            tmux send-keys -t "${target}" ":set nomillerview" "Enter"
+        else
+            tmux send-keys -t "${target}" ":set millerview" "Enter"
+        fi
+    fi
+}
+
 function height_lhs_secondary_main() {
     local height_total height_primary
     height_total=$(size_of ":" "window" "height")
@@ -114,6 +128,7 @@ function pipeline() {
                 main_vertical "${idx_rhs_start}" "${n_panes}" 67
                 ;;
         esac
+        set_vifm_miller "1"
     else
         case "${mode}" in
             "vert_even" )
@@ -127,7 +142,14 @@ function pipeline() {
 }
 
 function main() {
-    pipeline "${@}"
+    case "${1}" in
+        "vert_even" | "vert_main" )
+            pipeline "${1}"
+            ;;
+        "vifm_miller" )
+            set_vifm_miller ""
+            ;;
+    esac
 }
 main "${@}"
 unset -f main
