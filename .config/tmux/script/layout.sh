@@ -110,7 +110,17 @@ function pipeline() {
     local n_panes
     n_panes=$(tmux display-message -p -t ":" -F "#{window_panes}")
 
-    if [[ $(pane_command ":.1") == "vifm" ]]; then
+    if (( "${n_panes}" == 2 )); then
+        tmux resize-pane -t ":.1" -x "50%"
+        case "${mode}" in
+            "vert_even" )
+                tmux select-layout even-vertical
+                ;;
+            "vert_main" )
+                layout_default
+                ;;
+        esac
+    elif [[ $(pane_command ":.1") == "vifm" ]]; then
         layout_default
         local idx_rhs_start=2
         if [[ $(pane_command ":.2") == "zsh" ]]; then
@@ -128,17 +138,8 @@ function pipeline() {
                 main_vertical "${idx_rhs_start}" "${n_panes}" 67
                 ;;
         esac
-        set_vifm_miller "1"
-    else
-        case "${mode}" in
-            "vert_even" )
-                tmux select-layout even-vertical
-                ;;
-            "vert_main" )
-                layout_default
-                ;;
-        esac
     fi
+    set_vifm_miller "1"
 }
 
 function main() {
