@@ -44,26 +44,42 @@ function main_vertical() {
 }
 
 function pipeline() {
+    local mode="${1}"
     local n_panes
     n_panes=$(tmux display-message -p -t ":" -F "#{window_panes}")
 
-    if [[ "${n_panes}" -gt 1 ]]; then
-        if [[ $(pane_command ":.1") == "vifm" ]]; then
-            layout_default
-            if [[ $(pane_command ":.2") == "zsh" ]]; then
-                move_to_split ":.2" ":.1" "67%"
-                even_vertical 3 "${n_panes}"
-            else
-                even_vertical 2 "${n_panes}"
-            fi
-        else
-            even_vertical 1 "${n_panes}"
+    if [[ $(pane_command ":.1") == "vifm" ]]; then
+        layout_default
+        local idx_rhs_start=2
+        if [[ $(pane_command ":.2") == "zsh" ]]; then
+            idx_rhs_start=3
+            move_to_split ":.2" ":.1" "67%"
         fi
+        case "${mode}" in
+            "vert_even" )
+                even_vertical "${idx_rhs_start}" "${n_panes}" 100
+                if (( "${n_panes}" == 2 )); then
+                    tmux resize-pane -t ":.1" -x "50%"
+                fi
+                ;;
+            "vert_main" )
+                main_vertical "${idx_rhs_start}" "${n_panes}" 67
+                ;;
+        esac
+    else
+        case "${mode}" in
+            "vert_even" )
+                tmux select-layout even-vertical
+                ;;
+            "vert_main" )
+                layout_default
+                ;;
+        esac
     fi
 }
 
 function main() {
-    pipeline
+    pipeline "${@}"
 }
-main
+main "${@}"
 unset -f main
