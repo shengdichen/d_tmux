@@ -203,6 +203,19 @@ bind-key -r -T default M-S-Right {
     resize-pane -R "7";
 }
 
+bind-key -T default M-S-C-Up {
+    resize-pane -y "1";
+}
+bind-key -r -T default M-S-C-Down {
+    resize-pane -y "100%";
+}
+bind-key -r -T default M-S-C-Left {
+    resize-pane -x "1";
+}
+bind-key -r -T default M-S-C-Right {
+    resize-pane -x "100%";
+}
+
 # NOTE:
 #   -y := vertical stretch
 bind-key -T default M-PPage {
