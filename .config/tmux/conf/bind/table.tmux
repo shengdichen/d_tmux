@@ -175,20 +175,47 @@ bind-key -r -T default M-l {
 # resize {{{
 # toggle fullscreen (zoom-level)
 bind-key -T default M-z {
+    run-shell -b "${SHELL} \
+    ~/.config/tmux/script/layout.sh vifm_miller";
     resize-pane -Z;
 }
 
 bind-key -r -T default M-Up {
-    resize-pane -U;
+    resize-pane -U "1";
+}
+bind-key -r -T default M-S-Up {
+    resize-pane -U "7";
 }
 bind-key -r -T default M-Down {
-    resize-pane -D;
+    resize-pane -D "1";
+}
+bind-key -r -T default M-S-Down {
+    resize-pane -D "7";
 }
 bind-key -r -T default M-Left {
-    resize-pane -L;
+    resize-pane -L "1";
+}
+bind-key -r -T default M-S-Left {
+    resize-pane -L "7";
 }
 bind-key -r -T default M-Right {
-    resize-pane -R;
+    resize-pane -R "1";
+}
+bind-key -r -T default M-S-Right {
+    resize-pane -R "7";
+}
+
+bind-key -T default M-S-C-Up {
+    resize-pane -y "1";
+}
+bind-key -r -T default M-S-C-Down {
+    resize-pane -y "100%";
+}
+bind-key -r -T default M-S-C-Left {
+    resize-pane -x "1";
+}
+bind-key -r -T default M-S-C-Right {
+    resize-pane -x "100%";
 }
 
 # NOTE:
@@ -241,6 +268,14 @@ bind-key -T default M-M {
     move-pane -t ":.";
     select-layout main-vertical;
 }
+
+# split current pane and move (marked) pane there
+bind-key -T default M-[ {
+    join-pane -v -t ":.";  # vertically
+}
+bind-key -T default M-] {
+    join-pane -h -t ":.";  # horizontally
+}
 # }}}
 
 bind-key -T default M-q {
@@ -250,6 +285,19 @@ bind-key -T default M-q {
 }
 bind-key -T default M-Q {
     respawn-pane -k;
+}
+# }}}
+
+# layout {{{
+unbind-key -T prefix M-2
+bind-key -T prefix M-2 {
+    run-shell -b "${SHELL} \
+    ~/.config/tmux/script/layout.sh vert_even";
+}
+unbind-key -T prefix M-4
+bind-key -T prefix M-4 {
+    run-shell -b "${SHELL} \
+    ~/.config/tmux/script/layout.sh vert_main";
 }
 # }}}
 
