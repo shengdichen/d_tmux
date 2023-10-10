@@ -28,7 +28,7 @@ set-option -g -a status-format[0] "#[align=right]"
 
 # tty
 set-option -g -a status-format[0] "#[#{E:window-status-style}]>"
-set-option -g -a status-format[0] "#[#{E:status-style}]#{client_tty}"
+set-option -g -a status-format[0] "#[#{E:status-style}]#{pane_tty}"
 set-option -g -a status-format[0] "#[#{E:window-status-style}]  "
 
 set-option -g -a status-format[0] "#[#{E:window-status-style}]("
