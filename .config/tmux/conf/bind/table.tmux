@@ -228,11 +228,9 @@ bind-key -T default M-NPage {
 }
 
 bind-key -T default M-Home {
-    swap-pane -d -t ":.2";
     resize-pane -y "67%";
 }
 bind-key -T default M-End {
-    swap-pane -d -t ":.2";
     resize-pane -y "100%";
 }
 # }}}
@@ -261,12 +259,13 @@ bind-key -T default M-! {
 }
 
 # select (mark) pane
-bind-key -T default M-m select-pane -m
+bind-key -T default M-m {
+    select-pane -m;
+}
 
 # paste pane
 bind-key -T default M-M {
     move-pane -t ":.";
-    select-layout main-vertical;
 }
 
 # split current pane and move (marked) pane there

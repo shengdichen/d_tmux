@@ -28,7 +28,7 @@ set-option -g -a status-format[0] "#[align=right]"
 
 # tty
 set-option -g -a status-format[0] "#[#{E:window-status-style}]>"
-set-option -g -a status-format[0] "#[#{E:status-style}]#{client_tty}"
+set-option -g -a status-format[0] "#[#{E:status-style}]#{pane_tty}"
 set-option -g -a status-format[0] "#[#{E:window-status-style}]  "
 
 set-option -g -a status-format[0] "#[#{E:window-status-style}]("
@@ -41,7 +41,7 @@ set-option -g -a status-format[0] "#{\
 #[#{E:status-style}])\
 ,\
 }"
-set-option -g -a status-format[0] "#[#{E:window-status-style}]/"
+set-option -g -a status-format[0] "#[#{E:window-status-style}]:"
 set-option -g -a status-format[0] "#[#{E:window-status-style}]#{session_id}"
 
 set-option -g -a status-format[0] "#[#{E:window-status-style}], "  # separator
@@ -51,7 +51,7 @@ set-option -g -a status-format[0] "\
 #[#{E:window-status-current-style}]#{window_index}\
 #[#{E:window-status-style}]/\
 #[#{E:status-status-style}]#{session_windows}\
-#[#{E:window-status-style}]/\
+#[#{E:window-status-style}]:\
 #[#{E:window-status-style}]#{window_id}\
 "
 
@@ -62,7 +62,7 @@ set-option -g -a status-format[0] "\
 #[#{E:window-status-current-style}]#{pane_index}\
 #[#{E:window-status-style}]/\
 #[#{E:window-status-style}]#{window_panes}\
-#[#{E:window-status-style}]/\
+#[#{E:window-status-style}]:\
 #[#{E:window-status-style}]#{pane_id}\
 "
 set-option -g -a status-format[0] "#[#{E:window-status-style}])"
