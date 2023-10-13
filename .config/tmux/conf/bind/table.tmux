@@ -298,6 +298,12 @@ bind-key -T prefix M-4 {
     run-shell -b "${SHELL} \
     ~/.config/tmux/script/layout.sh vert_main";
 }
+
+unbind-key -T prefix M-BSpace
+bind-key -T default M-BSpace {
+    run-shell -b "${SHELL} \
+    ~/.config/tmux/script/open.sh";
+}
 # }}}
 
 # buffer {{{
