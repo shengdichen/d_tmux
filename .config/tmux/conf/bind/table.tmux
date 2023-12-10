@@ -1,7 +1,7 @@
 # NOTE:
 #   1. -a
 #   unset all binds of the key-table
-#   2.  -q
+#   2. -q
 #   fail silently: suppress warning when starting server, as non-default
 #   key-tables do not yet exist
 unbind-key -a -q -T default
@@ -41,7 +41,6 @@ bind-key -T default M-C-q {
 # NOTE:
 #   -a: create after current window
 #   -n: name window by prompt-input, with |void| as default
-#   3.  launch vifm to the default directories
 bind-key -T default M-S-Enter {
     command-prompt \
         -I "void" \
