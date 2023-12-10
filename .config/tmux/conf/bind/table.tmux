@@ -29,6 +29,12 @@ bind-key -T default M-) {
 bind-key -T default M-s {
     choose-tree -Zs -O "time";
 }
+
+bind-key -T default M-C-q {
+    confirm-before \
+        -p "Close session?" \
+        "kill-session; switch-client -t =sys:.";
+}
 # }}}
 
 # window {{{
@@ -121,12 +127,6 @@ bind-key -T default M-8 {
 # misc:
 #   command-prompt "find-window -Z -- '%%'"
 # }}}
-
-bind-key -T default M-C-q {
-    confirm-before \
-        -p "Close window?" \
-        "kill-window";
-}
 
 # displacement {{{
 # inner-session displacement
