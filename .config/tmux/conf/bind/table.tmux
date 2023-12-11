@@ -36,6 +36,16 @@ bind-key -T default M-C-q {
         -p "Close session?" \
         "kill-session; switch-client -t =sys:.";
 }
+
+bind-key -T default M-C {
+    command-prompt \
+        -p "Duplicate session:","Duplicate name:" \
+        -I "#{session_name}","#{session_name}_" \
+        {
+            new-session -t "%1";
+            rename-session "%2";
+        };
+}
 # }}}
 
 # window {{{
@@ -147,20 +157,23 @@ bind-key -T default M-) {
     move-window -a -t ":$.";
 }
 
-# copy (duplicate)
-bind-key -T default M-w {
-    choose-tree -s -NZ -O "time" {
-        link-window -a -t "%%";
-    };
-}
-bind-key -T default M-W {
+bind-key -T default M-Q {
     confirm-before -p "Close window?" {
         unlink-window -k;
     };
 }
 
+# copy (duplicate)
+bind-key -T default M-c {
+    display-message "Duplicate window";
+    choose-tree -s -NZ -O "time" {
+        link-window -a -t "%%";
+    };
+}
+
 # cross-session displacement
-bind-key -T default M-O {
+bind-key -T default M-x {
+    display-message "Move window";
     choose-tree -s -NZ -O "time" {
         # -a := insert after target (here, selected from choose-tree)
         move-window -a -t "%%";
@@ -270,7 +283,7 @@ bind-key -T default M-L {
 }
 
 # break pane into a new window after the current one
-bind-key -T default M-o {
+bind-key -T default M-b {
     command-prompt \
         -p "Break to new window:" \
         -I "#{window_name}_" \
@@ -297,11 +310,11 @@ bind-key -T default M-] {
 # }}}
 
 bind-key -T default M-q {
-    confirm-before \
-        -p "Close pane?" \
-        "kill-pane";
+    confirm-before -p "Close pane?" {
+        kill-pane;
+    };
 }
-bind-key -T default M-Q {
+bind-key -T default M-Z {
     respawn-pane -k;
 }
 # }}}
