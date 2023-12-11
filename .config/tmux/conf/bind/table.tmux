@@ -46,6 +46,15 @@ bind-key -T default M-C {
             rename-session "%2";
         };
 }
+
+bind-key -T default M-R {
+    command-prompt \
+        -p "Rename session:" \
+        -I "#{session_name}" \
+        {
+            rename-session "%1";
+        };
+}
 # }}}
 
 # window {{{
@@ -180,6 +189,15 @@ bind-key -T default M-x {
     };
 }
 # }}}
+
+bind-key -T default M-r {
+    command-prompt \
+        -p "Rename window:" \
+        -I "#{window_name}" \
+        {
+            rename-window "%1";
+        };
+}
 # }}}
 
 # pane {{{
