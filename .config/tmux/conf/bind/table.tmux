@@ -140,12 +140,17 @@ bind-key -T default M-P {
     swap-window -d -t ":{previous}.";
 }
 
+# cross-session displacement
+bind-key -T default M-@ {
+    choose-tree -s -NZ -O "time" {
+        # -a := insert after target (here, selected from choose-tree)
+        move-window -a -t "%%";
+    };
+}
+
 # available commands:
 #   1. moving
-#   a. command-prompt "move-window -t '%%'"
-#   -> prompt for index for moving current window
-#   b. move-window -t <my_session>:<window_number>
-#   -> cross-session displacement
+#   a. move-window -t "%%"
 #
 #   2. linking: (cpp-like) references of windows
 #   a. link-window -t <my_session>:
