@@ -19,13 +19,6 @@ bind-key -T default M-Tab {
     switch-client -l;  # last-active session
 }
 
-bind-key -T default M-( {
-    switch-client -p;  # previous session
-}
-bind-key -T default M-) {
-    switch-client -n;  # next session
-}
-
 bind-key -T default M-s {
     # -N: hide preview
     # -Z: display in full-screen (ignore pane-size)
@@ -51,7 +44,7 @@ bind-key -T default M-S-Enter {
 }
 
 # navigation {{{
-bind-key -T default M-w {
+bind-key -T default M-S {
     # -w: expand to window(s)
     choose-tree -w -Z -O "time";  # choose window interactively
 }
@@ -140,8 +133,17 @@ bind-key -T default M-P {
     swap-window -d -t ":{previous}.";
 }
 
+bind-key -T default M-! {
+    # move to first
+    move-window -b -t ":^.";
+}
+bind-key -T default M-) {
+    # move to last
+    move-window -a -t ":$.";
+}
+
 # cross-session displacement
-bind-key -T default M-@ {
+bind-key -T default M-W {
     choose-tree -s -NZ -O "time" {
         # -a := insert after target (here, selected from choose-tree)
         move-window -a -t "%%";
@@ -259,7 +261,7 @@ bind-key -T default M-L {
 }
 
 # break pane into a new window after the current one
-bind-key -T default M-! {
+bind-key -T default M-w {
     command-prompt \
         -p "Break to new window:" \
         -I "#{window_name}_" \
