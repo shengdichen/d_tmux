@@ -316,35 +316,23 @@ bind-key -T default M-BSpace {
 }
 # }}}
 
-# buffer {{{
+# buffer (visual-mode) {{{
 bind-key -T default M-v {
+    # do NOT auto |begin-selection|
     copy-mode;
-    send-keys -X "begin-selection";
 }
-bind-key -T default M-V {
-    copy-mode;
-    send-keys -X "begin-selection";
-    send-keys -X "select-line";
-}
-bind-key -T default M-C-V {
-    copy-mode;
-    send-keys -X "begin-selection";
-    send-keys -X "rectangle-toggle";
-}
-
-bind-key -T default M-u {
-    paste-buffer;  # use most-recent buffer
-}
-
 unbind-key -T copy-mode-vi v
 bind-key -T copy-mode-vi v {
     send-keys -X "begin-selection";
 }
 bind-key -T copy-mode-vi V {
+    display-message "V-Line";
     send-keys -X "select-line";
 }
 bind-key -T copy-mode-vi C-V {
-    send-keys -X "rectangle-toggle"
+    display-message "V-Block";
+    send-keys -X "begin-selection";
+    send-keys -X "rectangle-toggle";
 }
 
 bind-key -T copy-mode-vi K {
@@ -352,6 +340,14 @@ bind-key -T copy-mode-vi K {
 }
 bind-key -T copy-mode-vi J {
     send-key -N 4 "j";
+}
+
+bind-key -T copy-mode-vi y {
+    send-keys -X "copy-pipe-and-cancel";
+}
+unbind-key -T copy-mode-vi Enter
+bind-key -T default M-u {
+    paste-buffer;  # use most-recent buffer
 }
 
 unbind-key -T copy-mode-vi C-C
@@ -362,11 +358,6 @@ unbind-key -T copy-mode-vi q
 bind-key -T copy-mode-vi Q {
     send-keys -X "cancel";
 }
-
-bind-key -T copy-mode-vi y {
-    send-keys -X "copy-pipe-and-cancel";
-}
-unbind-key -T copy-mode-vi Enter
 # }}}
 
 # misc {{{
