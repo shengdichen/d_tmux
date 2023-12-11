@@ -4,38 +4,22 @@
 #   -s: session-name
 #   -n: window-name
 
-new-session -s "sys" -n "admin" -d \
-    "vifm ~/xdg/ ~/mnt/"
-split-window -h -t "=sys:1." -d \
-    -c "/"  # -c := cd
-new-window -n "home" -t "=sys:2." -d \
-    "vifm ~/ ~/Dots/"
+new-session -s "sys" -n "home" -d \
+    "vifm ~/dot/setup/ ~/.config/tmux/script/"
+split-window -h -t "=sys:1.1" -d \
+    "top -E G -d 1"
+new-window -n "mnt" -t "=sys:2." -d \
+    "vifm ~/mnt/ /run/media/"
 
-new-session -s "ace" -n "data" -d \
-    "vifm ~/xdg/ ~/mnt/x/Dox/"
-
-new-session -s "ent" -n "ctrl" -d "\
-    vifm ~/xdg/MDA/ ~/xdg/ \
-        -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" \
-        -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
-        -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
-"
-split-window -h -t "=ent:1.+" -d \
+new-session -s "mda" -n "ctrl" -d \
+    "vifm ~/xdg/MDA/Aud/ ~/xdg/MDA/Vid/"
+split-window -h -t "=mda:1.+" -d \
     "pulsemixer"
-split-window -v -t "=ent:1.+" -d \
-    "cmus"
-new-window -n "MDA" -t "=ent:2." -d "\
-    vifm ~/xdg/MDA/ ~/xdg/ \
-        -c \"tabnew ~/xdg/MDA/Aud\" -c \"tabname Aud\" \
-        -c \"tabnew ~/xdg/MDA/Vid\" -c \"tabname Vid\" \
-        -c \"tabnew ~/xdg/MDA/Lit\" -c \"tabname Lit\" \
-"
 # }}}
 
 # NOTE:
 #   attach in reverse-order
-attach-session -t "=ent:1.1"
-attach-session -t "=ace:1.1"
+attach-session -t "=mda:1.1"
 attach-session -t "=sys:1.2"
 
 # vim: filetype=tmux foldmethod=marker
