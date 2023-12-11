@@ -27,7 +27,10 @@ bind-key -T default M-) {
 }
 
 bind-key -T default M-s {
-    choose-tree -Zs -O "time";
+    # -N: hide preview
+    # -Z: display in full-screen (ignore pane-size)
+    # -s: expand to session(s)
+    choose-tree -s -N -O "time";
 }
 
 bind-key -T default M-C-q {
@@ -49,7 +52,8 @@ bind-key -T default M-S-Enter {
 
 # navigation {{{
 bind-key -T default M-w {
-    choose-tree -NZ -O "time";  # choose window interactively
+    # -w: expand to window(s)
+    choose-tree -w -Z -O "time";  # choose window interactively
 }
 
 bind-key -T default M-` {
