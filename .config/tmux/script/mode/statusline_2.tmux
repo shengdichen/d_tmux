@@ -1,3 +1,8 @@
+# NOTE:
+#   grey    := #[#{E:window-status-style}]
+#   white   := #[#{E:status-style}]
+#   bold    := #[#{E:window-status-current-style}]
+
 set-option -g status on
 set-option -g status-position bottom
 
@@ -8,7 +13,10 @@ set-option -g status-format[0] ""
 set-option -g -a status-format[0] "#[align=left]"
 
 # session
-set-option -g -a status-format[0] "#[#{E:status-style}]#{session_name}"
+# show session-group if existent, otherwise session-name
+set-option -g -a status-format[0] "#[#{E:status-style}]\
+#{?session_grouped,#{session_group},#{session_name}}\
+"
 set-option -g -a status-format[0] "#[#{E:window-status-style}]: "
 
 # all windows
@@ -34,7 +42,42 @@ set-option -g -a status-format[0] "#[#{E:window-status-style}]  "
 
 set-option -g -a status-format[0] "#[#{E:window-status-style}]("
 # session
-set-option -g -a status-format[0] "#[#{E:window-status-current-style}]#{session_name}"
+# session-group {{{
+# NOTE:
+#   if in session-group:
+#       if session-group-size > 1:
+#           if session-name == session-group:
+#               out = "[grey]session-name/session-group-size:"
+#           else:
+#               out = "[bold]session-name/session-group-size:"
+#       else:
+#           if session-name != session-group:
+#               out = "session-name:"
+set-option -g -a status-format[0] "#{?\
+session_grouped,\
+#{?\
+#{>:#{session_group_size},1},\
+#{?\
+#{==:#{session_name},#{session_group}},\
+#[#{E:window-status-style}]\
+,\
+#[#{E:window-status-current-style}]\
+}#{session_name}\
+#[#{E:window-status-style}]/#{session_group_size}\
+#[#{E:window-status-style}]:\
+,\
+#{?\
+#{!=:#{session_name},#{session_group}},\
+#[#{E:window-status-current-style}]#{session_name}\
+#[#{E:window-status-style}]:\
+,\
+}\
+}\
+,\
+}"
+# }}}
+set-option -g -a status-format[0] "#[#{E:window-status-style}]#{session_id}"
+# indicate (only) if multi-attached
 set-option -g -a status-format[0] "#{\
 ?session_many_attached,\
 #[#{E:status-style}](\
@@ -42,8 +85,6 @@ set-option -g -a status-format[0] "#{\
 #[#{E:status-style}])\
 ,\
 }"
-set-option -g -a status-format[0] "#[#{E:window-status-style}]:"
-set-option -g -a status-format[0] "#[#{E:window-status-style}]#{session_id}"
 
 set-option -g -a status-format[0] "#[#{E:window-status-style}], "  # separator
 
