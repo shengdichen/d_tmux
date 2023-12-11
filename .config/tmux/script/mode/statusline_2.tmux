@@ -7,8 +7,8 @@ set-option -g status-format[0] ""
 # LHS {{{
 set-option -g -a status-format[0] "#[align=left]"
 
-# host
-set-option -g -a status-format[0] "#[#{E:status-style}]#{host}"
+# session
+set-option -g -a status-format[0] "#[#{E:status-style}]#{session_name}"
 set-option -g -a status-format[0] "#[#{E:window-status-style}]: "
 
 # all windows
@@ -26,9 +26,10 @@ set-option -g -a status-format[0] "#[#{E:window-status-style}]\
 # RHS {{{
 set-option -g -a status-format[0] "#[align=right]"
 
-# tty
+# host>tty
+set-option -g -a status-format[0] "#[#{E:status-style}]#{host}"
 set-option -g -a status-format[0] "#[#{E:window-status-style}]>"
-set-option -g -a status-format[0] "#[#{E:status-style}]#{pane_tty}"
+set-option -g -a status-format[0] "#[#{E:window-status-style}]#{pane_tty}"
 set-option -g -a status-format[0] "#[#{E:window-status-style}]  "
 
 set-option -g -a status-format[0] "#[#{E:window-status-style}]("
