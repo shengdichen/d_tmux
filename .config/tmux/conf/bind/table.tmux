@@ -1,3 +1,11 @@
+# NOTE {{{
+# 1. common flags for |choose-tree|
+#   -N: hide preview
+#   -Z: display in full-screen (ignore pane-size)
+#   -G: expand session-group(s)
+#   -s/w: expand to session(s)/window(s)
+# }}}
+
 # NOTE:
 #   1. -a
 #   unset all binds of the key-table
@@ -20,10 +28,7 @@ bind-key -T default M-Tab {
 }
 
 bind-key -T default M-s {
-    # -N: hide preview
-    # -Z: display in full-screen (ignore pane-size)
-    # -s: expand to session(s)
-    choose-tree -s -N -O "time";
+    choose-tree -s -G -NZ -O "time";
 }
 
 bind-key -T default M-C-q {
@@ -142,21 +147,25 @@ bind-key -T default M-) {
     move-window -a -t ":$.";
 }
 
-# cross-session displacement
+# copy (duplicate)
+bind-key -T default M-w {
+    choose-tree -s -NZ -O "time" {
+        link-window -a -t "%%";
+    };
+}
 bind-key -T default M-W {
+    confirm-before -p "Close window?" {
+        unlink-window -k;
+    };
+}
+
+# cross-session displacement
+bind-key -T default M-O {
     choose-tree -s -NZ -O "time" {
         # -a := insert after target (here, selected from choose-tree)
         move-window -a -t "%%";
     };
 }
-
-# available commands:
-#   1. moving
-#   a. move-window -t "%%"
-#
-#   2. linking: (cpp-like) references of windows
-#   a. link-window -t <my_session>:
-#   b. unlink-window -t <my_session>:<my_window>
 # }}}
 # }}}
 
@@ -261,7 +270,7 @@ bind-key -T default M-L {
 }
 
 # break pane into a new window after the current one
-bind-key -T default M-w {
+bind-key -T default M-o {
     command-prompt \
         -p "Break to new window:" \
         -I "#{window_name}_" \
