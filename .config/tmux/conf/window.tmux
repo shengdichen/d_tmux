@@ -47,6 +47,8 @@ set-option -g -w pane-border-style \
 # }}}
 
 # misc {{{
+set-option -g -w aggressive-resize on
+
 set-option -g -w mode-keys vi
 set-option -g -w mode-style \
 "bg=terminal fg=terminal bold reverse"

@@ -1,7 +1,15 @@
+# NOTE {{{
+# 1. common flags for |choose-tree|
+#   -N: hide preview
+#   -Z: display in full-screen (ignore pane-size)
+#   -G: expand session-group(s)
+#   -s/w: expand to session(s)/window(s)
+# }}}
+
 # NOTE:
 #   1. -a
 #   unset all binds of the key-table
-#   2.  -q
+#   2. -q
 #   fail silently: suppress warning when starting server, as non-default
 #   key-tables do not yet exist
 unbind-key -a -q -T default
@@ -19,15 +27,33 @@ bind-key -T default M-Tab {
     switch-client -l;  # last-active session
 }
 
-bind-key -T default M-( {
-    switch-client -p;  # previous session
-}
-bind-key -T default M-) {
-    switch-client -n;  # next session
+bind-key -T default M-s {
+    choose-tree -s -G -NZ -O "time";
 }
 
-bind-key -T default M-s {
-    choose-tree -Zs -O "time";
+bind-key -T default M-C-q {
+    confirm-before \
+        -p "Close session?" \
+        "kill-session; switch-client -t =sys:.";
+}
+
+bind-key -T default M-C {
+    command-prompt \
+        -p "Duplicate session:","Duplicate name:" \
+        -I "#{session_name}","#{session_name}_" \
+        {
+            new-session -t "%1";
+            rename-session "%2";
+        };
+}
+
+bind-key -T default M-R {
+    command-prompt \
+        -p "Rename session:" \
+        -I "#{session_name}" \
+        {
+            rename-session "%1";
+        };
 }
 # }}}
 
@@ -35,7 +61,6 @@ bind-key -T default M-s {
 # NOTE:
 #   -a: create after current window
 #   -n: name window by prompt-input, with |void| as default
-#   3.  launch vifm to the default directories
 bind-key -T default M-S-Enter {
     command-prompt \
         -I "void" \
@@ -43,8 +68,9 @@ bind-key -T default M-S-Enter {
 }
 
 # navigation {{{
-bind-key -T default M-w {
-    choose-tree -NZ -O "time";  # choose window interactively
+bind-key -T default M-S {
+    # -w: expand to window(s)
+    choose-tree -w -Z -O "time";  # choose window interactively
 }
 
 bind-key -T default M-` {
@@ -122,12 +148,6 @@ bind-key -T default M-8 {
 #   command-prompt "find-window -Z -- '%%'"
 # }}}
 
-bind-key -T default M-C-q {
-    confirm-before \
-        -p "Close window?" \
-        "kill-window";
-}
-
 # displacement {{{
 # inner-session displacement
 bind-key -T default M-N {
@@ -137,17 +157,47 @@ bind-key -T default M-P {
     swap-window -d -t ":{previous}.";
 }
 
-# available commands:
-#   1. moving
-#   a. command-prompt "move-window -t '%%'"
-#   -> prompt for index for moving current window
-#   b. move-window -t <my_session>:<window_number>
-#   -> cross-session displacement
-#
-#   2. linking: (cpp-like) references of windows
-#   a. link-window -t <my_session>:
-#   b. unlink-window -t <my_session>:<my_window>
+bind-key -T default M-! {
+    # move to first
+    move-window -b -t ":^.";
+}
+bind-key -T default M-) {
+    # move to last
+    move-window -a -t ":$.";
+}
+
+bind-key -T default M-Q {
+    confirm-before -p "Close window?" {
+        unlink-window -k;
+    };
+}
+
+# copy (duplicate)
+bind-key -T default M-c {
+    display-message "Duplicate window";
+    choose-tree -s -NZ -O "time" {
+        link-window -a -t "%%";
+    };
+}
+
+# cross-session displacement
+bind-key -T default M-x {
+    display-message "Move window";
+    choose-tree -s -NZ -O "time" {
+        # -a := insert after target (here, selected from choose-tree)
+        move-window -a -t "%%";
+    };
+}
 # }}}
+
+bind-key -T default M-r {
+    command-prompt \
+        -p "Rename window:" \
+        -I "#{window_name}" \
+        {
+            rename-window "%1";
+        };
+}
 # }}}
 
 # pane {{{
@@ -251,7 +301,7 @@ bind-key -T default M-L {
 }
 
 # break pane into a new window after the current one
-bind-key -T default M-! {
+bind-key -T default M-b {
     command-prompt \
         -p "Break to new window:" \
         -I "#{window_name}_" \
@@ -278,11 +328,11 @@ bind-key -T default M-] {
 # }}}
 
 bind-key -T default M-q {
-    confirm-before \
-        -p "Close pane?" \
-        "kill-pane";
+    confirm-before -p "Close pane?" {
+        kill-pane;
+    };
 }
-bind-key -T default M-Q {
+bind-key -T default M-Z {
     respawn-pane -k;
 }
 # }}}
@@ -306,35 +356,23 @@ bind-key -T default M-BSpace {
 }
 # }}}
 
-# buffer {{{
+# buffer (visual-mode) {{{
 bind-key -T default M-v {
+    # do NOT auto |begin-selection|
     copy-mode;
-    send-keys -X "begin-selection";
 }
-bind-key -T default M-V {
-    copy-mode;
-    send-keys -X "begin-selection";
-    send-keys -X "select-line";
-}
-bind-key -T default M-C-V {
-    copy-mode;
-    send-keys -X "begin-selection";
-    send-keys -X "rectangle-toggle";
-}
-
-bind-key -T default M-u {
-    paste-buffer;  # use most-recent buffer
-}
-
 unbind-key -T copy-mode-vi v
 bind-key -T copy-mode-vi v {
     send-keys -X "begin-selection";
 }
 bind-key -T copy-mode-vi V {
+    display-message "V-Line";
     send-keys -X "select-line";
 }
 bind-key -T copy-mode-vi C-V {
-    send-keys -X "rectangle-toggle"
+    display-message "V-Block";
+    send-keys -X "begin-selection";
+    send-keys -X "rectangle-toggle";
 }
 
 bind-key -T copy-mode-vi K {
@@ -342,6 +380,14 @@ bind-key -T copy-mode-vi K {
 }
 bind-key -T copy-mode-vi J {
     send-key -N 4 "j";
+}
+
+bind-key -T copy-mode-vi y {
+    send-keys -X "copy-pipe-and-cancel";
+}
+unbind-key -T copy-mode-vi Enter
+bind-key -T default M-u {
+    paste-buffer;  # use most-recent buffer
 }
 
 unbind-key -T copy-mode-vi C-C
@@ -352,11 +398,6 @@ unbind-key -T copy-mode-vi q
 bind-key -T copy-mode-vi Q {
     send-keys -X "cancel";
 }
-
-bind-key -T copy-mode-vi y {
-    send-keys -X "copy-pipe-and-cancel";
-}
-unbind-key -T copy-mode-vi Enter
 # }}}
 
 # misc {{{
