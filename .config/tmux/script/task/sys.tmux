@@ -7,9 +7,6 @@ split-window -v -t "=sys:1.1" -d
 
 new-window -n "home" -t "=sys:2." \
     "vifm ~/dot/dot/d_prv/ ~/.password-store/"
-split-window -h -t "=sys:2.1" -d \
-    "neomutt"
-split-window -v -t "=sys:2.1" -d
 
 new-window -n "mnt" -t "=sys:3." \
     "vifm ~/mnt/ /run/media/"
