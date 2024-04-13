@@ -225,8 +225,8 @@ bind-key -r -T default M-l {
 # resize {{{
 # toggle fullscreen (zoom-level)
 bind-key -T default M-z {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/layout.sh vifm_miller";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh vifm_miller";
     resize-pane -Z;
 }
 
