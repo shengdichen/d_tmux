@@ -1,12 +1,9 @@
 #!/usr/bin/env dash
 
-pane_command() {
-    tmux display-message -p -t "${1}" -F "#{pane_current_command}"
-}
+SCRIPT_PATH="$(realpath "$(dirname "${0}")")"
+cd "${SCRIPT_PATH}" || exit 3
 
-__size_of() {
-    tmux display-message -p -t "${1}" -F "#{${2}_${3}}"
-}
+. "./util.sh"
 
 __squeeze() {
     local _val="${1}" _min="${2}" _max="${3}"
@@ -19,32 +16,17 @@ __squeeze() {
     fi
 }
 
-width_lhs_main() {
-    local width_min=59 width_max=97
-    local width_by_perc
-    width_by_perc=$(($(__size_of ":" "window" "width") / 3))
-
-    case "${1}" in
-        "min")
-            echo "${width_min}"
-            ;;
-        "max")
-            echo "${width_max}"
-            ;;
-        "perc")
-            echo "${width_by_perc}"
-            ;;
-        "range")
-            __squeeze "${width_by_perc}" "${width_min}" "${width_max}"
-            ;;
-    esac
-}
-
 set_vifm_miller() {
-    local _target=":.${1-}" _threshold=67
-    if [ "$(pane_command "${_target}")" = "vifm" ]; then
+    local _target="" _threshold=67
+    if [ "${#}" -gt 0 ]; then
+        _target="$(__make_target --pane "${1}")"
+    else
+        _target="$(__make_target)"
+    fi
+
+    if [ "$(__get_prop_pane_command --target "${_target}")" = "vifm" ]; then
         local _width
-        _width="$(__size_of "${_target}" "pane" "width")"
+        _width="$(__size_pane --target "${_target}" --width)"
 
         if [ "${_width}" -lt "${_threshold}" ]; then
             tmux send-keys -t "${_target}" ":set nomillerview" "Enter"
@@ -56,16 +38,19 @@ set_vifm_miller() {
 
 height_lhs_secondary_main() {
     local height_total height_primary
-    height_total=$(__size_of ":" "window" "height")
-    height_primary=$(__squeeze $((height_total / 3)) 20 53)
+    height_total="$(__size_window --height)"
+    height_primary="$(__squeeze $((height_total / 3)) 20 53)"
 
-    echo $((height_total - height_primary))
+    printf "%d" $((height_total - height_primary))
 }
 
-layout_default() {
+__layout_horz_main() {
     tmux select-layout main-vertical
 
-    tmux resize-pane -t ":.1" -x "$(width_lhs_main "range")"
+    local _width_min=59 _width_max=97
+    local _width
+    _width="$(__squeeze "$(($(__size_window --width) / 3))" "${_width_min}" "${_width_max}")"
+    tmux resize-pane -t ":.1" -x "${_width}"
 }
 
 move_to_split() {
@@ -106,39 +91,40 @@ main_vertical() {
 
 pipeline() {
     local mode="${1}"
-    local n_panes
-    n_panes=$(tmux display-message -p -t ":" -F "#{window_panes}")
 
-    if [ "${n_panes}" -eq 2 ]; then
+    local _n_panes
+    _n_panes="$(__n_panes_in_window)"
+
+    if [ "${_n_panes}" -eq 2 ]; then
         tmux resize-pane -t ":.1" -x "50%"
         case "${mode}" in
             "vert_even")
                 tmux select-layout even-vertical
                 ;;
             "vert_main")
-                layout_default
+                __layout_horz_main
                 ;;
         esac
-    elif [ "$(pane_command ":.1")" = "vifm" ]; then
-        layout_default
+    elif [ "$(__get_prop_pane_command --pane 1)" = "vifm" ]; then
+        __layout_horz_main
         local idx_rhs_start=2
-        if [ "$(pane_command ":.2")" = "zsh" ]; then
+        if [ "$(__get_prop_pane_command --pane 2)" = "zsh" ]; then
             idx_rhs_start=3
             move_to_split ":.2" ":.1" "$(height_lhs_secondary_main)"
         fi
         case "${mode}" in
             "vert_even")
-                even_vertical "${idx_rhs_start}" "${n_panes}" 100
-                if [ "${n_panes}" -eq 2 ]; then
+                even_vertical "${idx_rhs_start}" "${_n_panes}" 100
+                if [ "${_n_panes}" -eq 2 ]; then
                     tmux resize-pane -t ":.1" -x "50%"
                 fi
                 ;;
             "vert_main")
-                main_vertical "${idx_rhs_start}" "${n_panes}" 67
+                main_vertical "${idx_rhs_start}" "${_n_panes}" 67
                 ;;
         esac
     fi
-    set_vifm_miller "1"
+    set_vifm_miller "${IDX_PANE_MIN}"
 }
 
 main() {
@@ -147,6 +133,7 @@ main() {
             pipeline "${1}"
             ;;
         "vifm_miller")
+            shift
             set_vifm_miller
             ;;
     esac
