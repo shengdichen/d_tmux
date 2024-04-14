@@ -16,15 +16,117 @@ __squeeze() {
     fi
 }
 
+__split_horz_submain() {
+    tmux select-layout main-vertical
+
+    local WIDTH_MIN=59 WIDTH_MAX=97
+    local _width
+    _width="$(__squeeze "$(($(__size_window --width) / 3))" "${WIDTH_MIN}" "${WIDTH_MAX}")"
+    __resize_pane \
+        --target "$(__make_target --pane min)" \
+        --width "${_width}"
+}
+
+__resize_column_equal() {
+    local _idx_min="" _idx_max="" _height_all="100"
+    while [ "${#}" -gt 0 ]; do
+        case "${1}" in
+            "--min")
+                _idx_min="${2}"
+                shift && shift
+                ;;
+            "--max")
+                _idx_max="${2}"
+                shift && shift
+                ;;
+            "--height-all")
+                _height_all="${2}"
+                shift && shift
+                ;;
+        esac
+    done
+    if [ ! "${_idx_min}" ]; then
+        _idx_min="${IDX_PANE_MIN}"
+    fi
+    if [ ! "${_idx_max}" ]; then
+        _idx_max="$(__n_panes_in_window)"
+    fi
+    if [ "${_idx_min}" -ge "${_idx_max}" ]; then
+        return 0
+    fi
+
+    local _n_panes _height_nonlast _height_last
+    _n_panes="$((_idx_max - _idx_min + 1))"
+    _height_nonlast="$((_height_all / _n_panes))"
+    _height_last="$((_height_all - (_n_panes - 1) * _height_nonlast))"
+
+    for _idx in $(seq "${_idx_min}" "$((_idx_max - 1))"); do
+        __resize_pane --target ":.${_idx}" --height "${_height_nonlast}%"
+    done
+    __resize_pane --target ":.${_idx_max}" --height "${_height_last}%"
+}
+
+__resize_column_emph() {
+    local _idx_min="" _idx_max="" _height_all="100" _height_emph="67"
+    while [ "${#}" -gt 0 ]; do
+        case "${1}" in
+            "--min")
+                _idx_min="${2}"
+                shift && shift
+                ;;
+            "--max")
+                _idx_max="${2}"
+                shift && shift
+                ;;
+            "--height-all")
+                _height_all="${2}"
+                shift && shift
+                ;;
+            "--height-emph")
+                _height_emph="${2}"
+                shift && shift
+                ;;
+        esac
+    done
+    if [ ! "${_idx_min}" ]; then
+        _idx_min="${IDX_PANE_MIN}"
+    fi
+    if [ ! "${_idx_max}" ]; then
+        _idx_max="$(__n_panes_in_window)"
+    fi
+    if [ "${_idx_min}" -ge "${_idx_max}" ]; then
+        return 0
+    fi
+
+    __resize_pane --target ":.${_idx_min}" --height "${_height_emph}%"
+    __resize_column_equal \
+        --min "$((_idx_min + 1))" \
+        --max "${_idx_max}" \
+        --height-all "$((_height_all - _height_emph))"
+}
+
+__resize_column_lhs() {
+    local _height_all _height_emph
+    _height_all="$(__size_window --height)"
+    _height_emph="$(__squeeze $((_height_all / 3)) 20 53)"
+
+    __move_pane --from ":.2" --to ":.1" --size "$((_height_all - _height_emph))"
+}
+
 __pane_vifm_adapt_millerview() {
     local THRESHOLD=67
 
     local _target
     if [ "${1}" = "--target" ]; then
-        _target="${1}"
+        shift
+        if [ "${1}" = "this" ]; then
+            _target="$(__make_target)"
+        else
+            _target="${1}"
+        fi
         shift
     else
-        _target="$(__make_target)"
+        _target="$(__make_target --pane min)" # vifm as first pane by default
     fi
 
     if [ "$(__pane_command --target "${_target}")" = "vifm" ]; then
@@ -39,52 +141,32 @@ __pane_vifm_adapt_millerview() {
     fi
 }
 
-__height_lhs_secondary_main() {
-    local height_total height_primary
-    height_total="$(__size_window --height)"
-    height_primary="$(__squeeze $((height_total / 3)) 20 53)"
-
-    printf "%d" $((height_total - height_primary))
-}
-
-__split_horz_submain() {
-    tmux select-layout main-vertical
-
-    local WIDTH_MIN=59 WIDTH_MAX=97
-    local _width
-    _width="$(__squeeze "$(($(__size_window --width) / 3))" "${WIDTH_MIN}" "${WIDTH_MAX}")"
-    __resize_pane \
-        --target "$(__make_target --pane min)" \
-        --width "${_width}"
-}
-
 __layout_horz() {
     local _equal=""
     if [ "${1}" = "--equal" ]; then
+        shift
         _equal="yes"
     fi
 
     local _n_panes
     _n_panes="$(__n_panes_in_window)"
-    if [ "${_n_panes}" -eq 1 ]; then
-        return 0
-    fi
+    if [ "${_n_panes}" -eq 1 ]; then return 0; fi
     if [ "${_n_panes}" -eq 2 ]; then
         if [ "${_equal}" ]; then
             tmux select-layout even-vertical
         else
             __split_horz_submain
         fi
-        __pane_vifm_adapt_millerview --target "$(__make_target --pane min)"
+        __pane_vifm_adapt_millerview
         return 0
     fi
 
     __split_horz_submain
-    if [ "$(__pane_command --pane 1)" = "vifm" ]; then
+    if __is_pane_command --pane min -- "vifm"; then
         local _idx_pane_rhs_min
-        if [ "$(__pane_command --pane 2)" = "zsh" ]; then
+        if __is_pane_command --pane 2 -- "zsh"; then
             _idx_pane_rhs_min=3
-            __move_pane --from ":.2" --to ":.1" --size "$(__height_lhs_secondary_main)"
+            __resize_column_lhs
         else
             _idx_pane_rhs_min=2
         fi
@@ -94,9 +176,9 @@ __layout_horz() {
         else
             __resize_column_emph --min "${_idx_pane_rhs_min}"
         fi
-    fi
 
-    __pane_vifm_adapt_millerview --target "$(__make_target --pane min)"
+        __pane_vifm_adapt_millerview
+    fi
 }
 
 main() {
@@ -109,7 +191,7 @@ main() {
             ;;
         "vifm_miller")
             shift
-            __pane_vifm_adapt_millerview
+            __pane_vifm_adapt_millerview --target this
             ;;
     esac
 }

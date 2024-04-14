@@ -63,31 +63,31 @@ __make_target() {
                 shift && shift
                 ;;
             "--window")
-                shift
-                if [ "${1}" = "min" ]; then
-                    _window="${IDX_WINDOW_MIN}"
-                else
-                    _window="${1}"
-                fi
-                shift
+                _window="${2}"
+                shift && shift
                 ;;
             "--pane")
-                shift
-                if [ "${1}" = "min" ]; then
-                    _pane="${IDX_PANE_MIN}"
-                else
-                    _pane="${1}"
-                fi
-                shift
+                _pane="${2}"
+                shift && shift
                 ;;
         esac
     done
-    if [ "${_window}" = "max" ]; then
-        _window="$(__n_windows_in_session --session "${_session}")"
-    fi
-    if [ "${_pane}" = "max" ]; then
-        _pane="$(__n_panes_in_window --window "${_session}:${_window}")"
-    fi
+    case "${_window}" in
+        "min")
+            _window="${IDX_WINDOW_MIN}"
+            ;;
+        "max")
+            _window="$(__n_windows_in_session --session "${_session}")"
+            ;;
+    esac
+    case "${_pane}" in
+        "min")
+            _pane="${IDX_PANE_MIN}"
+            ;;
+        "max")
+            _pane="$(__n_panes_in_window --window "${_session}:${_window}")"
+            ;;
+    esac
 
     printf "%s:%s.%s" "${_session}" "${_window}" "${_pane}"
 }
@@ -137,7 +137,7 @@ __pane_command() {
     while [ "${#}" -gt 0 ]; do
         case "${1}" in
             "--pane")
-                _target=":.${2}"
+                _target="$(__make_target --pane "${2}")"
                 shift && shift
                 ;;
             "--target")
@@ -148,6 +148,27 @@ __pane_command() {
     done
 
     __get_prop --target "${_target}" -- "pane_current_command"
+}
+
+__is_pane_command() {
+    local _target=":."
+    while [ "${#}" -gt 0 ]; do
+        case "${1}" in
+            "--pane")
+                _target="$(__make_target --pane "${2}")"
+                shift && shift
+                ;;
+            "--target")
+                _target="${2}"
+                shift && shift
+                ;;
+            "--")
+                shift && break
+                ;;
+        esac
+    done
+
+    [ "$(__pane_command --target "${_target}")" = "${1}" ]
 }
 
 __index_pane() {
@@ -265,84 +286,6 @@ __resize_pane() {
     else
         true # noop
     fi
-}
-
-__resize_column_equal() {
-    local _idx_min="" _idx_max="" _height_all="100"
-    while [ "${#}" -gt 0 ]; do
-        case "${1}" in
-            "--min")
-                _idx_min="${2}"
-                shift && shift
-                ;;
-            "--max")
-                _idx_max="${2}"
-                shift && shift
-                ;;
-            "--height-all")
-                _height_all="${2}"
-                shift && shift
-                ;;
-        esac
-    done
-    if [ ! "${_idx_min}" ]; then
-        _idx_min="${IDX_PANE_MIN}"
-    fi
-    if [ ! "${_idx_max}" ]; then
-        _idx_max="$(__n_panes_in_window)"
-    fi
-    if [ "${_idx_min}" -ge "${_idx_max}" ]; then
-        return 0
-    fi
-
-    local _n_panes _height_nonlast _height_last
-    _n_panes="$((_idx_max - _idx_min + 1))"
-    _height_nonlast="$((_height_all / _n_panes))"
-    _height_last="$((_height_all - (_n_panes - 1) * _height_nonlast))"
-
-    for _idx in $(seq "${_idx_min}" "$((_idx_max - 1))"); do
-        __resize_pane --target ":.${_idx}" --height "${_height_nonlast}%"
-    done
-    __resize_pane --target ":.${_idx_max}" --height "${_height_last}%"
-}
-
-__resize_column_emph() {
-    local _idx_min="" _idx_max="" _height_all="100" _height_emph="67"
-    while [ "${#}" -gt 0 ]; do
-        case "${1}" in
-            "--min")
-                _idx_min="${2}"
-                shift && shift
-                ;;
-            "--max")
-                _idx_max="${2}"
-                shift && shift
-                ;;
-            "--height-all")
-                _height_all="${2}"
-                shift && shift
-                ;;
-            "--height-emph")
-                _height_emph="${2}"
-                shift && shift
-                ;;
-        esac
-    done
-    if [ ! "${_idx_min}" ]; then
-        _idx_min="${IDX_PANE_MIN}"
-    fi
-    if [ ! "${_idx_max}" ]; then
-        _idx_max="$(__n_panes_in_window)"
-    fi
-    if [ "${_idx_min}" -ge "${_idx_max}" ]; then
-        return 0
-    fi
-
-    __resize_pane --target ":.${_idx_min}" --height "${_height_emph}%"
-    __resize_column_equal \
-        --min "$((_idx_min + 1))" \
-        --max "${_idx_max}" \
-        --height-all "$((_height_all - _height_emph))"
 }
 # }}}
 
