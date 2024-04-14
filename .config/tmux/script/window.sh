@@ -5,11 +5,6 @@ cd "${SCRIPT_PATH}" || exit 3
 
 . "./util.sh"
 
-__switch_window() {
-    tmux select-window -t ":=${1}."
-}
-
-# index calculation {{{
 __index_rel_start() {
     local _idx
     _idx="$((IDX_WINDOW_MIN + ${1}))"
@@ -45,9 +40,8 @@ __index_rel_current() {
     fi
     printf "%d" "${_idx}"
 }
-# }}}
 
-main() {
+__main() {
     local _idx
     case "${1}" in
         "start")
@@ -61,6 +55,6 @@ main() {
             ;;
     esac
 
-    __switch_window "${_idx}"
+    tmux select-window -t ":=${_idx}."
 }
-main "${@}"
+__main "${@}"
