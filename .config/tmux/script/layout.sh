@@ -119,7 +119,7 @@ __resize_column_lhs() {
 }
 
 __pane_vifm_adapt_millerview() {
-    local THRESHOLD=67
+    local THRESHOLD_WIDTH=67
 
     local _target
     if [ "${1}" = "--target" ]; then
@@ -138,7 +138,7 @@ __pane_vifm_adapt_millerview() {
         local _width
         _width="$(__size_pane --target "${_target}" --width)"
 
-        if [ "${_width}" -lt "${THRESHOLD}" ]; then
+        if [ "${_width}" -lt "${THRESHOLD_WIDTH}" ]; then
             tmux send-keys -t "${_target}" ":set nomillerview" "Enter"
         else
             tmux send-keys -t "${_target}" ":set millerview" "Enter"
@@ -186,7 +186,7 @@ __layout_horz() {
     fi
 }
 
-main() {
+__main() {
     case "${1}" in
         "vert_main")
             __layout_horz
@@ -200,5 +200,4 @@ main() {
             ;;
     esac
 }
-main "${@}"
-unset -f main
+__main "${@}"
