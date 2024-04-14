@@ -1,14 +1,9 @@
 #!/usr/bin/env dash
 
-INDEX_MIN=1 # 1-indexing for windows
+SCRIPT_PATH="$(realpath "$(dirname "${0}")")"
+cd "${SCRIPT_PATH}" || exit 3
 
-__n_windows() {
-    tmux display-message -p -F "#{session_windows}"
-}
-
-__index_current() {
-    tmux display-message -p -F "#{window_index}"
-}
+. "./util.sh"
 
 __switch_window() {
     tmux select-window -t ":=${1}."
@@ -17,10 +12,10 @@ __switch_window() {
 # index calculation {{{
 __index_rel_start() {
     local _idx
-    _idx="$((INDEX_MIN + ${1}))"
+    _idx="$((IDX_WINDOW_MIN + ${1}))"
 
     local _n_wins
-    _n_wins="$(__n_windows)"
+    _n_wins="$(__n_windows_in_session)"
     if [ "${_idx}" -gt "${_n_wins}" ]; then
         _idx="${_n_wins}"
     fi
@@ -29,24 +24,24 @@ __index_rel_start() {
 
 __index_rel_end() {
     local _idx
-    _idx="$(($(__n_windows) - ${1}))"
+    _idx="$(($(__n_windows_in_session) - ${1}))"
 
-    if [ "${_idx}" -lt "${INDEX_MIN}" ]; then
-        _idx="${INDEX_MIN}"
+    if [ "${_idx}" -lt "${IDX_WINDOW_MIN}" ]; then
+        _idx="${IDX_WINDOW_MIN}"
     fi
     printf "%d" "${_idx}"
 }
 
 __index_rel_current() {
     local _idx
-    _idx="$(($(__index_current) + ${1}))"
+    _idx="$(($(__get_prop -- "window_index") + ${1}))"
 
     local _n_wins
-    _n_wins="$(__n_windows)"
+    _n_wins="$(__n_windows_in_session)"
     if [ "${_idx}" -gt "${_n_wins}" ]; then
         _idx="${_n_wins}"
-    elif [ "${_idx}" -lt "${INDEX_MIN}" ]; then
-        _idx="${INDEX_MIN}"
+    elif [ "${_idx}" -lt "${IDX_WINDOW_MIN}" ]; then
+        _idx="${IDX_WINDOW_MIN}"
     fi
     printf "%d" "${_idx}"
 }
