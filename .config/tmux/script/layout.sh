@@ -188,13 +188,11 @@ __layout_horz() {
 
 __main() {
     case "${1}" in
-        "vert_main")
-            __layout_horz
+        "horz")
+            shift
+            __layout_horz "${@}"
             ;;
-        "vert_even")
-            __layout_horz --equal
-            ;;
-        "vifm_miller")
+        "vifm-miller")
             shift
             __pane_vifm_adapt_millerview --target this
             ;;
