@@ -340,13 +340,13 @@ bind-key -T default M-Z {
 # layout {{{
 unbind-key -T prefix M-2
 bind-key -T prefix M-2 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/layout.sh vert_even";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh vert_even";
 }
 unbind-key -T prefix M-4
 bind-key -T prefix M-4 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/layout.sh vert_main";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh vert_main";
 }
 
 unbind-key -T prefix M-BSpace

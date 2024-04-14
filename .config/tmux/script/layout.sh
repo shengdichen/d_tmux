@@ -16,19 +16,22 @@ __squeeze() {
     fi
 }
 
-set_vifm_miller() {
-    local _target="" _threshold=67
-    if [ "${#}" -gt 0 ]; then
-        _target="$(__make_target --pane "${1}")"
+__pane_vifm_adapt_millerview() {
+    local THRESHOLD=67
+
+    local _target
+    if [ "${1}" = "--target" ]; then
+        _target="${1}"
+        shift
     else
         _target="$(__make_target)"
     fi
 
-    if [ "$(__get_prop_pane_command --target "${_target}")" = "vifm" ]; then
+    if [ "$(__pane_command --target "${_target}")" = "vifm" ]; then
         local _width
         _width="$(__size_pane --target "${_target}" --width)"
 
-        if [ "${_width}" -lt "${_threshold}" ]; then
+        if [ "${_width}" -lt "${THRESHOLD}" ]; then
             tmux send-keys -t "${_target}" ":set nomillerview" "Enter"
         else
             tmux send-keys -t "${_target}" ":set millerview" "Enter"
@@ -36,7 +39,7 @@ set_vifm_miller() {
     fi
 }
 
-height_lhs_secondary_main() {
+__height_lhs_secondary_main() {
     local height_total height_primary
     height_total="$(__size_window --height)"
     height_primary="$(__squeeze $((height_total / 3)) 20 53)"
@@ -44,97 +47,69 @@ height_lhs_secondary_main() {
     printf "%d" $((height_total - height_primary))
 }
 
-__layout_horz_main() {
+__split_horz_submain() {
     tmux select-layout main-vertical
 
-    local _width_min=59 _width_max=97
+    local WIDTH_MIN=59 WIDTH_MAX=97
     local _width
-    _width="$(__squeeze "$(($(__size_window --width) / 3))" "${_width_min}" "${_width_max}")"
-    tmux resize-pane -t ":.1" -x "${_width}"
+    _width="$(__squeeze "$(($(__size_window --width) / 3))" "${WIDTH_MIN}" "${WIDTH_MAX}")"
+    __resize_pane \
+        --target "$(__make_target --pane min)" \
+        --width "${_width}"
 }
 
-move_to_split() {
-    local source="${1}" to_split="${2}" new_size="${3}"
-
-    # -d := do NOT switch to source-pane
-    tmux join-pane \
-        -d \
-        -s "${source}" \
-        -t "${to_split}" \
-        -l "${new_size}"
-}
-
-even_vertical() {
-    local start="${1}" end="${2}" full_size="${3}"
-
-    if [ "${start}" -lt "${end}" ]; then
-        local n_panes size_avg size_last
-        n_panes="$((end - start + 1))"
-        size_avg="$((full_size / n_panes))"
-        size_last="$((full_size - (n_panes - 1) * size_avg))"
-
-        for pane in $(seq "${start}" $((end - 1))); do
-            tmux resize-pane -t ":.${pane}" -y "${size_avg}%"
-        done
-        tmux resize-pane -t ":.${end}" -y "${size_last}%"
+__layout_horz() {
+    local _equal=""
+    if [ "${1}" = "--equal" ]; then
+        _equal="yes"
     fi
-}
-
-main_vertical() {
-    local start="${1}" end="${2}" main_size="${3}"
-
-    if [ "${start}" -lt "${end}" ]; then
-        tmux resize-pane -t ":.${start}" -y "${main_size}%"
-        even_vertical $((start + 1)) "${end}" $((100 - main_size))
-    fi
-}
-
-pipeline() {
-    local mode="${1}"
 
     local _n_panes
     _n_panes="$(__n_panes_in_window)"
-
-    if [ "${_n_panes}" -eq 2 ]; then
-        tmux resize-pane -t ":.1" -x "50%"
-        case "${mode}" in
-            "vert_even")
-                tmux select-layout even-vertical
-                ;;
-            "vert_main")
-                __layout_horz_main
-                ;;
-        esac
-    elif [ "$(__get_prop_pane_command --pane 1)" = "vifm" ]; then
-        __layout_horz_main
-        local idx_rhs_start=2
-        if [ "$(__get_prop_pane_command --pane 2)" = "zsh" ]; then
-            idx_rhs_start=3
-            move_to_split ":.2" ":.1" "$(height_lhs_secondary_main)"
-        fi
-        case "${mode}" in
-            "vert_even")
-                even_vertical "${idx_rhs_start}" "${_n_panes}" 100
-                if [ "${_n_panes}" -eq 2 ]; then
-                    tmux resize-pane -t ":.1" -x "50%"
-                fi
-                ;;
-            "vert_main")
-                main_vertical "${idx_rhs_start}" "${_n_panes}" 67
-                ;;
-        esac
+    if [ "${_n_panes}" -eq 1 ]; then
+        return 0
     fi
-    set_vifm_miller "${IDX_PANE_MIN}"
+    if [ "${_n_panes}" -eq 2 ]; then
+        if [ "${_equal}" ]; then
+            tmux select-layout even-vertical
+        else
+            __split_horz_submain
+        fi
+        __pane_vifm_adapt_millerview --target "$(__make_target --pane min)"
+        return 0
+    fi
+
+    __split_horz_submain
+    if [ "$(__pane_command --pane 1)" = "vifm" ]; then
+        local _idx_pane_rhs_min
+        if [ "$(__pane_command --pane 2)" = "zsh" ]; then
+            _idx_pane_rhs_min=3
+            __move_pane --from ":.2" --to ":.1" --size "$(__height_lhs_secondary_main)"
+        else
+            _idx_pane_rhs_min=2
+        fi
+
+        if [ "${_equal}" ]; then
+            __resize_column_equal --min "${_idx_pane_rhs_min}"
+        else
+            __resize_column_emph --min "${_idx_pane_rhs_min}"
+        fi
+    fi
+
+    __pane_vifm_adapt_millerview --target "$(__make_target --pane min)"
 }
 
 main() {
     case "${1}" in
-        "vert_even" | "vert_main")
-            pipeline "${1}"
+        "vert_main")
+            __layout_horz
+            ;;
+        "vert_even")
+            __layout_horz --equal
             ;;
         "vifm_miller")
             shift
-            set_vifm_miller
+            __pane_vifm_adapt_millerview
             ;;
     esac
 }
