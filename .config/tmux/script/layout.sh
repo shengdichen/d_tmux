@@ -106,11 +106,16 @@ __resize_column_emph() {
 }
 
 __resize_column_lhs() {
-    local _height_all _height_emph
+    local _height_all _height_vifm HEIGHT_VIFM_MIN=20 HEIGHT_VIFM_MAX=53
     _height_all="$(__size_window --height)"
-    _height_emph="$(__squeeze $((_height_all / 3)) 20 53)"
+    _height_vifm="$(
+        __squeeze "$((_height_all / 3))" "${HEIGHT_VIFM_MIN}" "${HEIGHT_VIFM_MAX}"
+    )"
 
-    __move_pane --from ":.2" --to ":.1" --size "$((_height_all - _height_emph))"
+    __move_pane \
+        --from ":.$((IDX_PANE_MIN + 1))" \
+        --to ":.${IDX_PANE_MIN}" \
+        --size "$((_height_all - _height_vifm))"
 }
 
 __pane_vifm_adapt_millerview() {
