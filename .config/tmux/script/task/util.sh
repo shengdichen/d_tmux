@@ -2,7 +2,7 @@
 
 # util {{{
 __make_cmd_vifm() {
-    local _name="main" _path_1="${HOME}" _path_2="${HOME}"
+    local _name="main" _path_1="./" _path_2="./"
     while [ "${#}" -gt 0 ]; do
         case "${1}" in
             "--name")
@@ -39,7 +39,7 @@ __has_session() {
 }
 
 __create_session() {
-    local _name="ses" _window="main" _cmd=""
+    local _name="ses" _window="main" _cd="${HOME}" _cmd=""
     while [ "${#}" -gt 0 ]; do
         case "${1}" in
             "--name")
@@ -48,6 +48,10 @@ __create_session() {
                 ;;
             "--window")
                 _window="${2}"
+                shift && shift
+                ;;
+            "--cd")
+                _cd="${2}"
                 shift && shift
                 ;;
             "--cmd")
@@ -69,6 +73,7 @@ __create_session() {
         -s "${_name}" \
         -n "${_window}" \
         -d \
+        -c "${_cd}" \
         "${_cmd}"
 }
 
@@ -99,7 +104,7 @@ __has_window() {
 }
 
 __create_window() {
-    local _session="" _pos="" _name="win" _allow_dup="" _cmd=""
+    local _session="" _pos="" _name="win" _allow_dup="" _cd="${HOME}" _cmd=""
     while [ "${#}" -gt 0 ]; do
         case "${1}" in
             "--session")
@@ -117,6 +122,10 @@ __create_window() {
             "--allow-dup")
                 _allow_dup="yes"
                 shift
+                ;;
+            "--cd")
+                _cd="${2}"
+                shift && shift
                 ;;
             "--cmd")
                 _cmd="${2}"
@@ -140,6 +149,7 @@ __create_window() {
                 -b \
                 -n "${_name}" \
                 -d \
+                -c "${_cd}" \
                 "${_cmd}"
             ;;
         "last")
@@ -147,6 +157,7 @@ __create_window() {
                 -t "=${_session}:" \
                 -n "${_name}" \
                 -d \
+                -c "${_cd}" \
                 "${_cmd}"
             ;;
         "prev")
@@ -155,6 +166,7 @@ __create_window() {
                 -b \
                 -n "${_name}" \
                 -d \
+                -c "${_cd}" \
                 "${_cmd}"
             ;;
         "next")
@@ -163,6 +175,7 @@ __create_window() {
                 -a \
                 -n "${_name}" \
                 -d \
+                -c "${_cd}" \
                 "${_cmd}"
             ;;
         *)
@@ -172,6 +185,7 @@ __create_window() {
                 -a \
                 -n "${_name}" \
                 -d \
+                -c "${_cd}" \
                 "${_cmd}"
             ;;
     esac
@@ -180,7 +194,7 @@ __create_window() {
 
 # pane {{{
 __new_pane() {
-    local _target=":.+" _direction="-v" _cd="~" _cmd="${SHELL}"
+    local _target=":.+" _direction="-v" _cd="${HOME}" _cmd="${SHELL}"
     while [ "${#}" -gt 0 ]; do
         case "${1}" in
             "--target")
