@@ -139,56 +139,41 @@ __create_window() {
         return
     fi
 
+    local _target _relative
+    case "${_pos}" in
+        "first")
+            _target="=${_session}:^"
+            _relative="-b"
+            ;;
+        "last")
+            _target="=${_session}:$"
+            _relative="-a"
+            ;;
+        "prev")
+            _target="=${_session}:"
+            _relative="-b"
+            ;;
+        "next")
+            _target="=${_session}:"
+            _relative="-a"
+            ;;
+        *)
+            # insert after ${_pos}, defaulting to current window
+            _target="=${_session}:${_pos}"
+            _relative="-a"
+            ;;
+    esac
+
     if [ ! "${_cmd}" ]; then
         _cmd="$(__make_cmd_default)"
     fi
-    case "${_pos}" in
-        "first")
-            tmux new-window \
-                -t "=${_session}:1" \
-                -b \
-                -n "${_name}" \
-                -d \
-                -c "${_cd}" \
-                "${_cmd}"
-            ;;
-        "last")
-            tmux new-window \
-                -t "=${_session}:" \
-                -n "${_name}" \
-                -d \
-                -c "${_cd}" \
-                "${_cmd}"
-            ;;
-        "prev")
-            tmux new-window \
-                -t "=${_session}:" \
-                -b \
-                -n "${_name}" \
-                -d \
-                -c "${_cd}" \
-                "${_cmd}"
-            ;;
-        "next")
-            tmux new-window \
-                -t "=${_session}:" \
-                -a \
-                -n "${_name}" \
-                -d \
-                -c "${_cd}" \
-                "${_cmd}"
-            ;;
-        *)
-            # insert after ${_pos}
-            tmux new-window \
-                -t "=${_session}:${_pos}" \
-                -a \
-                -n "${_name}" \
-                -d \
-                -c "${_cd}" \
-                "${_cmd}"
-            ;;
-    esac
+    tmux new-window \
+        -t "${_target}" \
+        "${_relative}" \
+        -n "${_name}" \
+        -d \
+        -c "${_cd}" \
+        "${_cmd}"
 }
 # }}}
 
