@@ -43,9 +43,13 @@ __ascii() {
 }
 
 __top() {
-    top \
-        -d 1.3 \
-        -E G
+    while true; do
+        top \
+            -d 1.3 \
+            -E G
+        s-tui
+        nvtop --no-color
+    done
 }
 
 __free() {
