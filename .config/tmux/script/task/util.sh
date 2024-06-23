@@ -35,7 +35,7 @@ __make_cmd_default() {
 
 # session {{{
 __has_session() {
-    tmux has-session -t "${1}" 2>/dev/null
+    tmux has-session -t "=${1}" 2>/dev/null
 }
 
 __create_session() {
@@ -100,7 +100,7 @@ __has_window() {
         esac
     done
 
-    tmux list-windows -t "${_session}" -F "#{window_name}" | grep -q "^${1}$"
+    tmux list-windows -t "=${_session}" -F "#{window_name}" | grep -q "^${1}$"
 }
 
 __create_window() {
