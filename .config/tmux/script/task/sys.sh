@@ -66,8 +66,8 @@ __mda() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                "${HOME}/xdg/MDA/Aud/" \
-                "${HOME}/xdg/MDA/Vid"
+                "$(xdg-user-dir MUSIC)" \
+                "$(xdg-user-dir VIDEOS)"
         )"
 
     __new_pane \
