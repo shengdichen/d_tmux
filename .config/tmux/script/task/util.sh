@@ -240,11 +240,15 @@ __new_pane() {
 }
 
 __send_key() {
-    local _target=":."
+    local _target=":." _wait=""
     while [ "${#}" -gt 0 ]; do
         case "${1}" in
             "--target")
                 _target="${2}"
+                shift && shift
+                ;;
+            "--wait")
+                _wait="${2}"
                 shift && shift
                 ;;
             "--")
@@ -257,6 +261,9 @@ __send_key() {
         tmux send-keys \
             -t "${_target}" \
             "${@}"
+        if [ "${_wait}" ]; then
+            sleep "${_wait}"
+        fi
     fi
 }
 
@@ -292,11 +299,11 @@ __vifm_tab_set() {
     fi
 
     if [ "${_path_1}" ]; then
-        __send_key --target "${_target}" -- ":cd \"${_path_1}\"" "Enter"
+        __send_key --target "${_target}" --wait 2 -- ":cd \"${_path_1}\"" "Enter"
     fi
     if [ "${_path_2}" ]; then
         __send_key --target "${_target}" -- "Space"
-        __send_key --target "${_target}" -- ":cd \"${_path_2}\"" "Enter"
+        __send_key --target "${_target}" --wait 2 -- ":cd \"${_path_2}\"" "Enter"
         __send_key --target "${_target}" -- "Space"
     fi
     if [ "${_name}" ]; then
