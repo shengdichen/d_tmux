@@ -8,21 +8,18 @@ cd "${SCRIPT_PATH}" || exit 3
 
 SESSION="sys"
 
-__setup() {
-    local _window="setup"
-    local _target="=${SESSION}:=${_window}"
-
-    if __has_window --session "${SESSION}" -- "${_window}"; then
-        return
-    fi
-
-    __create_window \
-        --session "${SESSION}" \
-        --name "${_window}" \
+__base() {
+    __create_session \
+        --name "${SESSION}" \
         --cmd "$(
             __make_cmd_vifm \
-                "${HOME}/dot/setup" \
-                "${HOME}/.config/tmux/script"
+                --tab --name "main" \
+                "${HOME}/.local/bin" \
+                "${HOME}/.config/tmux/script/task" \
+                \
+                --tab --name "setup" \
+                "${HOME}/dot/dot" \
+                "${HOME}/dot/setup/post"
         )"
 }
 
@@ -80,7 +77,7 @@ __mda() {
         --cmd "${SCRIPT_PATH}/cmd.sh"
 }
 
-__attach_session "${SESSION}"
-__setup
+__base
 __mnt
 __mda
+__attach_session "${SESSION}"

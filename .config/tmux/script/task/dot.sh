@@ -9,8 +9,34 @@ cd "${SCRIPT_PATH}" || exit 3
 SESSION="dot"
 
 __base() {
-    local _window="base"
-    local _target="=${SESSION}:=${_window}"
+    __create_session \
+        --name "${SESSION}" \
+        --cmd "$(
+            __make_cmd_vifm \
+                "${HOME}/dot/dot" \
+                "${HOME}/.config/tmux/script/task"
+        )"
+}
+
+__setup() {
+    local _window="setup"
+
+    if __has_window --session "${SESSION}" -- "${_window}"; then
+        return
+    fi
+
+    __create_window \
+        --session "${SESSION}" \
+        --name "${_window}" \
+        --cmd "$(
+            __make_cmd_vifm \
+                "${HOME}/dot/setup/post" \
+                "${HOME}/dot/setup/extra"
+        )"
+}
+
+__common() {
+    local _window="common"
 
     __create_window \
         --session "${SESSION}" \
@@ -217,13 +243,15 @@ __mail() {
 }
 
 __main() {
-    __create_session --name "${SESSION}"
+    __base
+    __setup
 
-    for _e in "base" "prv" "wm" "zsh" "mpv" "nvim" "tmux" "vifm" "mail"; do
+    for _e in "common" "prv" "wm" "zsh" "mpv" "nvim" "tmux" "vifm" "mail"; do
         printf "%s\n" "${_e}"
     done | fzf --multi --reverse --height 37% | while read -r _line; do
         "__${_line}"
     done
+
     __attach_session "${SESSION}"
 }
 __main
