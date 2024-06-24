@@ -243,14 +243,21 @@ __mail() {
 }
 
 __main() {
+    local _running=""
+    if __has_session "${SESSION}"; then
+        _running="yes"
+    fi
+
     __base
     __setup
 
-    for _e in "common" "prv" "wm" "zsh" "mpv" "nvim" "tmux" "vifm" "mail"; do
-        printf "%s\n" "${_e}"
-    done | fzf --multi --reverse --height 37% | while read -r _line; do
-        "__${_line}"
-    done
+    if [ "${_running}" ]; then
+        for _e in "common" "prv" "wm" "zsh" "mpv" "nvim" "tmux" "vifm" "mail"; do
+            printf "%s\n" "${_e}"
+        done | fzf --multi --reverse --height 37% | while read -r _line; do
+            "__${_line}"
+        done
+    fi
 
     __attach_session "${SESSION}"
 }
