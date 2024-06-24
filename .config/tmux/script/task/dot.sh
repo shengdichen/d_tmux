@@ -26,7 +26,6 @@ __base() {
 
 __prv() {
     local _window="prv"
-    local _target="=${SESSION}:=${_window}"
 
     if __has_window --session "${SESSION}" -- "${_window}"; then
         return
@@ -44,7 +43,6 @@ __prv() {
 
 __wm() {
     local _window="wm"
-    local _target="=${SESSION}:=${_window}"
 
     if __has_window --session "${SESSION}" -- "${_window}"; then
         return
@@ -55,23 +53,18 @@ __wm() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
+                --tab --name "main" \
                 "${HOME}/dot/dot/d_sway/" \
-                "${HOME}/.config/hypr/"
+                "${HOME}/.config/hypr/" \
+                \
+                --tab --name "hypr" \
+                "${HOME}/dot/dot/d_sway/.config/hypr/" \
+                "${HOME}/dot/dot/d_sway/.config/fuzzel/" \
+                \
+                --tab --name "sway" \
+                "${HOME}/dot/dot/d_sway/.config/sway/" \
+                "${HOME}/dot/dot/d_sway/.config/swaylock/"
         )"
-
-    __vifm_tab_set \
-        --target "${_target}" \
-        --new \
-        --name "hypr" \
-        --path-1 "${HOME}/dot/dot/d_sway/.config/hypr/" \
-        --path-2 "${HOME}/dot/dot/d_sway/.config/fuzzel/"
-
-    __vifm_tab_set \
-        --target "${_target}" \
-        --new \
-        --name "sway" \
-        --path-1 "${HOME}/dot/dot/d_sway/.config/sway/" \
-        --path-2 "${HOME}/dot/dot/d_sway/.config/swaylock/"
 }
 
 __zsh() {
@@ -86,36 +79,26 @@ __zsh() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
+                --tab --name "main" \
                 "${HOME}/dot/dot/d_zsh/" \
-                "${HOME}/.config/zsh/"
+                "${HOME}/.config/zsh/" \
+                \
+                --tab --name "conf" \
+                "${HOME}/dot/dot/d_zsh/.config/zsh/conf/" \
+                "${HOME}/dot/dot/d_zsh/.config/" \
+                \
+                --tab --name "script" \
+                "${HOME}/dot/dot/d_zsh/.local/script/" \
+                "${HOME}/.local/script/" \
+                \
+                --tab --name "xdg" \
+                "${HOME}/dot/dot/d_zsh/.local/share/applications/" \
+                "${HOME}/.local/share/applications/"
         )"
-
-    local _pane="=${SESSION}:=${_window}.1"
-    __vifm_tab_set \
-        --target "${_pane}" \
-        --new \
-        --name "conf" \
-        --path-1 "${HOME}/dot/dot/d_zsh/.config/zsh/conf/" \
-        --path-2 "${HOME}/dot/dot/d_zsh/.config/"
-
-    __vifm_tab_set \
-        --target "${_pane}" \
-        --new \
-        --name "script" \
-        --path-1 "${HOME}/dot/dot/d_zsh/.local/script/" \
-        --path-2 "${HOME}/.local/script/"
-
-    __vifm_tab_set \
-        --target "${_pane}" \
-        --new \
-        --name "xdg" \
-        --path-1 "${HOME}/dot/dot/d_zsh/.local/share/applications/" \
-        --path-2 "${HOME}/.local/share/applications/"
 }
 
 __mpv() {
     local _window="mpv"
-    local _target="=${SESSION}:=${_window}"
 
     if __has_window --session "${SESSION}" -- "${_window}"; then
         return
@@ -126,21 +109,18 @@ __mpv() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
+                --tab --name "main" \
                 "${HOME}/dot/dot/d_mpv/" \
-                "${HOME}/.config/mpv/"
+                "${HOME}/.config/mpv/" \
+                \
+                --tab --name "js" \
+                "${HOME}/dot/dot/d_mpv/js/src/js/lib" \
+                "${HOME}/dot/dot/d_mpv/js/src/"
         )"
-
-    __vifm_tab_set \
-        --target "${_target}" \
-        --new \
-        --name "js" \
-        --path-1 "${HOME}/dot/dot/d_mpv/js/src/js/lib" \
-        --path-2 "${HOME}/dot/dot/d_mpv/js/src/"
 }
 
 __nvim() {
     local _window="nvim"
-    local _target="=${SESSION}:=${_window}"
 
     if __has_window --session "${SESSION}" -- "${_window}"; then
         return
@@ -151,21 +131,18 @@ __nvim() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
+                --tab --name "main" \
                 "${HOME}/dot/dot/d_nvim/" \
-                "${HOME}/.config/nvim/"
+                "${HOME}/.config/nvim/" \
+                \
+                --tab --name "conf" \
+                "${HOME}/dot/dot/d_nvim/.config/nvim/conf/rpre/plugin/external" \
+                "${HOME}/dot/dot/d_nvim/.config/nvim/conf/rpre/pack/start/start/shrakula/lua/shrakula"
         )"
-
-    __vifm_tab_set \
-        --target "${_target}" \
-        --new \
-        --name "conf" \
-        --path-1 "${HOME}/dot/dot/d_nvim/.config/nvim/conf/rpre/plugin/external" \
-        --path-2 "${HOME}/dot/dot/d_nvim/.config/nvim/conf/rpre/pack/start/start/shrakula/lua/shrakula"
 }
 
 __tmux() {
     local _window="tmux"
-    local _target="=${SESSION}:=${_window}"
 
     if __has_window --session "${SESSION}" -- "${_window}"; then
         return
@@ -176,21 +153,18 @@ __tmux() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
+                --tab --name "main" \
                 "${HOME}/dot/dot/d_tmux/" \
-                "${HOME}/.config/tmux/"
+                "${HOME}/.config/tmux/" \
+                \
+                --tab --name "script" \
+                "${HOME}/dot/dot/d_tmux/.config/tmux/script/" \
+                "${HOME}/dot/dot/d_prv/.config/tmux/script"
         )"
-
-    __vifm_tab_set \
-        --target "${_target}" \
-        --new \
-        --name "script" \
-        --path-1 "${HOME}/dot/dot/d_tmux/.config/tmux/script/" \
-        --path-2 "${HOME}/dot/dot/d_prv/.config/tmux/script"
 }
 
 __vifm() {
     local _window="vifm"
-    local _target="=${SESSION}:=${_window}"
 
     if __has_window --session "${SESSION}" -- "${_window}"; then
         return
@@ -201,16 +175,13 @@ __vifm() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
+                --tab --name "main" \
                 "${HOME}/dot/dot/d_vifm/" \
-                "${HOME}/.config/vifm/"
+                "${HOME}/.config/vifm/" \
+                --tab --name "conf" \
+                "${HOME}/dot/dot/d_vifm/.config/vifm/scripts/" \
+                "${HOME}/dot/dot/d_vifm/src/"
         )"
-
-    __vifm_tab_set \
-        --target "${_target}" \
-        --new \
-        --name "conf" \
-        --path-1 "${HOME}/dot/dot/d_vifm/.config/vifm/scripts/" \
-        --path-2 "${HOME}/dot/dot/d_vifm/src/"
 }
 
 __mail() {
