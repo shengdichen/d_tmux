@@ -21,8 +21,8 @@ __setup() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/setup" \
-                --path-2 "${HOME}/.config/tmux/script"
+                "${HOME}/dot/setup" \
+                "${HOME}/.config/tmux/script"
         )"
 }
 
@@ -39,8 +39,8 @@ __mnt() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/mnt/" \
-                --path-2 "/run/media"
+                "${HOME}/mnt/" \
+                "/run/media"
         )"
 
     __new_pane \
@@ -66,8 +66,8 @@ __mda() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/xdg/MDA/Aud/" \
-                --path-2 "${HOME}/xdg/MDA/Vid"
+                "${HOME}/xdg/MDA/Aud/" \
+                "${HOME}/xdg/MDA/Vid"
         )"
 
     __new_pane \

@@ -19,8 +19,8 @@ __base() {
         --allow-dup \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/" \
-                --path-2 "${HOME}/.config/"
+                "${HOME}/dot/dot/" \
+                "${HOME}/.config/"
         )"
 }
 
@@ -37,8 +37,8 @@ __prv() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_prv/" \
-                --path-2 "${HOME}/.password-store/"
+                "${HOME}/dot/dot/d_prv/" \
+                "${HOME}/.password-store/"
         )"
 }
 
@@ -55,8 +55,8 @@ __wm() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_sway/" \
-                --path-2 "${HOME}/.config/hypr/"
+                "${HOME}/dot/dot/d_sway/" \
+                "${HOME}/.config/hypr/"
         )"
 
     __vifm_tab_set \
@@ -86,8 +86,8 @@ __zsh() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_zsh/" \
-                --path-2 "${HOME}/.config/zsh/"
+                "${HOME}/dot/dot/d_zsh/" \
+                "${HOME}/.config/zsh/"
         )"
 
     local _pane="=${SESSION}:=${_window}.1"
@@ -126,8 +126,8 @@ __mpv() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_mpv/" \
-                --path-2 "${HOME}/.config/mpv/"
+                "${HOME}/dot/dot/d_mpv/" \
+                "${HOME}/.config/mpv/"
         )"
 
     __vifm_tab_set \
@@ -151,8 +151,8 @@ __nvim() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_nvim/" \
-                --path-2 "${HOME}/.config/nvim/"
+                "${HOME}/dot/dot/d_nvim/" \
+                "${HOME}/.config/nvim/"
         )"
 
     __vifm_tab_set \
@@ -176,8 +176,8 @@ __tmux() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_tmux/" \
-                --path-2 "${HOME}/.config/tmux/"
+                "${HOME}/dot/dot/d_tmux/" \
+                "${HOME}/.config/tmux/"
         )"
 
     __vifm_tab_set \
@@ -201,8 +201,8 @@ __vifm() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_vifm/" \
-                --path-2 "${HOME}/.config/vifm/"
+                "${HOME}/dot/dot/d_vifm/" \
+                "${HOME}/.config/vifm/"
         )"
 
     __vifm_tab_set \
@@ -226,8 +226,8 @@ __mail() {
         --name "${_window}" \
         --cmd "$(
             __make_cmd_vifm \
-                --path-1 "${HOME}/dot/dot/d_mail/.local/share/mail/" \
-                --path-2 "${HOME}/dot/dot/d_mail/.config/neomutt/"
+                "${HOME}/dot/dot/d_mail/.local/share/mail/" \
+                "${HOME}/dot/dot/d_mail/.config/neomutt/"
         )"
 
     __new_pane \

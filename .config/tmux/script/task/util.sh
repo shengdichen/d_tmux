@@ -2,30 +2,54 @@
 
 # util {{{
 __make_cmd_vifm() {
-    local _name="main" _path_1="./" _path_2="./"
-    while [ "${#}" -gt 0 ]; do
-        case "${1}" in
-            "--name")
-                _name="${2}"
-                shift && shift
-                ;;
-            "--path-1")
-                _path_1="${2}"
-                shift && shift
-                ;;
-            "--path-2")
-                _path_2="${2}"
-                shift && shift
-                ;;
-        esac
-    done
+    __vifm() {
+        printf -- "-c \"%s\"" "${1}"
+    }
 
-    if [ "${_name}" ]; then
-        printf "vifm -c \"tabname %s\" \"%s\" \"%s\"" "${_name}" "${_path_1}" "${_path_2}"
+    __escape_path() {
+        printf -- "\\\"%s\\\"" "${1}"
+    }
+
+    if [ "${#}" -eq 0 ]; then
+        printf "vifm \"%s\" \"%s\"" "${HOME}" "${HOME}"
+    elif [ "${#}" -eq 1 ]; then
+        printf "vifm \"%s\" \"%s\"" "${1}" "${1}"
+    elif [ "${#}" -eq 2 ]; then
+        printf "vifm \"%s\" \"%s\"" "${1}" "${2}"
     else
-        printf "vifm \"%s\" \"%s\"" "${_path_1}" "${_path_2}"
-    fi
+        local _res="vifm" _is_first_tab="yes"
+        local _is_first_tab="yes" _tabname=""
+        local _path_1="" _path_2=""
+        while [ "${#}" -gt 0 ]; do
+            case "${1}" in
+                "--tab")
+                    shift
+                    if [ "${_is_first_tab}" ]; then
+                        _is_first_tab=""
+                    else
+                        _res="${_res} $(__vifm "tabnew")"
+                    fi
 
+                    if [ "${1}" = "--name" ]; then
+                        _tabname="${2}"
+                        shift 2
+                    else
+                        _tabname=""
+                    fi
+
+                    _path_1="$(__escape_path "${1}")"
+                    _path_2="$(__escape_path "${2}")"
+                    shift 2
+                    _res="${_res} $(__vifm "cd ${_path_1} ${_path_2}")"
+
+                    if [ "${_tabname}" ]; then
+                        _res="${_res} $(__vifm "tabname ${_tabname}")"
+                    fi
+                    ;;
+            esac
+        done
+        printf "%s" "${_res}"
+    fi
 }
 
 __make_cmd_default() {
