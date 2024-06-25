@@ -34,6 +34,7 @@ __mnt() {
     __create_window \
         --session "${SESSION}" \
         --name "${_window}" \
+        --pos "last" \
         --cmd "$(
             __make_cmd_vifm \
                 "${HOME}/mnt/" \
@@ -61,6 +62,7 @@ __mda() {
     __create_window \
         --session "${SESSION}" \
         --name "${_window}" \
+        --pos "last" \
         --cmd "$(
             __make_cmd_vifm \
                 "$(xdg-user-dir MUSIC)" \
@@ -80,4 +82,3 @@ __mda() {
 __base
 __mnt
 __mda
-__attach_session "${SESSION}"

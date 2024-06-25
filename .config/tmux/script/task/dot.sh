@@ -257,8 +257,7 @@ __main() {
         done | fzf --multi --reverse --height 37% | while read -r _line; do
             "__${_line}"
         done
+        __attach_session "${SESSION}"
     fi
-
-    __attach_session "${SESSION}"
 }
-__main
+__main "${@}"
