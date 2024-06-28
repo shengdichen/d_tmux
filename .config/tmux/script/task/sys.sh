@@ -4,7 +4,6 @@ SCRIPT_PATH="$(realpath "$(dirname "${0}")")"
 cd "${SCRIPT_PATH}" || exit 3
 
 . "./util.sh"
-. "../util.sh"
 
 SESSION="sys"
 
