@@ -55,6 +55,34 @@ __make_cmd_vifm() {
 __make_cmd_default() {
     __make_cmd_vifm
 }
+
+__make_cmd_poetry() {
+    local _cd="" _cmd="${SHELL}"
+
+    while [ "${#}" -gt 0 ]; do
+        case "${1}" in
+            "--cd")
+                _cd="${2}"
+                shift && shift
+                ;;
+            "--cmd")
+                _cmd="${2}"
+                shift && shift
+                ;;
+        esac
+    done
+
+    local _res=""
+    if [ "${_cd}" ]; then
+        _res="${_res}cd \"${_cd}\" && "
+    fi
+    if [ "${_cmd}" ]; then
+        _res="${_res}poetry run ${_cmd}"
+    else
+        _res="${_res}poetry shell"
+    fi
+    printf "%s" "${_res}"
+}
 # }}}
 
 # session {{{
