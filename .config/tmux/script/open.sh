@@ -1,25 +1,24 @@
-session_path="${HOME}/.local/state/nvim/throw_session.vim"
+#!/usr/bin/env dash
 
-function should_respawn() {
-    [[ $(tmux display-message -p -F "#{pane_current_command}") == "vifm" ]]
+SCRIPT_PATH="$(realpath "$(dirname "${0}")")"
+cd "${SCRIPT_PATH}" || exit 3
+
+. "./util.sh"
+
+PATH_SESSION="${HOME}/.local/state/nvim/throw_session.vim"
+
+__make_session() {
+    tmux send-keys ":mksession! ${PATH_SESSION} || qa" "Enter"
 }
 
-function make_session() {
-    tmux send-keys ":mksession! ${session_path} || qa" "Enter"
+__respawn() {
+    tmux split-window "nvim -S ${PATH_SESSION}"
 }
 
-function respawn() {
-    tmux split-window "nvim -S ${session_path}"
-}
-
-function main() {
-    if should_respawn; then
-        make_session
-        respawn
+__main() {
+    if [ "$(__pane_command)" = "vifm" ]; then
+        __make_session
+        __respawn
     fi
-
-    unset session_path
-    unset -f should_respawn make_session respawn
 }
-main
-unset -f main
+__main

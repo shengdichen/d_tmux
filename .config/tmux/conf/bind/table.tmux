@@ -102,23 +102,23 @@ bind-key -T default M-3 {
 #   6 := current+3
 #   7 := current+2
 bind-key -T default M-4 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/window.zsh current +2";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/window.sh current +2";
 }
 
 bind-key -T default M-5 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/window.zsh current +3";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/window.sh current +3";
 }
 
 bind-key -T default M-6 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/window.zsh current -3";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/window.sh current -3";
 }
 
 bind-key -T default M-7 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/window.zsh current -2";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/window.sh current -2";
 }
 # }}}
 
@@ -128,18 +128,18 @@ bind-key -T default M-7 {
 #   9 := end-1
 #   8 := end-2
 bind-key -T default M-0 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/window.zsh end 0";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/window.sh end 0";
 }
 
 bind-key -T default M-9 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/window.zsh end 1";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/window.sh end 1";
 }
 
 bind-key -T default M-8 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/window.zsh end 2";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/window.sh end 2";
 }
 # }}}
 # }}}
@@ -225,8 +225,8 @@ bind-key -r -T default M-l {
 # resize {{{
 # toggle fullscreen (zoom-level)
 bind-key -T default M-z {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/layout.sh vifm_miller";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh vifm-miller";
     resize-pane -Z;
 }
 
@@ -340,19 +340,19 @@ bind-key -T default M-Z {
 # layout {{{
 unbind-key -T prefix M-2
 bind-key -T prefix M-2 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/layout.sh vert_even";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh horz --equal";
 }
 unbind-key -T prefix M-4
 bind-key -T prefix M-4 {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/layout.sh vert_main";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh horz";
 }
 
 unbind-key -T prefix M-BSpace
 bind-key -T default M-BSpace {
-    run-shell -b "${SHELL} \
-    ~/.config/tmux/script/open.sh";
+    run-shell -b \
+    "${HOME}/.config/tmux/script/open.sh";
 }
 # }}}
 

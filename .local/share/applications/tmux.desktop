@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=__tmux
+
+Exec=./.local/script/tmux.sh run
+Terminal=true
