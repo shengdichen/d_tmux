@@ -60,9 +60,12 @@ __free() {
 
 __time() {
     while true; do
-        clear
-        date "+%Y.%b.%d-%H:%M:%S" | toilet -f future | cowsay -n -g
+        date "+%Y.%b.%d" | toilet -f future
+        date "+%p, %V->%a; %Z@%z"
+        date "+%H:%M:%S" | toilet -f future --metal | lolcat
+
         sleep 1.0
+        clear
     done
 }
 
