@@ -3,10 +3,7 @@
 . "${HOME}/.local/lib/util.sh"
 
 __tmux_running() {
-    pgrep \
-        -u "$(id -u)" \
-        -f "^tmux .*start" \
-        >/dev/null
+    __pgrep "^tmux .*start"
 }
 
 __tmux_start() {
