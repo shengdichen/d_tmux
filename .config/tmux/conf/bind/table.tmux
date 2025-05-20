@@ -338,13 +338,28 @@ bind-key -T default M-Z {
 # }}}
 
 # layout {{{
+bind-key -T default M-! {
+    select-layout even-vertical
+}
 unbind-key -T prefix M-2
 bind-key -T prefix M-2 {
     run-shell -b \
     "${HOME}/.config/tmux/script/layout.sh horz --equal";
 }
+bind-key -T default M-@ {
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh horz --equal";
+}
+
+bind-key -T default M-# {
+    select-layout even-horizontal
+}
 unbind-key -T prefix M-4
 bind-key -T prefix M-4 {
+    run-shell -b \
+    "${HOME}/.config/tmux/script/layout.sh horz";
+}
+bind-key -T default M-$ {
     run-shell -b \
     "${HOME}/.config/tmux/script/layout.sh horz";
 }
