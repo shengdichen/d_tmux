@@ -83,6 +83,31 @@ __make_cmd_poetry() {
     fi
     printf "%s" "${_res}"
 }
+
+__make_cmd_pwsh() {
+    local _path="~" _command=""
+    while [ "${#}" -gt 0 ]; do
+        case "${1}" in
+            "--path")
+                _path="${2}"
+                shift 2
+                ;;
+            "--command")
+                _command="${2}"
+                shift 2
+                ;;
+        esac
+    done
+
+    local _cmd="pwsh.exe"
+    if [ "${_path}" ]; then
+        _cmd="${_cmd} -WorkingDirectory \"${_path}\""
+    fi
+    if [ "${_command}" ]; then
+        _cmd="${_cmd} -Command \"${_command}\""
+    fi
+    printf "%s\n" "${_cmd}"
+}
 # }}}
 
 # session {{{
