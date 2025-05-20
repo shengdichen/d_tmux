@@ -59,10 +59,22 @@ __free() {
 }
 
 __time() {
+    local _height
     while true; do
-        clear
-        date "+%Y.%b.%d-%H:%M:%S" | toilet -f future | cowsay -n -g
+        _height="$(tput lines)"
+
+        if [ "${_height}" -ge 10 ]; then
+            "${HOME}/.local/script/time.sh" print --more
+            (cd "${HOME}/dot/setup/extra/" && "./tlp.sh")
+        elif [ "${_height}" -ge 6 ]; then
+            "${HOME}/.local/script/time.sh" print
+            (cd "${HOME}/dot/setup/extra/" && "./tlp.sh")
+        else
+            "${HOME}/.local/script/time.sh" print --less
+        fi
+
         sleep 1.0
+        clear
     done
 }
 

@@ -1,7 +1,9 @@
 #!/usr/bin/env dash
 
+. "${HOME}/.local/lib/util.sh"
+
 __tmux_running() {
-    pgrep -u "$(id -u)" -f "^tmux .*start" 1>/dev/null
+    __pgrep "^tmux .*start"
 }
 
 __tmux_start() {
@@ -15,13 +17,14 @@ __tmux_start() {
 }
 
 __tmux_attach_session() {
-    if [ ! "${TMUX}" ]; then
-        local _session
-        _session="$(tmux list-sessions -F "#{session_name}" | fzf --reverse)"
-        tmux attach-session -t "${_session}"
-    else
+    if [ "${TMUX}" ]; then
         printf "tmux> already in tmux, done!\n"
+        return
     fi
+
+    local _session
+    _session="$(tmux list-sessions -F "#{session_name}" | __fzf)"
+    tmux attach-session -t "${_session}"
 }
 
 __tmux_attach_window() {
@@ -32,20 +35,28 @@ __tmux_attach_window() {
                 printf "%s> %s\n" "${_session}" "${_window}"
             done
         done |
-            fzf --reverse |
+            __fzf |
             sed "s/^\(.*\)> \(.*\)$/=\1:=\2/"
     )"
-    # must first become a client before switching
-    tmux attach-session ";" switch-client -t "${_choice}"
+
+    if [ "${TMUX}" ]; then
+        tmux switch-client -t "${_choice}"
+        return
+    fi
+
+    # NOTE:
+    #   equivalent to:
+    #   $ tmux attach-session ";" switch-client -t "${_choice}"
+    tmux attach-session -t "${_choice}"
 }
 
 case "${1}" in
     "run")
         if ! __tmux_running; then
             __tmux_start
-        else
-            __tmux_attach_window
+            return
         fi
+        __tmux_attach_window
         ;;
     *) ;;
 esac
